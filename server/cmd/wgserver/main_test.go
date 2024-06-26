@@ -1,14 +1,22 @@
 package main
 
-import "testing"
+import (
+	"context"
+	"os"
+	"testing"
+)
 
-func TestMain(t *testing.T) {
+func TestRun(t *testing.T) {
 	var (
-		exp = 1
-		got = 1
+		ctx    = context.TODO()
+		args   = []string{"wgserver"}
+		getenv = func(string) string { return "" }
+		stdin  = os.Stdin
+		stdout = os.Stdout
+		stderr = os.Stdout
 	)
 
-	if exp != got {
-		t.Errorf("exp:%d; got:%d", exp, got)
+	if err := run(ctx, args, getenv, stdin, stdout, stderr); err != nil {
+		t.Error("exp nil; got err:", err)
 	}
 }
