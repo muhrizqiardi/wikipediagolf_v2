@@ -1,0 +1,126 @@
+{
+  "nodes": {
+    "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1717285511,
+        "narHash": "sha256-iKzJcpdXih14qYVcZ9QC9XuZYnPc6T8YImb6dX166kw=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "2a55567fcf15b1b1c7ed712a2c6fadaec7412ea8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "gnumake42": {
+      "locked": {
+        "lastModified": 1718225733,
+        "narHash": "sha256-aTIpfLT+hQr0H1d7QA2k5a5rWrkL+M8ECN2tI9ClpSg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a9858885e197f984d92d7fe64e9fff6b2e488d40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a9858885e197f984d92d7fe64e9fff6b2e488d40",
+        "type": "github"
+      }
+    },
+    "go": {
+      "locked": {
+        "lastModified": 1715530780,
+        "narHash": "sha256-bBz4/T/zBzv9Xi5XUlFDeosmSNppLaCQTizMKSksAvk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3281bec7174f679eabf584591e75979a258d8c40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3281bec7174f679eabf584591e75979a258d8c40",
+        "type": "github"
+      }
+    },
+    "gopls": {
+      "locked": {
+        "lastModified": 1715530780,
+        "narHash": "sha256-bBz4/T/zBzv9Xi5XUlFDeosmSNppLaCQTizMKSksAvk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3281bec7174f679eabf584591e75979a258d8c40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3281bec7174f679eabf584591e75979a258d8c40",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1719254875,
+        "narHash": "sha256-ECni+IkwXjusHsm9Sexdtq8weAq/yUyt1TWIemXt3Ko=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2893f56de08021cffd9b6b6dfc70fd9ccd51eb60",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1717284937,
+        "narHash": "sha256-lIbdfCsf8LMFloheeE6N31+BMIeixqyQWbSr2vk79EQ=",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/eb9ceca17df2ea50a250b6b27f7bf6ab0186f198.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/eb9ceca17df2ea50a250b6b27f7bf6ab0186f198.tar.gz"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "gnumake42": "gnumake42",
+        "go": "go",
+        "gopls": "gopls",
+        "nixpkgs": "nixpkgs",
+        "typescript-language-server": "typescript-language-server"
+      }
+    },
+    "typescript-language-server": {
+      "locked": {
+        "lastModified": 1719082008,
+        "narHash": "sha256-jHJSUH619zBQ6WdC21fFAlDxHErKVDJ5fpN0Hgx4sjs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9693852a2070b398ee123a329e68f0dab5526681",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9693852a2070b398ee123a329e68f0dab5526681",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
