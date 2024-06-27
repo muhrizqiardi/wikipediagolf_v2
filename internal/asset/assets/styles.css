@@ -1,39 +1,14 @@
 /*! concrete.css v3.0.0 | MIT License | github.com/louismerlin/concrete.css */
 
-/**
- * Set universal color variables
- */
-
 :root {
   --fg: #111;
   --bg: #fff;
 }
 
-/**
- * Invert the colors if the user has dark mode activated.
- */
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fg: #fff;
-    --bg: #111;
-  }
-}
-
-/**
- * 1. Modify the base font-size to 1.25rem, to make everything larger.
- * 2. Set box-sizing globally to handle padding and border widths.
- */
-
 html {
-  font-size: 1.25rem; /* 1 */
+  font-size: 1.1rem; /* 1 */
   box-sizing: border-box; /* 2 */
 }
-
-/**
- * 1. Continue the global box-sizing modification.
- * 2. Set the underline size for all elements.
- */
 
 *,
 ::after,
@@ -42,12 +17,6 @@ html {
   text-decoration-thickness: 0.1rem; /* 2 */
 }
 
-/**
- * 1. Remove body margin.
- * 2. Set the text and background color to white and black by default.
- * 3. Set the font-family to Helvetica, or equivalent.
- */
-
 body {
   margin: 0; /* 1 */
   background: var(--bg); /* 2 */
@@ -55,27 +24,14 @@ body {
   font-family: Helvetica, Arial, sans-serif; /* 3 */
 }
 
-/**
- * Set the link color to black
- */
-
 a {
   color: var(--fg);
 }
 
-/**
- * 1. Stretch figure to full width of the section.
- */
 figure {
   margin: 0; /* 1 */
 }
 
-/**
- * 1. Right-align text 
- * 2. Make figure caption a little smaller than normal text.
- * 3. Add border at bottom.
- * 4. Add spacing after the element.
- */
 figcaption {
   text-align: right; /* 1 */
   font-size: 0.8em; /* 2 */
@@ -83,28 +39,14 @@ figcaption {
   padding-bottom: 0.2rem; /* 4 */
 }
 
-/**
- * 1. Set the max width of images to 100%, so that they don't overflow.
- * 2. Set the height of images relative to their width.
- */
-
 img {
   max-width: 100%; /* 1 */
   height: auto; /* 2 */
 }
 
-/**
- * Add some padding around the main sections.
- */
-
 main section + section {
   padding: 2rem 0;
 }
-
-/** 
- * 1. Center the root main/header/footer elements horizontally.
- * 2. Set the width of the elements to 640px, with padding for mobile screens.
- */
 
 body > header,
 body > main,
@@ -122,8 +64,8 @@ body > footer {
  */
 
 body > header {
-  padding-top: 8rem; /* 1 */
-  padding-bottom: 8rem; /* 1 */
+  padding-top: 1.5rem; /* 1 */
+  padding-bottom: 3rem; /* 1 */
   font-size: 1.2em; /* 2 */
 }
 
@@ -146,19 +88,9 @@ h6 {
   font-size: 0.67em;
 }
 
-/**
- * Center the text in the footer.
- */
-
 footer {
   text-align: center;
 }
-
-/**
- * 1. Change the style of the button.
- * 2. Set the color and border of the button.
- * 3. Add the pointer cursor when hovering a button.
- */
 
 button,
 input[type="button"],
@@ -177,11 +109,6 @@ input[type="submit"] {
   cursor: pointer; /* 3 */
 }
 
-/**
- * 1. Set the border of a disabled button to be dashed.
- * 2. Add the not-allowed cursor when hovering a disabled button.
- */
-
 button:disabled,
 input[type="button"]:disabled,
 input[type="reset"]:disabled,
@@ -190,51 +117,27 @@ input[type="submit"]:disabled {
   cursor: not-allowed; /* 2 */
 }
 
-/**
- * Set the list bullet to square.
- */
-
 ul {
   list-style: square;
 }
 
-/**
- * Set a margin around the navigation bar
- */
 nav {
   margin: 2rem 0;
 }
 
-/**
- * 1. Remove padding around the navigation bar's inner unordered list
- * 2. Remove list style for the navigation bar's inner unordered list
- */
 nav ul {
   padding: 0; /* 1 */
   list-style: none; /* 2 */
 }
 
-/**
- * 1. Set margins around the navigation bar's inner unordered list items
- * 2. Make navigation bar unordered list elements render horizontally
- */
 nav ul li {
   margin: 0 0.2rem; /* 1 */
   display: inline-block; /* 2 */
 }
 
-/**
- * Set the border around a fieldset.
- */
-
 fieldset {
   border: 0.1rem solid var(--fg);
 }
-
-/**
- * 1. Modify the display of labels and legends.
- * 2. Add a margin underneath.
- */
 
 label,
 legend {
@@ -242,11 +145,6 @@ legend {
   font-weight: bold; /* 1 */
   margin-bottom: 0.4rem; /* 2 */
 }
-
-/** 
- * 1. Change the appearance of the text input.
- * 2. Set the color and border of the text input.
- */
 
 input[type="email"],
 input[type="number"],
@@ -283,11 +181,6 @@ textarea {
   margin: 0 0 0.8rem 0;
 }
 
-/**
- * 1. Set the font color for the placeholder in inputs.
- * 2. Set font-style to italic for the placeholder in inputs.
- */
-
 input::placeholder,
 textarea::placeholder {
   color: var(--fg); /* 1 */
@@ -295,66 +188,33 @@ textarea::placeholder {
   opacity: 1;
 }
 
-/**
- * 1. Expand width to 100% for the table element.
- * 2. Remove the distance between the borders of adjacent table cells.
- */
-
 table {
   width: 100%; /* 1 */
   border-spacing: 0; /* 2 */
 }
-
-/**
- * Add padding around table cells.
- */
 
 td,
 th {
   padding: 0.4rem;
 }
 
-/**
- * Remove left padding for first cell in a row.
- */
-
 td:first-child,
 th:first-child {
   padding-left: 0;
 }
-
-/**
- * Remove right padding for last cell in a row.
- */
 
 td:last-child,
 th:last-child {
   padding-right: 0;
 }
 
-/**
- * 1. Add a border under the table header.
- * 2. Align the text to the left in the table header.
- */
-
 th {
   border-bottom: 0.1rem solid var(--fg); /* 1 */
   text-align: left; /* 2 */
 }
-
-/**
- * Add a thiner border under table rows.
- */
-
-td {
+*/ td {
   border-bottom: 0.05rem solid var(--fg);
 }
-
-/**
- * 1. Change the margins and padding.
- * 2. Add a border on the left of these elements.
- * 3. Set the y overflow to hidden to hide the navigation bar.
- */
 
 blockquote,
 pre {
@@ -365,20 +225,10 @@ pre {
   overflow-y: hidden; /* 3 */
 }
 
-/**
- * 1. Set the rest of the border of the preformatted element to dotted.
- * 2. Re-set the left border style.
- */
-
 pre {
   border: 0.05rem dotted var(--fg); /* 1 */
   border-left: 0.1rem solid var(--fg); /* 2 */
 }
-
-/**
- * 1. Modify the display of the code block.
- * 2. Reduce the font size of the code block.
- */
 
 pre > code {
   white-space: pre; /* 1 */
@@ -386,14 +236,10 @@ pre > code {
   font-size: 0.8rem; /* 2 */
 }
 
-/**
- * 1. Modify the display of the progress bar in all browsers.
- * 2. Set the colors and border of the progress bar.
- */
-
 progress {
   -moz-appearance: none; /* 1 */
   -webkit-appearance: none; /* 1 */
+  appearance: none;
   display: block; /* 1 */
   height: 0.5rem; /* 1 */
   overflow: hidden; /* 1 */
@@ -405,34 +251,44 @@ progress {
   border-radius: 0; /* 2 */
 }
 
-/**
- * Set the background color of the webkit progress bar.
- */
-
 progress::-webkit-progress-bar {
   background-color: var(--bg);
 }
-
-/**
- * Set the color of the webkit progress bar.
- */
 
 progress::-webkit-progress-value {
   background-color: var(--fg);
 }
 
-/**
- * Set the color of the mozilla progress bar.
- */
-
 progress::-moz-progress-bar {
   background-color: var(--fg);
 }
 
-/**
- * Set the border for the horizontal rule.
- */
-
 hr {
   border: 0.05rem solid var(--fg);
+}
+
+.page-header {
+  text-align: center;
+  padding-top: 0;
+}
+
+.page-header__title {
+  margin-top: 0;
+  margin-bottom: 0;
+  @media (min-width: 1024px) {
+    font-size: 3.75rem;
+  }
+}
+
+.page-header__tagline {
+  margin-top: 0;
+}
+
+.language-switcher {
+  display: flex;
+  justify-content: end;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 0;
 }
