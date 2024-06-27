@@ -40,6 +40,20 @@ func AssertInequal[T comparable](t *testing.T, exp, got T) {
 	}
 }
 
+func AssertNotNil(t *testing.T, got any) {
+	t.Helper()
+	if got == nil {
+		t.Errorf("exp not nil; got %v", got)
+	}
+}
+
+func AssertNil(t *testing.T, got any) {
+	t.Helper()
+	if got == nil {
+		t.Errorf("exp not nil; got %v", got)
+	}
+}
+
 func AssertEqualCMP(t *testing.T, exp, got interface{}, opts ...cmp.Option) bool {
 	t.Helper()
 	if diff := cmp.Diff(exp, got, opts...); diff != "" {
