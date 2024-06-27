@@ -23,19 +23,22 @@
           version = "2.0.0";
           subPackages = [ "cmd/wgserver" ];
           src = ./.;
-          vendorHash = "sha256-bMMEkHk5zS0OgPmMFHG88HhmXg5Wffpjx3wYuGLuXSE=";
+          vendorHash = "sha256-1wycFQdf6sudxnH10xNz1bppRDCQjCz33n+ugP74SdQ=";
+          preBuild = ''
+            cp -r ${self'.packages.wgserver-npm}/dist ./internal/asset/dist 
+          '';
         };
         packages.wgserver-npm = pkgs.buildNpmPackage {
           pname = "tagbox";
           version = "0.2.0";
           src = ./.;
-          npmDepsHash = pkgs.lib.fakeHash;
+          npmDepsHash = "sha256-zFoLuyaqZr5rcVpp5Pzn61PotTncpG9+L9SyhhF92KI=";
           nativeBuildInputs = [
-            inputs'.esbuild.legacyPackages.esbuild
+            inputs'.tailwindcss.legacyPackages.tailwindcss
           ];
           postBuild = ''
             mkdir -p $out
-            cp -r ./dist $out/dist
+            cp -r ./internal/asset/dist $out/dist
           '';
         };
         packages.wgserver-docker = pkgs.dockerTools.buildImage {
