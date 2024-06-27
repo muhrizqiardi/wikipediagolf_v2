@@ -10,8 +10,8 @@ import (
 	"strconv"
 
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/asset"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/config"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/homepage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/shared/config"
 )
 
 func run(
@@ -30,6 +30,7 @@ func run(
 
 	serveMux := http.NewServeMux()
 	tmpl := homepage.MustNewTemplate(homepage.NewTemplate())
+	asset.AddEndpoint(serveMux)
 	homepageEndpointDeps := homepage.EndpointDeps{
 		Template: tmpl,
 	}
