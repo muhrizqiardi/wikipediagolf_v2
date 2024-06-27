@@ -2,5 +2,5 @@ package asset
 
 import "embed"
 
-//go:embed assets/*
-var assetFS embed.FS
+//go:embed dist/*
+var distFS embed.FS

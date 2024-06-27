@@ -13,7 +13,7 @@ import (
 func TestHandler(t *testing.T) {
 	t.Run("should return styles.css", func(t *testing.T) {
 		var (
-			req = httptest.NewRequest(http.MethodGet, "/assets/styles.css", nil)
+			req = httptest.NewRequest(http.MethodGet, "/dist/styles.css", nil)
 			res = httptest.NewRecorder()
 		)
 

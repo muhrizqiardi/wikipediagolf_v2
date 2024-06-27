@@ -1,4 +1,4 @@
 test:
 	go test ./...
 watch:
-	wgo go run ./cmd/wgserver/main.go -host=3000
+	wgo npm run build :: go run ./cmd/wgserver/main.go -host=3000  

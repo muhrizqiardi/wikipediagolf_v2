@@ -1,28 +1,141 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-white [scrollbar-gutter:stable]">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
-    <link rel="stylesheet" href="/assets/styles.css" />
-    <title>Hello world!</title>
+    <link rel="stylesheet" href="/dist/styles.css" />
+    <title>Wikipediagolf</title>
   </head>
-  <body>
-    <div class="language-switcher">
-      <button class="language-switcher__button">EN</button>
+  <body class="bg-white antialiased">
+    <div id="flash-group">
+      <div
+        id="client-error"
+        phx-click='[["push",{"event":"lv:clear-flash","value":{"key":"error"}}],["hide",{"time":200,"to":"#client-error","transition":[["transition-all","transform","ease-in","duration-200"],["opacity-100","translate-y-0","sm:scale-100"],["opacity-0","translate-y-4","sm:translate-y-0","sm:scale-95"]]}]]'
+        role="alert"
+        class="fixed top-2 right-2 mr-2 w-80 sm:w-96 z-50 rounded-lg p-3 ring-1 bg-rose-50 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
+        hidden=""
+        phx-connected='[["hide",{"time":200,"to":"#client-error","transition":[["transition-all","transform","ease-in","duration-200"],["opacity-100","translate-y-0","sm:scale-100"],["opacity-0","translate-y-4","sm:translate-y-0","sm:scale-95"]]}]]'
+        phx-disconnected='[["show",{"to":".phx-client-error #client-error","transition":[["transition-all","transform","ease-out","duration-300"],["opacity-0","translate-y-4","sm:translate-y-0","sm:scale-95"],["opacity-100","translate-y-0","sm:scale-100"]]}]]'
+      >
+        <p class="flex items-center gap-1.5 text-sm font-semibold leading-6">
+          <span class="hero-exclamation-circle-mini h-4 w-4"></span>
+          We can't find the internet
+        </p>
+        <p class="mt-2 text-sm leading-5">
+          Attempting to reconnect
+          <span class="hero-arrow-path ml-1 h-3 w-3 animate-spin"></span>
+        </p>
+        <button
+          type="button"
+          class="group absolute top-1 right-1 p-2"
+          aria-label="close"
+        >
+          <span
+            class="hero-x-mark-solid h-5 w-5 opacity-40 group-hover:opacity-70"
+          ></span>
+        </button>
+      </div>
     </div>
-    <header class="page-header">
-      <h1 class="page-header__title">WIKIPEDIA GOLF</h1>
-      <p class="page-header__tagline">
-        Find the shortest way to go from a wiki article to another wiki article!
-      </p>
-    </header>
-    <aside>
-      <p><a href="/">Sign up / sign in</a></p>
-      <p><a href="/">Singleplayer</a></p>
-      <p><a href="/">Create Room</a></p>
-      <p><a href="/">Join Room</a></p>
-    </aside>
-    <main></main>
+    <div
+      class="flex flex-col gap-12 justify-center items-center h-screen bg-base-200 p-3"
+    >
+      <header>
+        <h1 class="text-6xl mt-12 mb-4 text-center font-bold uppercase">
+          Wikipedia Golf
+        </h1>
+        <p class="text-lg text-center">
+          Find the shortest way to go from a wiki article to another wiki
+          article!
+        </p>
+      </header>
+
+      <main
+        id="main"
+        class="mx-auto p-6 max-w-6xl w-full lg:h-[512px] bg-base-100 grid lg:grid-cols-4 gap-6 rounded-box overflow-y-scroll transition-[all]"
+      >
+        <nav
+          class="bg-base-100 flex flex-col gap-6 max-h-[calc(512px-3rem)] lg:sticky lg:top-0"
+        >
+          <div class="h-full flex flex-col gap-2">
+            <form action="/rooms/create" method="post" class="flex">
+              <input
+                type="hidden"
+                name="_csrf_token"
+                value="PwgDeHBULAdbCAlSOgI4RyMMVnYpIlE2ReSK8fGJ1NY6HkoqOH92ch4O"
+              />
+              <input
+                type="hidden"
+                name="displayName"
+                value="__SINGLEPLAYER__"
+              />
+
+              <button
+                type="submit"
+                class="btn btn-lg flex-col items-start justify-center w-full"
+              >
+                <span>Play</span>
+                <span class="font-normal text-xs">Single player</span>
+              </button>
+            </form>
+            <a
+              href="/rooms/create"
+              class="btn btn-lg flex-col items-start justify-center"
+            >
+              <span>Create Room</span>
+              <span class="font-normal text-xs">Play with your friends</span>
+            </a>
+            <a
+              href="/rooms/join"
+              class="btn btn-lg flex-col items-start justify-center"
+            >
+              <span>Join Room</span>
+              <span class="font-normal text-xs">Join an existing Room</span>
+            </a>
+
+            <p class="text-neutral-content text-xs mt-6 text-center lg:mt-auto">
+              Created by
+              <a
+                href="mailto:muhrizqiardi@gmail.com"
+                class="link link-info link-hover"
+                >Muhammad Rizqi Ardiansyah</a
+              >. Articles taken from Wikipedia English.
+            </p>
+          </div>
+        </nav>
+
+        <section class="lg:col-span-3">
+          <div role="tablist" class="tabs tabs-lg tabs-lifted">
+            <input
+              type="radio"
+              name="my_tabs_2"
+              role="tab"
+              class="tab"
+              aria-label="Tutorial"
+              checked=""
+            />
+            <div
+              role="tabpanel"
+              class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+            >
+              (coming soon!)
+            </div>
+
+            <input
+              type="radio"
+              name="my_tabs_2"
+              role="tab"
+              class="tab"
+              aria-label="Leaderboard"
+            />
+            <div
+              role="tabpanel"
+              class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+            >
+              (coming soon!)
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   </body>
 </html>
