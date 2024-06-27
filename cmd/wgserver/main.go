@@ -9,7 +9,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/server/internal/games/shared/config"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/games/shared/config"
 )
 
 func run(

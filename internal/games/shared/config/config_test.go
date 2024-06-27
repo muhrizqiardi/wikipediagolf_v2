@@ -3,7 +3,7 @@ package config
 import (
 	"testing"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/server/testutil"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
 )
 
 func TestGetConfig(t *testing.T) {

@@ -20,8 +20,8 @@
           name = "wgserver";
           version = "2.0.0";
           subPackages = [ "cmd/wgserver" ];
-          src = ./server;
-          vendorHash = null;
+          src = ./.;
+          vendorHash = "sha256-bMMEkHk5zS0OgPmMFHG88HhmXg5Wffpjx3wYuGLuXSE=";
         };
         packages.wgserver-docker = pkgs.dockerTools.buildImage {
           name = "muhrizqiardi/wgserver";
