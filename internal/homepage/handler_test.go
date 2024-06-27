@@ -15,10 +15,14 @@ func TestEndpoint(t *testing.T) {
 			res      = httptest.NewRecorder()
 			tmpl     = MustNewTemplate(NewTemplate())
 			serveMux = http.NewServeMux()
+			deps     = EndpointDeps{
+				Template: tmpl,
+			}
 		)
 
-		Endpoint(tmpl)(serveMux)
+		AddEndpoint(serveMux, deps)
 		serveMux.ServeHTTP(res, req)
+
 		testutil.AssertInequal(t, 404, res.Result().StatusCode)
 	})
 }

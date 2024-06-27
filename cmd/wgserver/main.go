@@ -9,6 +9,8 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/asset"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/homepage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/shared/config"
 )
 
@@ -25,9 +27,15 @@ func run(
 		Level:     slog.LevelDebug,
 	})))
 	cfg := config.GetConfig(args, getenv)
-	handler := http.NewServeMux()
 
-	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), handler)
+	serveMux := http.NewServeMux()
+	tmpl := homepage.MustNewTemplate(homepage.NewTemplate())
+	homepageEndpointDeps := homepage.EndpointDeps{
+		Template: tmpl,
+	}
+	homepage.AddEndpoint(serveMux, homepageEndpointDeps)
+
+	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), serveMux)
 }
 
 func main() {
