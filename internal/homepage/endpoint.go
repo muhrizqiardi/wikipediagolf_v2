@@ -10,5 +10,5 @@ type EndpointDeps struct {
 }
 
 func AddEndpoint(serveMux *http.ServeMux, deps EndpointDeps) {
-	serveMux.Handle("/{$}", Handler(deps.Template))
+	serveMux.Handle("GET /{$}", Handler(deps.Template))
 }
