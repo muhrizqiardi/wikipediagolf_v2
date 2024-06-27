@@ -9,6 +9,8 @@
     go.url = "github:NixOS/nixpkgs/3281bec7174f679eabf584591e75979a258d8c40";
     gopls.url = "github:NixOS/nixpkgs/3281bec7174f679eabf584591e75979a258d8c40";
     typescript-language-server.url = "github:NixOS/nixpkgs/9693852a2070b398ee123a329e68f0dab5526681";
+    esbuild.url = "github:NixOS/nixpkgs/3281bec7174f679eabf584591e75979a258d8c40";
+    tailwindcss.url = "github:NixOS/nixpkgs/3281bec7174f679eabf584591e75979a258d8c40";
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -20,8 +22,24 @@
           name = "wgserver";
           version = "2.0.0";
           subPackages = [ "cmd/wgserver" ];
-          src = ./server;
-          vendorHash = null;
+          src = ./.;
+          vendorHash = "sha256-1wycFQdf6sudxnH10xNz1bppRDCQjCz33n+ugP74SdQ=";
+          preBuild = ''
+            cp -r ${self'.packages.wgserver-npm}/dist ./internal/asset/dist 
+          '';
+        };
+        packages.wgserver-npm = pkgs.buildNpmPackage {
+          pname = "tagbox";
+          version = "0.2.0";
+          src = ./.;
+          npmDepsHash = "sha256-zFoLuyaqZr5rcVpp5Pzn61PotTncpG9+L9SyhhF92KI=";
+          nativeBuildInputs = [
+            inputs'.tailwindcss.legacyPackages.tailwindcss
+          ];
+          postBuild = ''
+            mkdir -p $out
+            cp -r ./internal/asset/dist $out/dist
+          '';
         };
         packages.wgserver-docker = pkgs.dockerTools.buildImage {
           name = "muhrizqiardi/wgserver";
@@ -53,6 +71,9 @@
             inputs'.go.legacyPackages.go
             inputs'.gopls.legacyPackages.gopls
             inputs'.typescript-language-server.legacyPackages.nodePackages.typescript-language-server
+            inputs'.esbuild.legacyPackages.esbuild
+            inputs'.tailwindcss.legacyPackages.tailwindcss
+            inputs'.tailwindcss.legacyPackages.tailwindcss-language-server
           ];
         };
       };

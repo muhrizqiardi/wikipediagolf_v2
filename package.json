@@ -1,0 +1,16 @@
+{
+  "name": "wikipediagolf_v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "build": "tailwindcss -i ./internal/asset/src/styles.css -o ./internal/asset/dist/styles.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "daisyui": "^4.12.10"
+  }
+}
