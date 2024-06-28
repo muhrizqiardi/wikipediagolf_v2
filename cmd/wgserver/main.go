@@ -13,6 +13,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/asset"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/config"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/homepage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signinpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signuppage"
 )
 
@@ -49,6 +50,11 @@ func run(
 		Template: tmpl,
 	}
 	signuppage.AddEndpoint(serveMux, signuppageEndpointDeps)
+	signinpage.AddTemplate(tmpl)
+	signinpageEndpointDeps := signinpage.EndpointDeps{
+		Template: tmpl,
+	}
+	signinpage.AddEndpoint(serveMux, signinpageEndpointDeps)
 
 	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), serveMux)
 }
