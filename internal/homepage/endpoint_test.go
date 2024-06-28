@@ -19,9 +19,7 @@ func TestEndpoint(t *testing.T) {
 
 		tmpl := template.New("")
 		tmpl, err := AddTemplate(tmpl)
-		if err != nil {
-			t.Error("exp nil; got err:", err)
-		}
+		testutil.AssertNoError(t, err)
 		deps := EndpointDeps{
 			Template: tmpl,
 		}
