@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
 )
 
 func TestHandler(t *testing.T) {
@@ -15,9 +17,7 @@ func TestHandler(t *testing.T) {
 		)
 		tmpl := template.New("")
 		tmpl, err := AddTemplate(tmpl)
-		if err != nil {
-			t.Error("exp nil; got err:", err)
-		}
+		testutil.AssertNoError(t, err)
 
 		Handler(tmpl).ServeHTTP(res, req)
 
