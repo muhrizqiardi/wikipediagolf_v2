@@ -21,7 +21,6 @@
         packages.wgserver = pkgs.buildGoModule {
           name = "wgserver";
           version = "2.0.0";
-          subPackages = [ "cmd/wgserver" ];
           src = ./.;
           vendorHash = "sha256-1wycFQdf6sudxnH10xNz1bppRDCQjCz33n+ugP74SdQ=";
           preBuild = ''
