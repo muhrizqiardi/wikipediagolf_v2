@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"html/template"
 	"io"
 	"log/slog"
 	"net/http"
@@ -30,8 +31,12 @@ func run(
 	cfg := config.GetConfig(args, getenv)
 
 	serveMux := http.NewServeMux()
-	tmpl := homepage.MustNewTemplate(homepage.NewTemplate())
+	tmpl := template.New("")
 	tmpl, err := signuppage.AddTemplate(tmpl)
+	if err != nil {
+		return err
+	}
+	tmpl, err = homepage.AddTemplate(tmpl)
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package homepage
 
 import (
+	"html/template"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -13,12 +14,17 @@ func TestEndpoint(t *testing.T) {
 		var (
 			req      = httptest.NewRequest(http.MethodGet, "/", nil)
 			res      = httptest.NewRecorder()
-			tmpl     = MustNewTemplate(NewTemplate())
 			serveMux = http.NewServeMux()
-			deps     = EndpointDeps{
-				Template: tmpl,
-			}
 		)
+
+		tmpl := template.New("")
+		tmpl, err := AddTemplate(tmpl)
+		if err != nil {
+			t.Error("exp nil; got err:", err)
+		}
+		deps := EndpointDeps{
+			Template: tmpl,
+		}
 
 		AddEndpoint(serveMux, deps)
 		serveMux.ServeHTTP(res, req)
