@@ -1,17 +1,25 @@
 package homepage
 
 import (
+	"bytes"
+	"html/template"
 	"testing"
 
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
 )
 
-func TestNewTemplate(t *testing.T) {
-	got, err := NewTemplate()
-	testutil.AssertNoError(t, err)
-	testutil.AssertNotNil(t, got)
-}
-func TestMustNewTemplate(t *testing.T) {
-	got := MustNewTemplate(NewTemplate())
-	testutil.AssertNotNil(t, got)
+func TestAddTemplate(t *testing.T) {
+	t.Run("should add template to an existing template instance", func(t *testing.T) {
+		templateName := "index.html"
+		tmpl := template.New("")
+
+		tmpl, err := AddTemplate(tmpl)
+		testutil.AssertNoError(t, err)
+		testutil.AssertNotNil(t, tmpl)
+
+		var buf bytes.Buffer
+		err = tmpl.ExecuteTemplate(&buf, templateName, nil)
+		testutil.AssertNoError(t, err)
+		testutil.AssertInequal(t, 0, buf.Len())
+	})
 }

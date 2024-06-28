@@ -1,6 +1,7 @@
 package homepage
 
 import (
+	"html/template"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -12,7 +13,8 @@ func TestHandler(t *testing.T) {
 			req = httptest.NewRequest(http.MethodGet, "/", nil)
 			res = httptest.NewRecorder()
 		)
-		tmpl, err := NewTemplate()
+		tmpl := template.New("")
+		tmpl, err := AddTemplate(tmpl)
 		if err != nil {
 			t.Error("exp nil; got err:", err)
 		}
