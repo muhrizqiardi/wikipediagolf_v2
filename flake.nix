@@ -32,7 +32,7 @@
           pname = "tagbox";
           version = "0.2.0";
           src = ./.;
-          npmDepsHash = "sha256-zFoLuyaqZr5rcVpp5Pzn61PotTncpG9+L9SyhhF92KI=";
+          npmDepsHash = "sha256-m1E6aLBQe6YlwtYXY34TyQUIjnICqXAt1Im1BhmWx9c=";
           nativeBuildInputs = [
             inputs'.tailwindcss.legacyPackages.tailwindcss
           ];
