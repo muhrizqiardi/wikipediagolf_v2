@@ -46,4 +46,4 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Push Docker Image
-        run: docker push muhrizqiardi/wgserver:0.2.0
+        run: docker push muhrizqiardi/wgserver:2.0.0
