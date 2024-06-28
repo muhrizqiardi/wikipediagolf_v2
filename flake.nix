@@ -28,7 +28,7 @@
           '';
         };
         packages.wgserver-npm = pkgs.buildNpmPackage {
-          pname = "tagbox";
+          pname = "wgserver-npm";
           version = "0.2.0";
           src = ./.;
           npmDepsHash = "sha256-m1E6aLBQe6YlwtYXY34TyQUIjnICqXAt1Im1BhmWx9c=";
