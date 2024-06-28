@@ -1,3 +1,5 @@
+const { addIconSelectors } = require("@iconify/tailwind");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./internal/**/*.{html,js}"],
@@ -7,5 +9,5 @@ module.exports = {
   daisyui: {
     themes: ["luxury"],
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), addIconSelectors(["mdi"])],
 };
