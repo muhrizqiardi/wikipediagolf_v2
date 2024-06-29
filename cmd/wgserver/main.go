@@ -16,6 +16,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/gamepage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/homepage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/joinroompage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/pregamesplashscreen"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/resultpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signinpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signuppage"
@@ -91,6 +92,11 @@ func run(
 		Template: tmpl,
 	}
 	resultpage.AddEndpoint(serveMux, resultpageEndpointDeps)
+	pregamesplashscreen.AddTemplate(tmpl)
+	pregamesplashscreenEndpointDeps := pregamesplashscreen.EndpointDeps{
+		Template: tmpl,
+	}
+	pregamesplashscreen.AddEndpoint(serveMux, pregamesplashscreenEndpointDeps)
 
 	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), serveMux)
 }
