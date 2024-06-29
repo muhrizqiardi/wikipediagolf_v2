@@ -17,6 +17,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/joinroompage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signinpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signuppage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/waitingroompage"
 )
 
 func run(
@@ -67,6 +68,11 @@ func run(
 		Template: tmpl,
 	}
 	joinroompage.AddEndpoint(serveMux, joinroompageEndpointDeps)
+	waitingroompage.AddTemplate(tmpl)
+	waitingroompageEndpointDeps := waitingroompage.EndpointDeps{
+		Template: tmpl,
+	}
+	waitingroompage.AddEndpoint(serveMux, waitingroompageEndpointDeps)
 
 	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), serveMux)
 }
