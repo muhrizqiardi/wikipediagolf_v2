@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" class="bg-white [scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/dist/styles.css" />
+    <title>Wikipediagolf</title>
+  </head>
+  <body class="bg-white antialiased">
+    <div>
+      <div
+        class="h-screen grid lg:grid-cols-12 overflow-y-hidden lg:overflow-y-auto"
+      >
+        <aside
+          class="lg:col-span-3 bg-base-100 p-3 flex flex-col gap-3 min-h-[512px] lg:min-h-[100vh] overflow-y-auto"
+        >
+          <header class="mx-3 h-6 flex items-center">
+            <h1 class="m-0 text-lg font-bold uppercase">Wikipedia Golf</h1>
+          </header>
+          <div class="grid gap-3">
+            <div
+              class="flex-1 card card-compact bg-primary text-primary-content"
+            >
+              <div class="card-body gap-5">
+                <div class="flex flex-col">
+                  <p class="text-sm mb-2">From</p>
+                  <p class="text-2xl font-serif">Drew Darby</p>
+                  <p>Texas state legislator</p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="flex-1 card card-compact bg-primary text-primary-content"
+            >
+              <div class="card-body gap-5">
+                <div class="flex flex-col text-right">
+                  <p class="text-sm mb-2">to</p>
+                  <p class="text-2xl font-serif">Malkhaz Akishbaia</p>
+                  <p>Georgian Abkhaz politician</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-error w-full">
+            <span class="iconify mdi--flag h-5 w-5"></span>
+            Give up
+          </button>
+
+          <div class="card rounded-xl bg-base-200 z-0">
+            <div class="card-body p-2 z-0">
+              <ul id="player_list" class="flex flex-col">
+                <li class="text-base-content font-semibold px-4 py-2 mb-1">
+                  <span>Player List</span>
+                </li>
+                <li class="text-base-content px-4 py-2">
+                  <span>asdf (You)</span>
+                </li>
+                <li class="text-base-content px-4 py-2">
+                  <span>Challenger123</span>
+                  <span class="iconify mdi--flag text-lg text-white"></span>
+                </li>
+                <li class="text-base-content px-4 py-2">
+                  <span>@Kepler22b</span>
+                  <span class="iconify mdi--check text-lg text-success"></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <ul class="menu rounded-xl bg-base-200">
+            <li class="menu-title text-base-content text-base mb-1">
+              Click history
+            </li>
+            <li>
+              <a>Drew Darby</a>
+            </li>
+          </ul>
+        </aside>
+        <main class="lg:col-span-9 bg-base-100">
+          <div class="h-12 bg-base-100 px-3 flex items-center gap-2">
+            <button class="btn btn-sm btn-circle md:hidden" title="Toggle menu">
+              <span class="iconify mdi--chevron-up text-xl"></span>
+            </button>
+            <button
+              class="btn btn-sm btn-circle"
+              title="Go back to previous click"
+            >
+              <span class="iconify mdi--arrow-back text-xl"></span>
+            </button>
+            <div class="mx-auto inline-flex items-center text-sm">
+              <p class="inline-flex items-center gap-1.5">
+                <span class="hero-cursor-arrow-rays w-5 h-5"></span>
+                <span> 0 click(s) </span>
+              </p>
+            </div>
+            <button class="btn btn-success btn-sm">
+              <span class="iconify mdi--check text-lg"></span>Finish
+            </button>
+          </div>
+          <div
+            class="border-t border-t-base-300 border-l border-l-base-300 h-[calc(100vh-3rem)] rounded-tl-3xl bg-base-200 flex flex-col items-stretch justify-stretch overflow-hidden"
+          >
+            <div class="w-full h-0 overflow z-[100]">
+              <div class="h-[calc(100vh-3rem)] z-[100]" type="button"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
