@@ -4,7 +4,7 @@
   "description": "",
   "main": "tailwind.config.js",
   "scripts": {
-    "build": "tailwindcss -i ./internal/asset/src/styles.css -o ./internal/asset/dist/styles.css",
+    "build": "tailwindcss -i ./internal/view/asset/src/styles.css -o ./internal/view/asset/dist/styles.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
