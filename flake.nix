@@ -24,7 +24,7 @@
           src = ./.;
           vendorHash = "sha256-1wycFQdf6sudxnH10xNz1bppRDCQjCz33n+ugP74SdQ=";
           preBuild = ''
-            cp -r ${self'.packages.wgserver-npm}/dist ./internal/asset/dist 
+            cp -r ${self'.packages.wgserver-npm}/dist ./internal/view/asset/dist 
           '';
         };
         packages.wgserver-npm = pkgs.buildNpmPackage {
@@ -37,7 +37,7 @@
           ];
           postBuild = ''
             mkdir -p $out
-            cp -r ./internal/asset/dist $out/dist
+            cp -r ./internal/view/asset/dist $out/dist
           '';
         };
         packages.wgserver-docker = pkgs.dockerTools.buildImage {
