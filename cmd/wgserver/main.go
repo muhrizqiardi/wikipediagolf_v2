@@ -16,6 +16,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/gamepage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/homepage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/joinroompage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/resultpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signinpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signuppage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/surrenderpage"
@@ -85,6 +86,11 @@ func run(
 		Template: tmpl,
 	}
 	surrenderpage.AddEndpoint(serveMux, surrenderpageEndpointDeps)
+	resultpage.AddTemplate(tmpl)
+	resultpageEndpointDeps := resultpage.EndpointDeps{
+		Template: tmpl,
+	}
+	resultpage.AddEndpoint(serveMux, resultpageEndpointDeps)
 
 	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), serveMux)
 }

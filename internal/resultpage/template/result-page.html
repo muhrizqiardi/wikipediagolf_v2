@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/dist/styles.css" />
+    <title>Wikipediagolf</title>
+  </head>
+  <body class="bg-base-200 antialiased">
+    <div
+      class="w-full h-screen z-[100] bg-base-100 flex flex-col items-center justify-start"
+    >
+      <article
+        class="mt-16 max-w-6xl w-full flex flex-col justify-center items-center gap-4 p-6"
+      >
+        <header>
+          <h1 class="text-3xl mb-12 text-center font-bold">Result</h1>
+        </header>
+        <div class="grid lg:grid-cols-2 gap-2 max-w-96 w-full mb-4">
+          <div class="flex-1 card card-compact bg-primary text-primary-content">
+            <div class="card-body gap-5">
+              <div class="text-sm flex flex-col">
+                <p class="mb-2">From</p>
+                <p class="text-2xl font-serif">Drew Darby</p>
+                <p>Texas state legislator</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 card card-compact bg-primary text-primary-content">
+            <div class="card-body gap-5">
+              <div class="text-sm flex flex-col">
+                <p class="mb-2">to</p>
+                <p class="text-2xl font-serif">Richard Sly</p>
+                <p>Australian lawyer and judge (1849–1929)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="w-full max-w-3xl min-h-48 rounded-xl shadow-md bg-base-200 grid lg:grid-cols-3 mb-8 p-2 gap-2 text-sm"
+        >
+          <div class="border-r border-r-base-300">
+            <ul class="menu b8 font-semibold-base-200 rounded-box">
+              <li><button class="active">Challenger 1 (You)</button></li>
+              <li><a>@kepler22b</a></li>
+              <li><a>Apollo 321</a></li>
+            </ul>
+          </div>
+          <div class="lg:col-span-2 p-2">
+            <p class="text-lg mb-8 font-semibold">
+              Challenger 1 (You)'s clicks
+            </p>
+            <ul
+              class="timeline timeline-snap-icon timeline-compact timeline-vertical text-xs"
+            >
+              <li>
+                <div class="timeline-middle">
+                  <span class="iconify mdi--circle"></span>
+                </div>
+                <div
+                  class="timeline-start timeline-box border-base-300 bg-primary text-primary-content mb-3"
+                >
+                  <div class="font-serif text-lg">Mac (computer)</div>
+                  <p class="leading-tight">
+                    Family of personal computers made by Apple
+                  </p>
+                </div>
+                <hr />
+              </li>
+              <li>
+                <hr />
+                <div class="timeline-middle">
+                  <span class="iconify mdi--circle"></span>
+                </div>
+                <div
+                  class="timeline-end timeline-box border-base-300 bg-primary text-primary-content mb-3"
+                >
+                  <div class="font-serif text-lg">iMac</div>
+                  Line of all-in-one desktop computers by Apple Inc.
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid gap-2 max-w-96 w-full">
+          <button class="btn btn-block">Next game</button>
+          <button class="btn btn-block btn-error">Quit game</button>
+        </div>
+      </article>
+    </div>
+  </body>
+</html>
