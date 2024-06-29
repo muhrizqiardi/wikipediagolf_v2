@@ -10,18 +10,18 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/asset"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/config"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/createroompage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/gamepage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/homepage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/joinroompage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/pregamesplashscreen"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/resultpage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signinpage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/signuppage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/surrenderpage"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/waitingroompage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/config"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/asset"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/game"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/gameresult"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/home"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/pregame"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomcreate"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomjoin"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomwaiting"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/signin"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/signup"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/surrender"
 )
 
 func run(
@@ -40,63 +40,63 @@ func run(
 
 	serveMux := http.NewServeMux()
 	tmpl := template.New("")
-	tmpl, err := signuppage.AddTemplate(tmpl)
+	tmpl, err := signup.AddTemplate(tmpl)
 	if err != nil {
 		return err
 	}
-	tmpl, err = homepage.AddTemplate(tmpl)
+	tmpl, err = home.AddTemplate(tmpl)
 	if err != nil {
 		return err
 	}
 	asset.AddEndpoint(serveMux)
-	homepageEndpointDeps := homepage.EndpointDeps{
+	homepageEndpointDeps := home.EndpointDeps{
 		Template: tmpl,
 	}
-	homepage.AddEndpoint(serveMux, homepageEndpointDeps)
-	signuppageEndpointDeps := signuppage.EndpointDeps{
+	home.AddEndpoint(serveMux, homepageEndpointDeps)
+	signuppageEndpointDeps := signup.EndpointDeps{
 		Template: tmpl,
 	}
-	signuppage.AddEndpoint(serveMux, signuppageEndpointDeps)
-	signinpage.AddTemplate(tmpl)
-	signinpageEndpointDeps := signinpage.EndpointDeps{
+	signup.AddEndpoint(serveMux, signuppageEndpointDeps)
+	signin.AddTemplate(tmpl)
+	signinEndpointDeps := signin.EndpointDeps{
 		Template: tmpl,
 	}
-	signinpage.AddEndpoint(serveMux, signinpageEndpointDeps)
-	createroompage.AddTemplate(tmpl)
-	createroompageEndpointDeps := createroompage.EndpointDeps{
+	signin.AddEndpoint(serveMux, signinEndpointDeps)
+	createroom.AddTemplate(tmpl)
+	createroompageEndpointDeps := createroom.EndpointDeps{
 		Template: tmpl,
 	}
-	createroompage.AddEndpoint(serveMux, createroompageEndpointDeps)
-	joinroompage.AddTemplate(tmpl)
-	joinroompageEndpointDeps := joinroompage.EndpointDeps{
+	createroom.AddEndpoint(serveMux, createroompageEndpointDeps)
+	roomjoin.AddTemplate(tmpl)
+	joinroompageEndpointDeps := roomjoin.EndpointDeps{
 		Template: tmpl,
 	}
-	joinroompage.AddEndpoint(serveMux, joinroompageEndpointDeps)
-	waitingroompage.AddTemplate(tmpl)
-	waitingroompageEndpointDeps := waitingroompage.EndpointDeps{
+	roomjoin.AddEndpoint(serveMux, joinroompageEndpointDeps)
+	roomwaiting.AddTemplate(tmpl)
+	waitingroompageEndpointDeps := roomwaiting.EndpointDeps{
 		Template: tmpl,
 	}
-	waitingroompage.AddEndpoint(serveMux, waitingroompageEndpointDeps)
-	gamepage.AddTemplate(tmpl)
-	gamepageEndpointDeps := gamepage.EndpointDeps{
+	roomwaiting.AddEndpoint(serveMux, waitingroompageEndpointDeps)
+	game.AddTemplate(tmpl)
+	gamepageEndpointDeps := game.EndpointDeps{
 		Template: tmpl,
 	}
-	gamepage.AddEndpoint(serveMux, gamepageEndpointDeps)
-	surrenderpage.AddTemplate(tmpl)
-	surrenderpageEndpointDeps := surrenderpage.EndpointDeps{
+	game.AddEndpoint(serveMux, gamepageEndpointDeps)
+	surrender.AddTemplate(tmpl)
+	surrenderpageEndpointDeps := surrender.EndpointDeps{
 		Template: tmpl,
 	}
-	surrenderpage.AddEndpoint(serveMux, surrenderpageEndpointDeps)
-	resultpage.AddTemplate(tmpl)
-	resultpageEndpointDeps := resultpage.EndpointDeps{
+	surrender.AddEndpoint(serveMux, surrenderpageEndpointDeps)
+	gameresult.AddTemplate(tmpl)
+	resultpageEndpointDeps := gameresult.EndpointDeps{
 		Template: tmpl,
 	}
-	resultpage.AddEndpoint(serveMux, resultpageEndpointDeps)
-	pregamesplashscreen.AddTemplate(tmpl)
-	pregamesplashscreenEndpointDeps := pregamesplashscreen.EndpointDeps{
+	gameresult.AddEndpoint(serveMux, resultpageEndpointDeps)
+	pregame.AddTemplate(tmpl)
+	pregamesplashscreenEndpointDeps := pregame.EndpointDeps{
 		Template: tmpl,
 	}
-	pregamesplashscreen.AddEndpoint(serveMux, pregamesplashscreenEndpointDeps)
+	pregame.AddEndpoint(serveMux, pregamesplashscreenEndpointDeps)
 
 	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), serveMux)
 }
