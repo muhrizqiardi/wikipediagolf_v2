@@ -8,7 +8,7 @@
   </head>
   <body class="bg-white antialiased">
     <div
-      class="flex flex-col gap-8 justify-center items-center lg:h-screen bg-base-200 p-3"
+      class="flex flex-col gap-8 justify-center items-center lg:min-h-screen bg-base-200 p-3"
     >
       <header>
         <h1 class="text-6xl mt-6 mb-4 text-center font-bold uppercase">
@@ -22,12 +22,43 @@
 
       <main
         id="main"
-        class="mx-auto p-6 max-w-6xl w-full lg:h-[512px] bg-base-100 grid lg:grid-cols-4 gap-6 rounded-box overflow-y-scroll transition-[all]"
+        class="mx-auto p-6 max-w-6xl w-full flex-grow bg-base-100 grid lg:grid-cols-4 gap-6 rounded-box overflow-y-scroll transition-[all]"
       >
-        <nav
-          class="bg-base-100 flex flex-col gap-6 max-h-[calc(512px-3rem)] lg:sticky lg:top-0"
-        >
+        <nav class="bg-base-100 flex flex-col gap-6 lg:sticky lg:top-0">
           <div class="h-full flex flex-col gap-2">
+            <div class="flex justify-end">
+              <button class="btn" onclick="changeLanguageModal.showModal()">
+                EN
+                <span class="iconify mdi--globe text-lg"></span>
+              </button>
+              <dialog id="changeLanguageModal" class="modal">
+                <div class="modal-box w-84 p-0">
+                  <header class="sticky top-0 z-[100] bg-base-100 px-6 py-4">
+                    <h3 class="text-lg font-bold">Select Language</h3>
+                  </header>
+                  <div class="px-6 py-4">
+                    <ul class="menu rounded-box p-0 mb-6">
+                      <li>
+                        <a class="active">
+                          <span class="iconify mdi--check text-lg"></span>
+                          English
+                        </a>
+                      </li>
+                    </ul>
+                    <div class="alert">
+                      <p>More languages will be supported soon. Stay tuned!</p>
+                    </div>
+                  </div>
+                  <div
+                    class="modal-action sticky bottom-0 z-[100] bg-base-100 px-6 py-4 mt-0"
+                  >
+                    <form method="dialog">
+                      <button class="btn btn-ghost btn-sm">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            </div>
             <form class="w-full">
               <button
                 class="btn btn-lg flex-col items-start justify-center w-full"
