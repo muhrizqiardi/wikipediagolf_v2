@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "firebase-tools": {
+      "locked": {
+        "lastModified": 1719082008,
+        "narHash": "sha256-jHJSUH619zBQ6WdC21fFAlDxHErKVDJ5fpN0Hgx4sjs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9693852a2070b398ee123a329e68f0dab5526681",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9693852a2070b398ee123a329e68f0dab5526681",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -113,6 +129,7 @@
     "root": {
       "inputs": {
         "esbuild": "esbuild",
+        "firebase-tools": "firebase-tools",
         "flake-parts": "flake-parts",
         "gnumake42": "gnumake42",
         "go": "go",

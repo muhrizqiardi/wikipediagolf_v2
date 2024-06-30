@@ -11,6 +11,7 @@
     typescript-language-server.url = "github:NixOS/nixpkgs/9693852a2070b398ee123a329e68f0dab5526681";
     esbuild.url = "github:NixOS/nixpkgs/3281bec7174f679eabf584591e75979a258d8c40";
     tailwindcss.url = "github:NixOS/nixpkgs/3281bec7174f679eabf584591e75979a258d8c40";
+    firebase-tools.url = "github:NixOS/nixpkgs/9693852a2070b398ee123a329e68f0dab5526681";
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -72,6 +73,7 @@
             inputs'.typescript-language-server.legacyPackages.nodePackages.typescript-language-server
             inputs'.esbuild.legacyPackages.esbuild
             inputs'.tailwindcss.legacyPackages.tailwindcss
+            inputs'.firebase-tools.legacyPackages.firebase-tools
             inputs'.tailwindcss.legacyPackages.tailwindcss-language-server
           ];
         };
