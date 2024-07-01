@@ -2,7 +2,6 @@ package signup
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -27,7 +26,6 @@ type CreateUserRequest struct {
 func (c *CreateUserRequest) Valid(ctx context.Context) error {
 	if err := Validate.StructCtx(ctx, c); err != nil {
 		if err, ok := err.(validator.ValidationErrors); ok {
-			fmt.Println("ok", ok)
 			return &ValidationErrors{err}
 		}
 	}
