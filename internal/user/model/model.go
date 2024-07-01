@@ -14,8 +14,8 @@ type User struct {
 }
 
 type Username struct {
-	UserID    string
-	Username  string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	UID       string    `db:"uid"`
+	Username  string    `db:"username"`
+	CreatedAt time.Time `db:"created_at"`
+	UpdatedAt time.Time `db:"updated_at"`
 }
