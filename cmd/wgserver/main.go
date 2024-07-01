@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"html/template"
 	"io"
@@ -10,7 +11,12 @@ import (
 	"os"
 	"strconv"
 
+	_ "github.com/lib/pq"
+	"google.golang.org/api/option"
+
+	firebase "firebase.google.com/go"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/config"
+	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/user/feature/signup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/asset"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/game"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/gameresult"
@@ -97,8 +103,30 @@ func run(
 		Template: tmpl,
 	}
 	pregame.AddEndpoint(serveMux, pregamesplashscreenEndpointDeps)
+	firebaseApp, err := firebase.NewApp(context.Background(), nil, option.WithCredentialsFile(cfg.FirebaseConfig))
+	if err != nil {
+		return err
+	}
+	db, err := sql.Open("postgres", cfg.DatabaseURL)
+	if err != nil {
+		return err
+	}
+	signupUserRepository := featureSignup.NewUserRepository(context.Background(), firebaseApp)
+	signupUsernameRepository := featureSignup.NewUsernameRepository(context.Background(), db)
+	signupService := featureSignup.NewService(context.Background(), signupUserRepository, signupUsernameRepository)
+	tmpl, err = featureSignup.AddTemplate(tmpl)
+	if err != nil {
+		return err
+	}
+	featureSignup.AddEndpoint(serveMux, featureSignup.EndpointDeps{
+		Service:  signupService,
+		Template: tmpl,
+	})
+	featureSignup.Handler(signupService, tmpl)
 
-	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), serveMux)
+	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
+	slog.Info("starting server", "addr", addr)
+	return http.ListenAndServe(addr, serveMux)
 }
 
 func main() {
