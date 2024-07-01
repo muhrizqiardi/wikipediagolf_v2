@@ -35,6 +35,7 @@ func (r *userRepository) Create(email, password string) (*CreateUserResponse, er
 	userToCreate := (&auth.UserToCreate{}).
 		Email(email).
 		Password(password).
+		EmailVerified(false).
 		Disabled(false)
 
 	newUser, err := client.CreateUser(r.context, userToCreate)

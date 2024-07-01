@@ -41,4 +41,5 @@ type CreateUserResponse struct {
 	DisplayName   string
 	PhotoURL      string
 	Disabled      bool
+	Token         string
 }

@@ -23,7 +23,7 @@ func handleError(tmpl *template.Template, err error) http.Handler {
 			msg = "Confirm Password should be the same as Password"
 		}
 
-		if err := ExecuteTemplate(tmpl, w, TemplateData{msg}); err != nil {
+		if err := ExecuteTemplate(tmpl, w, TemplateData{"error", msg}); err != nil {
 			slog.Error("failed to execute template", "err", err)
 		}
 	})
@@ -47,6 +47,7 @@ func Handler(s Service, tmpl *template.Template) http.Handler {
 			handleError(tmpl, err).ServeHTTP(w, r)
 			return
 		}
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+
+		ExecuteTemplate(tmpl, w, TemplateData{"success", "Check your email for verification link"})
 	})
 }
