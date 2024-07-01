@@ -13,7 +13,7 @@ import (
 	_ "github.com/lib/pq"
 	"google.golang.org/api/option"
 
-	firebase "firebase.google.com/go"
+	firebase "firebase.google.com/go/v4"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/config"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/dbsetup"
 	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/user/feature/signup"

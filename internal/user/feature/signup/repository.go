@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	firebase "firebase.google.com/go"
-	"firebase.google.com/go/auth"
+	firebase "firebase.google.com/go/v4"
+	"firebase.google.com/go/v4/auth"
 	"github.com/jmoiron/sqlx"
 )
 
