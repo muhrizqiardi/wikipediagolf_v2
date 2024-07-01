@@ -62,6 +62,13 @@ type usernameRepository struct {
 	db      *sql.DB
 }
 
+func NewUsernameRepository(ctx context.Context, db *sql.DB) *usernameRepository {
+	return &usernameRepository{
+		context: ctx,
+		db:      db,
+	}
+}
+
 func (r *usernameRepository) Insert(username string) error {
 	var (
 		query = QueryInsertUsername
