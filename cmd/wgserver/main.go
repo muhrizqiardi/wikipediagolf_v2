@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"html/template"
 	"io"
@@ -16,13 +15,14 @@ import (
 
 	firebase "firebase.google.com/go"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/config"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/dbsetup"
 	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/user/feature/signup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/asset"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/game"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/gameresult"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/home"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/pregame"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomcreate"
+	createroom "github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomcreate"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomjoin"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomwaiting"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/signin"
@@ -43,10 +43,14 @@ func run(
 		Level:     slog.LevelDebug,
 	})))
 	cfg := config.GetConfig(args, getenv)
+	db, err := dbsetup.Setup(context.Background(), cfg.DatabaseURL, cfg.IsMigrate)
+	if err != nil {
+		return err
+	}
 
 	serveMux := http.NewServeMux()
 	tmpl := template.New("")
-	tmpl, err := signup.AddTemplate(tmpl)
+	tmpl, err = signup.AddTemplate(tmpl)
 	if err != nil {
 		return err
 	}
@@ -104,10 +108,6 @@ func run(
 	}
 	pregame.AddEndpoint(serveMux, pregamesplashscreenEndpointDeps)
 	firebaseApp, err := firebase.NewApp(context.Background(), nil, option.WithCredentialsFile(cfg.FirebaseConfig))
-	if err != nil {
-		return err
-	}
-	db, err := sql.Open("postgres", cfg.DatabaseURL)
 	if err != nil {
 		return err
 	}
