@@ -7,6 +7,8 @@
     <title>Wikipediagolf</title>
   </head>
   <body class="bg-white antialiased">
+    <script src="/assets/htmx.min.js"></script>
+
     <div
       class="flex flex-col p-3 gap-12 justify-center items-center bg-base-200"
     >
@@ -25,7 +27,15 @@
           </a>
           <h2 class="text-lg font-semibold text-center">Sign Up</h2>
         </header>
-        <form class="flex flex-col gap-2" action="/sign-up" method="post">
+        <form
+          class="flex flex-col gap-2"
+          action="/sign-up"
+          method="post"
+          hx-boost="true"
+          hx-target="#signupAlert"
+          hx-swap="innerHTML"
+        >
+          <div id="signupAlert" class="mt-2"></div>
           <label class="form-control w-full">
             <div class="label">
               <span class="label-text">Username</span>

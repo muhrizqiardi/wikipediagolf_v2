@@ -17,7 +17,21 @@ func TestHandler(t *testing.T) {
 			res = httptest.NewRecorder()
 		)
 
-		Handler().ServeHTTP(res, req)
+		DistHandler().ServeHTTP(res, req)
+
+		var bodyBuf bytes.Buffer
+		written, err := io.Copy(&bodyBuf, res.Result().Body)
+		testutil.AssertNoError(t, err)
+		testutil.AssertInequal(t, 0, written)
+		testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
+	})
+	t.Run("should return htmx.min.js", func(t *testing.T) {
+		var (
+			req = httptest.NewRequest(http.MethodGet, "/assets/htmx.min.js", nil)
+			res = httptest.NewRecorder()
+		)
+
+		AssetHandler().ServeHTTP(res, req)
 
 		var bodyBuf bytes.Buffer
 		written, err := io.Copy(&bodyBuf, res.Result().Body)
