@@ -14,7 +14,7 @@ type mockUsernameRepository struct {
 	findErr error
 }
 
-func (mr *mockUsernameRepository) Insert(username string) error {
+func (mr *mockUsernameRepository) Insert(uid, username string) error {
 	return mr.insertErr
 }
 

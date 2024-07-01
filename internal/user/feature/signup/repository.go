@@ -53,7 +53,7 @@ func (r *userRepository) Create(email, password string) (*CreateUserResponse, er
 }
 
 type UsernameRepository interface {
-	Insert(username string) error
+	Insert(uid, username string) error
 	Find(username string) (*FindUsernameResponse, error)
 }
 
@@ -69,10 +69,10 @@ func NewUsernameRepository(ctx context.Context, db *sql.DB) *usernameRepository 
 	}
 }
 
-func (r *usernameRepository) Insert(username string) error {
+func (r *usernameRepository) Insert(uid, username string) error {
 	var (
 		query = QueryInsertUsername
-		args  = []any{username}
+		args  = []any{uid, username}
 	)
 
 	tx, err := r.db.BeginTx(r.context, &sql.TxOptions{})

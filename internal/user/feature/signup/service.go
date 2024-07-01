@@ -47,7 +47,7 @@ func (s *service) SignUp(payload CreateUserRequest) (*CreateUserResponse, error)
 		return nil, err
 	}
 
-	if err := s.usernameRepository.Insert(payload.Username); err != nil {
+	if err := s.usernameRepository.Insert(u.UID, payload.Username); err != nil {
 		return nil, err
 	}
 
