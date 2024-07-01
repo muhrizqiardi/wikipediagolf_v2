@@ -10,6 +10,7 @@ var (
 
 	ErrCreateUser       = errors.New("failed to create user")
 	ErrDuplicateUser    = errors.New("user already exist")
+	ErrDuplicateEmail   = errors.New("provided email already exist")
 	ErrInvalidUsername  = errors.New("invalid username")
 	ErrInvalidEmail     = errors.New("invalid email")
 	ErrPasswordNotMatch = errors.New("confirm password does not match password")

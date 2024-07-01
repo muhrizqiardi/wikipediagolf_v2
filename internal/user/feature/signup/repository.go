@@ -6,6 +6,7 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
+	"firebase.google.com/go/v4/errorutils"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -38,6 +39,10 @@ func (r *userRepository) Create(email, password string) (*CreateUserResponse, er
 
 	newUser, err := client.CreateUser(r.context, userToCreate)
 	if err != nil {
+		switch {
+		case errorutils.IsAlreadyExists(err):
+			return nil, ErrDuplicateEmail
+		}
 		return nil, err
 	}
 
