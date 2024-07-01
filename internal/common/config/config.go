@@ -15,7 +15,7 @@ type Config struct {
 }
 
 func GetConfig(args []string, getenv func(string) string) Config {
-	f := flag.NewFlagSet("default", flag.PanicOnError)
+	f := flag.NewFlagSet("wgserver", flag.PanicOnError)
 	var (
 		host           = f.String("host", "0.0.0.0", "Listen on host")
 		port           = f.Int("port", 3000, "Listen on port")
