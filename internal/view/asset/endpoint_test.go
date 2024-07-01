@@ -10,13 +10,29 @@ import (
 
 func TestAddEndpoint(t *testing.T) {
 	t.Run("should not return 404", func(t *testing.T) {
-		var (
-			req = httptest.NewRequest(http.MethodGet, "/dist/styles.css", nil)
-			res = httptest.NewRecorder()
-		)
+		{
+			var (
+				req      = httptest.NewRequest(http.MethodGet, "/dist/styles.css", nil)
+				res      = httptest.NewRecorder()
+				serveMux = http.NewServeMux()
+			)
 
-		Handler().ServeHTTP(res, req)
+			AddEndpoint(serveMux)
+			serveMux.ServeHTTP(res, req)
 
-		testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
+			testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
+		}
+		{
+			var (
+				req      = httptest.NewRequest(http.MethodGet, "/assets/htmx.min.js", nil)
+				res      = httptest.NewRecorder()
+				serveMux = http.NewServeMux()
+			)
+
+			AddEndpoint(serveMux)
+			serveMux.ServeHTTP(res, req)
+
+			testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
+		}
 	})
 }

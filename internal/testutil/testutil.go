@@ -1,10 +1,42 @@
 package testutil
 
 import (
+	"errors"
+	"io"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/gorilla/schema"
 )
+
+func ToFormUrlencoded(src interface{}) (io.Reader, error) {
+	dst := url.Values{}
+	if err := schema.NewEncoder().Encode(src, dst); err != nil {
+		return nil, err
+	}
+	result := dst.Encode()
+	return strings.NewReader(result), nil
+}
+
+func MustToFormUrlencoded(src interface{}) io.Reader {
+	b, err := ToFormUrlencoded(src)
+	if err != nil {
+		return nil
+	}
+
+	return b
+}
+
+func CompareError(t *testing.T, exp, got error) bool {
+	t.Helper()
+	result := errors.Is(exp, got)
+	if !result {
+		t.Errorf("exp: %v; got: %v", exp, got)
+	}
+	return result
+}
 
 func AssertError(t *testing.T, err error) bool {
 	t.Helper()

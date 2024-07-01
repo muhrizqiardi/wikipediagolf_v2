@@ -10,13 +10,19 @@ import (
 	"os"
 	"strconv"
 
+	_ "github.com/lib/pq"
+	"google.golang.org/api/option"
+
+	firebase "firebase.google.com/go/v4"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/config"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/dbsetup"
+	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/user/feature/signup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/asset"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/game"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/gameresult"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/home"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/pregame"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomcreate"
+	createroom "github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomcreate"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomjoin"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomwaiting"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/signin"
@@ -37,10 +43,14 @@ func run(
 		Level:     slog.LevelDebug,
 	})))
 	cfg := config.GetConfig(args, getenv)
+	db, err := dbsetup.Setup(context.Background(), cfg.DatabaseURL, cfg.IsMigrate)
+	if err != nil {
+		return err
+	}
 
 	serveMux := http.NewServeMux()
 	tmpl := template.New("")
-	tmpl, err := signup.AddTemplate(tmpl)
+	tmpl, err = signup.AddTemplate(tmpl)
 	if err != nil {
 		return err
 	}
@@ -97,13 +107,31 @@ func run(
 		Template: tmpl,
 	}
 	pregame.AddEndpoint(serveMux, pregamesplashscreenEndpointDeps)
+	firebaseApp, err := firebase.NewApp(context.Background(), nil, option.WithCredentialsFile(cfg.FirebaseConfig))
+	if err != nil {
+		return err
+	}
+	signupUserRepository := featureSignup.NewUserRepository(context.Background(), firebaseApp)
+	signupUsernameRepository := featureSignup.NewUsernameRepository(context.Background(), db)
+	signupService := featureSignup.NewService(context.Background(), signupUserRepository, signupUsernameRepository)
+	tmpl, err = featureSignup.AddTemplate(tmpl)
+	if err != nil {
+		return err
+	}
+	featureSignup.AddEndpoint(serveMux, featureSignup.EndpointDeps{
+		Service:  signupService,
+		Template: tmpl,
+	})
+	featureSignup.Handler(signupService, tmpl)
 
-	return http.ListenAndServe(cfg.Host+":"+strconv.Itoa(cfg.Port), serveMux)
+	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
+	slog.Info("starting server", "addr", addr)
+	return http.ListenAndServe(addr, serveMux)
 }
 
 func main() {
 	ctx := context.Background()
-	if err := run(ctx, os.Args, os.Getenv, os.Stdin, os.Stdout, os.Stdout); err != nil {
+	if err := run(ctx, os.Args[1:], os.Getenv, os.Stdin, os.Stdout, os.Stdout); err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		os.Exit(1)
 		return
