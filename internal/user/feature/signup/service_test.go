@@ -100,7 +100,7 @@ func TestService_DuplicateUsername(t *testing.T) {
 	testutil.AssertEqualCMP(t, expVal, got)
 }
 
-func TestService_UserRepositoryReturnsError(t *testing.T) {
+func TestService_UserRepositoryFindReturnsError(t *testing.T) {
 	var (
 		userRepository = &mockUserRepository{
 			createV:   nil,
@@ -127,7 +127,7 @@ func TestService_UserRepositoryReturnsError(t *testing.T) {
 	testutil.AssertEqualCMP(t, expVal, got)
 }
 
-func TestService_UsernameRepositoryReturnsNoError(t *testing.T) {
+func TestService_UsernameRepositoryFindReturnsNoError(t *testing.T) {
 	var (
 		userRepository = &mockUserRepository{
 			createV: &CreateUserResponse{
