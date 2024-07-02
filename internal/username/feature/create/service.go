@@ -1,10 +1,6 @@
 package create
 
-import (
-	"context"
-
-	"github.com/lib/pq"
-)
+import "context"
 
 type Service interface {
 	Create(payload CreateUsernameRequest) error
@@ -30,13 +26,6 @@ func (s *service) Create(payload CreateUsernameRequest) error {
 				return ErrInvalidUsername
 			}
 		}
-	}
-
-	if err := s.repository.Insert(payload.UID, payload.Username); err != nil {
-		if err, ok := err.(*pq.Error); ok && err.Code == "23505" {
-			return ErrDuplicateUsername
-		}
-		return ErrCreateUsername
 	}
 
 	return nil

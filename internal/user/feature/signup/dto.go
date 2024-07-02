@@ -6,18 +6,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type InsertUsernameResponse struct {
-	UID      string
-	Username string
-}
-
-type FindUsernameResponse struct {
-	UID      string
-	Username string
-}
-
 type CreateUserRequest struct {
-	Username        string `schema:"username" validate:"isusername"`
 	Email           string `schema:"email" validate:"email"`
 	Password        string `schema:"password" validate:"ispassword"`
 	ConfirmPassword string `schema:"confirmPassword" validate:"isconfirm"`
