@@ -23,7 +23,7 @@ func Handler(tmpl *template.Template, service Service) http.HandlerFunc {
 			return
 		}
 
-		if _, err := service.Create(payload); err != nil {
+		if err := service.Create(payload); err != nil {
 			slog.Error("failed to create username", "err", err)
 			switch {
 			case errors.Is(err, ErrInvalidUsername):

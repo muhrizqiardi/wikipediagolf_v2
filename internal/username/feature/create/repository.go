@@ -3,13 +3,10 @@ package create
 import (
 	"context"
 	"database/sql"
-
-	"github.com/jmoiron/sqlx"
 )
 
 type Repository interface {
 	Insert(uid, username string) error
-	Find(username string) (*FindUsernameResponse, error)
 }
 
 type repository struct {
@@ -41,25 +38,4 @@ func (r *repository) Insert(uid, username string) error {
 	}
 
 	return nil
-}
-
-func (r *repository) Find(username string) (*FindUsernameResponse, error) {
-	var (
-		query = QueryFindUsername
-		args  = []any{username}
-		dest  FindUsernameResponse
-	)
-
-	dbx := sqlx.NewDb(r.db, "postgresql")
-	txx, err := dbx.BeginTxx(r.context, &sql.TxOptions{})
-	if err != nil {
-		return nil, err
-	}
-	defer txx.Commit()
-
-	if err := txx.Get(&dest, query, args...); err != nil {
-		return nil, err
-	}
-
-	return &dest, nil
 }

@@ -6,7 +6,6 @@ import (
 	"net/url"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
 )
@@ -23,15 +22,7 @@ func TestAddEndpoint(t *testing.T) {
 		serveMux = http.NewServeMux()
 	)
 	deps := EndpointDeps{
-		Service: &mockService{
-			createV: &CreateUsernameResponse{
-				UID:       "",
-				Username:  "",
-				CreatedAt: time.Time{},
-				UpdatedAt: time.Time{},
-			},
-			createErr: nil,
-		},
+		Service: &mockService{createErr: nil},
 	}
 	AddEndpoint(serveMux, deps)
 	serveMux.ServeHTTP(res, req)

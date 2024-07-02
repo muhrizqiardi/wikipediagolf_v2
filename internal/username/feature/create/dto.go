@@ -1,15 +1,25 @@
 package create
 
-import "time"
+import (
+	"context"
+	"time"
 
-type FindUsernameResponse struct {
-	UID      string
-	Username string
-}
+	"github.com/go-playground/validator/v10"
+)
 
 type CreateUsernameRequest struct {
-	UID      string
-	Username string
+	UID      string `schema:"uid"`
+	Username string `schema:"username" validate:"isusername"`
+}
+
+func (c *CreateUsernameRequest) Valid(ctx context.Context) error {
+	if err := Validate.StructCtx(ctx, c); err != nil {
+		if err, ok := err.(validator.ValidationErrors); ok {
+			return &ValidationErrors{err}
+		}
+	}
+
+	return nil
 }
 
 type CreateUsernameResponse struct {

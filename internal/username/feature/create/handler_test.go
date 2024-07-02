@@ -7,7 +7,6 @@ import (
 	"net/url"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
@@ -20,12 +19,9 @@ func TestHandler_InvalidUsername(t *testing.T) {
 			"uid":      []string{"mockUID"},
 			"username": []string{"invalid username"},
 		}.Encode())
-		res = httptest.NewRecorder()
-		req = httptest.NewRequest(http.MethodPost, path, body)
-		ms  = &mockService{
-			createV:   nil,
-			createErr: ErrInvalidUsername,
-		}
+		res  = httptest.NewRecorder()
+		req  = httptest.NewRequest(http.MethodPost, path, body)
+		ms   = &mockService{createErr: ErrInvalidUsername}
 		tmpl = template.New("")
 	)
 
@@ -44,12 +40,9 @@ func TestHandler_DuplicateUsername(t *testing.T) {
 			"uid":      []string{"mockUID"},
 			"username": []string{"username"},
 		}.Encode())
-		res = httptest.NewRecorder()
-		req = httptest.NewRequest(http.MethodPost, path, body)
-		ms  = &mockService{
-			createV:   nil,
-			createErr: ErrDuplicateUsername,
-		}
+		res  = httptest.NewRecorder()
+		req  = httptest.NewRequest(http.MethodPost, path, body)
+		ms   = &mockService{createErr: ErrDuplicateUsername}
 		tmpl = template.New("")
 	)
 
@@ -63,15 +56,7 @@ func TestHandler_DuplicateUsername(t *testing.T) {
 
 func TestHandler_NoError(t *testing.T) {
 	var (
-		ms = &mockService{
-			createV: &CreateUsernameResponse{
-				UID:       "mockUID",
-				Username:  "validUsername",
-				CreatedAt: time.Time{},
-				UpdatedAt: time.Time{},
-			},
-			createErr: nil,
-		}
+		ms   = &mockService{createErr: nil}
 		path = "/usernames/create"
 		body = strings.NewReader(url.Values{
 			"uid":      []string{"mockUID"},
