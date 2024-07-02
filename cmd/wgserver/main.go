@@ -18,6 +18,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/dbsetup"
 	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/user/feature/signup"
 	featureUsernameCreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/create"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/createpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/asset"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/game"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/gameresult"
@@ -132,6 +133,13 @@ func run(
 	featureUsernameCreate.AddEndpoint(serveMux, featureUsernameCreate.EndpointDeps{
 		Template: tmpl,
 		Service:  nil,
+	})
+	tmpl, err = createpage.AddTemplate(tmpl)
+	if err != nil {
+		return err
+	}
+	createpage.AddEndpoint(serveMux, createpage.EndpointDeps{
+		Template: tmpl,
 	})
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
