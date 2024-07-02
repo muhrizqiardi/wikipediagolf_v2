@@ -8,6 +8,7 @@
   </head>
   <body class="bg-base-200 antialiased">
     <script src="/assets/htmx.min.js"></script>
+    <script src="/dist/index.js"></script>
     <div
       class="flex flex-col p-3 gap-12 justify-center items-center bg-base-200"
     >
@@ -29,11 +30,11 @@
         <form class="flex flex-col gap-2" action="/rooms/create" method="post">
           <label class="form-control w-full">
             <div class="label">
-              <span class="label-text">Username</span>
+              <span class="label-text">Email</span>
             </div>
             <input
-              type="text"
-              name="username"
+              type="email"
+              name="email"
               class="input input-bordered w-full"
               required
             />
