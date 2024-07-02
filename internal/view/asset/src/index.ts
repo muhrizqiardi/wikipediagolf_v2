@@ -2,7 +2,7 @@ import { initializeApp } from "@firebase/app";
 import { connectAuthEmulator, getAuth } from "@firebase/auth";
 import { SignInService } from "./features/sign-in/service";
 import { FirebaseService } from "./features/firebase/service";
-import { SignInHandler } from "./features/sign-in/handle";
+import { handler } from "./features/sign-in/handle";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBCYr34q-Pn3WZ8l0Slvjdnn1dL5KFW5UU",
@@ -20,4 +20,12 @@ DEV: connectAuthEmulator(auth, "http://127.0.0.1:9099");
 
 const firebaseService = new FirebaseService(auth);
 const signInService = new SignInService(firebaseService);
-const signInHandler = new SignInHandler(signInService);
+const signInHandler = handler(signInService);
+
+function addEventHandlers() {
+  const signinFormEl = document.querySelector("#signin");
+  if (signinFormEl === null) return null;
+
+  signinFormEl.addEventListener("submit", signInHandler);
+}
+addEventHandlers();

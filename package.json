@@ -4,11 +4,11 @@
   "description": "",
   "main": "tailwind.config.js",
   "scripts": {
-    "build-js": "esbuild --drop-labels=DEV ./internal/view/asset/src/index.ts --outdir=./internal/view/asset/dist --bundle --allow-overwrite",
+    "build-js": "esbuild --drop-labels=DEV --drop:console ./internal/view/asset/src/index.ts --outdir=./internal/view/asset/dist --bundle --allow-overwrite",
     "build-tailwindcss": "tailwindcss -i ./internal/view/asset/src/styles.css -o ./internal/view/asset/dist/styles.css",
     "build": "npm run build-tailwindcss && npm run build-js",
-    "dev-js": "esbuild ./internal/view/asset/src/index.ts --outdir=./internal/view/asset/dist --bundle --allow-overwrite",
-    "dev": "npm run build-tailwindcss && npm run build-js",
+    "dev-js": "esbuild ./internal/view/asset/src/index.ts --sourcemap --outdir=./internal/view/asset/dist --bundle --allow-overwrite",
+    "dev": "npm run build-tailwindcss && npm run dev-js",
     "test": "vitest"
   },
   "keywords": [],

@@ -9,7 +9,7 @@
   <body class="bg-base-200 antialiased">
     <script src="/assets/htmx.min.js"></script>
     <script src="/assets/surreal.js"></script>
-    <script src="/dist/index.js"></script>
+    <script defer src="/dist/index.js"></script>
     <div
       class="flex flex-col p-3 gap-12 justify-center items-center bg-base-200"
     >
@@ -28,7 +28,13 @@
           </a>
           <h2 class="text-lg font-semibold text-center">Sign In</h2>
         </header>
-        <form class="flex flex-col gap-2" action="/rooms/create" method="post">
+        <form id="signin" class="flex flex-col gap-2">
+          <div id="signinAlertContainer" class="mt-2"></div>
+          <template id="signinAlert">
+            <article class="alert alert-error" data-testid="signupalert">
+              <span id="signinAlertText"></span>
+            </article>
+          </template>
           <label class="form-control w-full">
             <div class="label">
               <span class="label-text">Email</span>

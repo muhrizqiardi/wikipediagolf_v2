@@ -4,13 +4,13 @@ import { ZodError } from "zod";
 import { ValidationError } from "./error";
 
 export interface ISignInService {
-  SignIn(payload: SignInRequest): Promise<SignInResponse>;
+  signIn(payload: SignInRequest): Promise<SignInResponse>;
 }
 
 export class SignInService implements ISignInService {
   constructor(private firebaseService: IFirebaseService) {}
 
-  async SignIn(payload: SignInRequest) {
+  async signIn(payload: SignInRequest) {
     try {
       const validPayload = signInRequestSchema.parse(payload);
       const { user } = await this.firebaseService.signInWithEmailAndPassword(
