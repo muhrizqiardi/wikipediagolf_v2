@@ -1,0 +1,9 @@
+{{if (eq .Type "error")}}
+<article class="alert alert-error" data-testid="createusernamealert">
+  {{.Message}}
+</article>
+{{else if (eq .Type "success")}}
+<article class="alert alert-success" data-testid="createusernamealert">
+  {{.Message}}
+</article>
+{{end}}
