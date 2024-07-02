@@ -48,6 +48,8 @@ func Handler(s Service, tmpl *template.Template) http.Handler {
 			return
 		}
 
-		ExecuteTemplate(tmpl, w, TemplateData{"success", "Check your email for verification link"})
+		w.Header().Set("HX-Redirect", "/usernames/create")
+		w.Header().Set("HX-Target", "body")
+		w.Header().Set("HX-Swap", "outerHTML")
 	})
 }
