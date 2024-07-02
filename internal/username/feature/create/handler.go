@@ -38,7 +38,9 @@ func Handler(tmpl *template.Template, service Service) http.HandlerFunc {
 			}
 		}
 
-		w.Header().Set("HX-Location", "/")
+		w.Header().Set("HX-Redirect", "/")
+		w.Header().Set("HX-Target", "body")
+		w.Header().Set("HX-Swap", "outerHTML")
 		return
 	})
 }

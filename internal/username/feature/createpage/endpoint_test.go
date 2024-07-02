@@ -12,7 +12,7 @@ import (
 func TestAddEndpoint(t *testing.T) {
 	t.Run("should return status code 200", func(t *testing.T) {
 		var (
-			path     = "/rooms/create"
+			path     = "/usernames/create"
 			res      = httptest.NewRecorder()
 			req      = httptest.NewRequest(http.MethodGet, path, nil)
 			serveMux = http.NewServeMux()
@@ -26,6 +26,6 @@ func TestAddEndpoint(t *testing.T) {
 		AddEndpoint(serveMux, deps)
 		serveMux.ServeHTTP(res, req)
 
-		testutil.AssertEqual(t, res.Result().StatusCode, http.StatusOK)
+		testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
 	})
 }

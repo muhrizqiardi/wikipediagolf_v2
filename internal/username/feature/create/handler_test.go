@@ -70,5 +70,7 @@ func TestHandler_NoError(t *testing.T) {
 	AddTemplate(tmpl)
 	Handler(tmpl, ms).ServeHTTP(res, req)
 
-	testutil.AssertEqual(t, res.Result().Header.Get("HX-Location"), "/")
+	testutil.AssertEqual(t, res.Result().Header.Get("HX-Redirect"), "/")
+	testutil.AssertEqual(t, res.Result().Header.Get("HX-Target"), "body")
+	testutil.AssertEqual(t, res.Result().Header.Get("HX-Swap"), "outerHTML")
 }
