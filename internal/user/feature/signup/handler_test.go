@@ -142,7 +142,7 @@ func TestHandler_NoError(t *testing.T) {
 	testutil.AssertNoError(t, err)
 	Handler(ms, tmpl).ServeHTTP(res, req)
 
-	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
-	testutil.AssertNoError(t, err)
-	testutil.AssertEqual(t, "Check your email for verification link", strings.TrimSpace(doc.Find(`[data-testid="signupalert"]`).First().Text()))
+	testutil.AssertEqual(t, res.Result().Header.Get("HX-Redirect"), "/usernames/create")
+	testutil.AssertEqual(t, res.Result().Header.Get("HX-Target"), "body")
+	testutil.AssertEqual(t, res.Result().Header.Get("HX-Swap"), "outerHTML")
 }
