@@ -4,8 +4,12 @@
   "description": "",
   "main": "tailwind.config.js",
   "scripts": {
-    "build": "tailwindcss -i ./internal/view/asset/src/styles.css -o ./internal/view/asset/dist/styles.css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-js": "esbuild --drop-labels=DEV --drop:console ./internal/view/asset/src/index.ts --outdir=./internal/view/asset/dist --bundle --allow-overwrite",
+    "build-tailwindcss": "tailwindcss -i ./internal/view/asset/src/styles.css -o ./internal/view/asset/dist/styles.css",
+    "build": "npm run build-tailwindcss && npm run build-js",
+    "dev-js": "esbuild ./internal/view/asset/src/index.ts --sourcemap --outdir=./internal/view/asset/dist --bundle --allow-overwrite",
+    "dev": "npm run build-tailwindcss && npm run dev-js",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +17,12 @@
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.67",
     "@iconify/tailwind": "^1.1.1",
-    "daisyui": "^4.12.10"
+    "daisyui": "^4.12.10",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "@firebase/app": "^0.10.5",
+    "@firebase/auth": "^1.7.4",
+    "zod": "^3.23.8"
   }
 }
