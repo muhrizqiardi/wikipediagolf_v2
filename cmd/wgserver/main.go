@@ -113,9 +113,8 @@ func run(
 	if err != nil {
 		return err
 	}
-	signupUserRepository := featureSignup.NewUserRepository(context.Background(), firebaseApp)
-	signupUsernameRepository := featureSignup.NewUsernameRepository(context.Background(), db)
-	signupService := featureSignup.NewService(context.Background(), signupUserRepository, signupUsernameRepository)
+	signupUserRepository := featureSignup.NewRepository(context.Background(), firebaseApp)
+	signupService := featureSignup.NewService(context.Background(), signupUserRepository)
 	tmpl, err = featureSignup.AddTemplate(tmpl)
 	if err != nil {
 		return err

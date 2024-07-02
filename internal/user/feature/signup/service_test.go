@@ -2,20 +2,15 @@ package signup
 
 import (
 	"context"
-	"database/sql"
-	"errors"
 	"testing"
 
-	"github.com/lib/pq"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
 )
 
 func TestService_InvalidEmail(t *testing.T) {
 	var (
-		userRepository     = &mockUserRepository{}
-		usernameRepository = &mockUsernameRepository{}
-		payload            = CreateUserRequest{
-			Username:        "validUsername",
+		mr      = &mockRepository{}
+		payload = CreateUserRequest{
 			Email:           "invalidexample.com",
 			Password:        "secure_Password321",
 			ConfirmPassword: "secure_Password321",
@@ -24,7 +19,7 @@ func TestService_InvalidEmail(t *testing.T) {
 		expErr                     = ErrInvalidEmail
 	)
 
-	s := NewService(context.Background(), userRepository, usernameRepository)
+	s := NewService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -32,10 +27,8 @@ func TestService_InvalidEmail(t *testing.T) {
 
 func TestService_InvalidPassword(t *testing.T) {
 	var (
-		userRepository     = &mockUserRepository{}
-		usernameRepository = &mockUsernameRepository{}
-		payload            = CreateUserRequest{
-			Username:        "validUsername",
+		mr      = &mockRepository{}
+		payload = CreateUserRequest{
 			Email:           "valid@email.com",
 			Password:        "invld",
 			ConfirmPassword: "secure_Password321",
@@ -44,7 +37,7 @@ func TestService_InvalidPassword(t *testing.T) {
 		expErr                     = ErrInvalidPassword
 	)
 
-	s := NewService(context.Background(), userRepository, usernameRepository)
+	s := NewService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -52,10 +45,8 @@ func TestService_InvalidPassword(t *testing.T) {
 
 func TestService_InvalidConfirmPassword(t *testing.T) {
 	var (
-		userRepository     = &mockUserRepository{}
-		usernameRepository = &mockUsernameRepository{}
-		payload            = CreateUserRequest{
-			Username:        "validUsername",
+		mr      = &mockRepository{}
+		payload = CreateUserRequest{
 			Email:           "valid@example.com",
 			Password:        "secure_Password321",
 			ConfirmPassword: "invld",
@@ -64,37 +55,7 @@ func TestService_InvalidConfirmPassword(t *testing.T) {
 		expErr                     = ErrPasswordNotMatch
 	)
 
-	s := NewService(context.Background(), userRepository, usernameRepository)
-	got, err := s.SignUp(payload)
-	testutil.CompareError(t, expErr, err)
-	testutil.AssertEqualCMP(t, expVal, got)
-}
-
-func TestService_DuplicateUsername(t *testing.T) {
-	var (
-		userRepository = &mockUserRepository{
-			createV:   nil,
-			createErr: errors.New(""),
-		}
-		usernameRepository = &mockUsernameRepository{
-			insertErr: nil,
-			findV: &FindUsernameResponse{
-				UID:      "mockUID",
-				Username: "validUsername",
-			},
-			findErr: nil,
-		}
-		payload = CreateUserRequest{
-			Username:        "validUsername",
-			Email:           "valid@example.com",
-			Password:        "secure_Password321",
-			ConfirmPassword: "secure_Password321",
-		}
-		expVal *CreateUserResponse = nil
-		expErr                     = ErrDuplicateUser
-	)
-
-	s := NewService(context.Background(), userRepository, usernameRepository)
+	s := NewService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -102,20 +63,11 @@ func TestService_DuplicateUsername(t *testing.T) {
 
 func TestService_DuplicateEmail(t *testing.T) {
 	var (
-		userRepository = &mockUserRepository{
+		mr = &mockRepository{
 			createV:   nil,
 			createErr: ErrDuplicateEmail,
 		}
-		usernameRepository = &mockUsernameRepository{
-			insertErr: nil,
-			findV: &FindUsernameResponse{
-				UID:      "mockUID",
-				Username: "validUsername",
-			},
-			findErr: nil,
-		}
 		payload = CreateUserRequest{
-			Username:        "validUsername",
 			Email:           "valid@example.com",
 			Password:        "secure_Password321",
 			ConfirmPassword: "secure_Password321",
@@ -124,7 +76,7 @@ func TestService_DuplicateEmail(t *testing.T) {
 		expErr                     = ErrDuplicateUser
 	)
 
-	s := NewService(context.Background(), userRepository, usernameRepository)
+	s := NewService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -132,17 +84,11 @@ func TestService_DuplicateEmail(t *testing.T) {
 
 func TestService_UserRepositoryFindReturnsError(t *testing.T) {
 	var (
-		userRepository = &mockUserRepository{
+		mr = &mockRepository{
 			createV:   nil,
 			createErr: ErrDuplicateEmail,
 		}
-		usernameRepository = &mockUsernameRepository{
-			insertErr: nil,
-			findV:     nil,
-			findErr:   sql.ErrNoRows,
-		}
 		payload = CreateUserRequest{
-			Username:        "validUsername",
 			Email:           "valid@example.com",
 			Password:        "secure_Password321",
 			ConfirmPassword: "secure_Password321",
@@ -151,40 +97,7 @@ func TestService_UserRepositoryFindReturnsError(t *testing.T) {
 		expErr                     = ErrDuplicateEmail
 	)
 
-	s := NewService(context.Background(), userRepository, usernameRepository)
-	got, err := s.SignUp(payload)
-	testutil.CompareError(t, expErr, err)
-	testutil.AssertEqualCMP(t, expVal, got)
-}
-
-func TestService_UsernameRepositoryFindReturnsNoError(t *testing.T) {
-	var (
-		userRepository = &mockUserRepository{
-			createV: &CreateUserResponse{
-				UID:           "mockuid",
-				Email:         "fulan@example.com",
-				EmailVerified: false,
-				PhoneNumber:   "123",
-				DisplayName:   "mcok",
-				PhotoURL:      "url",
-				Disabled:      false,
-			},
-			createErr: nil,
-		}
-		usernameRepository = &mockUsernameRepository{
-			insertErr: &pq.Error{Code: "23505"},
-		}
-		payload = CreateUserRequest{
-			Username:        "validUsername",
-			Email:           "valid@example.com",
-			Password:        "secure_Password321",
-			ConfirmPassword: "secure_Password321",
-		}
-		expVal *CreateUserResponse = nil
-		expErr                     = ErrDuplicateUser
-	)
-
-	s := NewService(context.Background(), userRepository, usernameRepository)
+	s := NewService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -192,7 +105,7 @@ func TestService_UsernameRepositoryFindReturnsNoError(t *testing.T) {
 
 func TestService_NoError(t *testing.T) {
 	var (
-		userRepository = &mockUserRepository{
+		mr = &mockRepository{
 			createV: &CreateUserResponse{
 				UID:           "mockuid",
 				Email:         "fulan@example.com",
@@ -204,13 +117,7 @@ func TestService_NoError(t *testing.T) {
 			},
 			createErr: nil,
 		}
-		usernameRepository = &mockUsernameRepository{
-			insertErr: nil,
-			findV:     nil,
-			findErr:   sql.ErrNoRows,
-		}
 		payload = CreateUserRequest{
-			Username:        "validUsername",
 			Email:           "valid@example.com",
 			Password:        "secure_Password321",
 			ConfirmPassword: "secure_Password321",
@@ -227,7 +134,7 @@ func TestService_NoError(t *testing.T) {
 		expErr error = nil
 	)
 
-	s := NewService(context.Background(), userRepository, usernameRepository)
+	s := NewService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)

@@ -9,16 +9,14 @@ type Service interface {
 }
 
 type service struct {
-	context            context.Context
-	userRepository     UserRepository
-	usernameRepository UsernameRepository
+	context        context.Context
+	userRepository Repository
 }
 
-func NewService(ctx context.Context, ur UserRepository, unr UsernameRepository) *service {
+func NewService(ctx context.Context, ur Repository) *service {
 	return &service{
-		context:            ctx,
-		userRepository:     ur,
-		usernameRepository: unr,
+		context:        ctx,
+		userRepository: ur,
 	}
 }
 
@@ -38,16 +36,8 @@ func (s *service) SignUp(payload CreateUserRequest) (*CreateUserResponse, error)
 		}
 	}
 
-	if _, err := s.usernameRepository.Find(payload.Username); err == nil {
-		return nil, ErrDuplicateUser
-	}
-
 	u, err := s.userRepository.Create(payload.Email, payload.Password)
 	if err != nil {
-		return nil, err
-	}
-
-	if err := s.usernameRepository.Insert(u.UID, payload.Username); err != nil {
 		return nil, err
 	}
 
