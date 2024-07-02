@@ -24,7 +24,7 @@ func TestCreate_InvalidUsername(t *testing.T) {
 	testutil.CompareError(t, ErrInvalidUsername, err)
 }
 
-func TesetCreate_RepositoryErrorCode23505(t *testing.T) {
+func TestCreate_RepositoryErrorCode23505(t *testing.T) {
 	var (
 		mr      = &mockRepository{insertErr: &pq.Error{Code: "23505"}}
 		payload = CreateUsernameRequest{
