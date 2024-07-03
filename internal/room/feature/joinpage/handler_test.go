@@ -20,7 +20,7 @@ func TestHandler(t *testing.T) {
 		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 
-		Handler(tmpl).ServeHTTP(res, req)
+		handler(tmpl).ServeHTTP(res, req)
 
 		testutil.AssertEqual(t, res.Result().StatusCode, http.StatusOK)
 	})

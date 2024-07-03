@@ -23,7 +23,7 @@ func TestHandler(t *testing.T) {
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
 
-		Handler(tmpl).ServeHTTP(res, req)
+		handler(tmpl).ServeHTTP(res, req)
 
 		testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
 		var buf bytes.Buffer

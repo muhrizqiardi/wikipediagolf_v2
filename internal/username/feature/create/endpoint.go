@@ -11,5 +11,5 @@ type endpointDeps struct {
 }
 
 func addEndpoint(serveMux *http.ServeMux, deps endpointDeps) {
-	serveMux.Handle("POST /usernames/create", Handler(deps.Template, deps.Service))
+	serveMux.Handle("POST /usernames/create", handler(deps.Template, deps.Service))
 }

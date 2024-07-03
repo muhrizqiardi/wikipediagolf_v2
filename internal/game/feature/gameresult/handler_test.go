@@ -21,7 +21,7 @@ func TestHandler(t *testing.T) {
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
 
-		Handler(tmpl).ServeHTTP(res, req)
+		handler(tmpl).ServeHTTP(res, req)
 
 		testutil.AssertInequal(t, res.Result().StatusCode, http.StatusNotFound)
 	})

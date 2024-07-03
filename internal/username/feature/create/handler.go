@@ -9,7 +9,7 @@ import (
 	"github.com/gorilla/schema"
 )
 
-func Handler(tmpl *template.Template, service Service) http.HandlerFunc {
+func handler(tmpl *template.Template, service Service) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if err := r.ParseForm(); err != nil {
 			slog.Error("failed to parse form", "err", err)
