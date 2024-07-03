@@ -20,6 +20,7 @@ import (
 	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/user/feature/signup"
 	featureUsernameCreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/create"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/createpage"
+	usernameMiddleware "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/middleware"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/asset"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/game"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/gameresult"
@@ -141,10 +142,13 @@ func run(
 	createpage.AddEndpoint(serveMux, createpage.EndpointDeps{
 		Template: tmpl,
 	})
+	umwr := usernameMiddleware.NewRepository(context.Background(), db)
+	umws := usernameMiddleware.NewService(umwr)
+	umw := usernameMiddleware.Middleware(umws)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)
-	return http.ListenAndServe(addr, authmiddleware.AuthMiddleware(firebaseApp)(serveMux))
+	return http.ListenAndServe(addr, umw(authmiddleware.AuthMiddleware(firebaseApp)(serveMux)))
 }
 
 func main() {
