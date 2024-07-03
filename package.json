@@ -23,6 +23,7 @@
   "dependencies": {
     "@firebase/app": "^0.10.5",
     "@firebase/auth": "^1.7.4",
+    "htmx.org": "^1.9.12",
     "zod": "^3.23.8"
   }
 }
