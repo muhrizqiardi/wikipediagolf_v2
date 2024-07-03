@@ -17,7 +17,9 @@ export class SignInService implements ISignInService {
         validPayload.email,
         validPayload.password,
       );
-      const idToken = await user.getIdToken(true);
+      const currentUser = this.firebaseService.getCurrentUser();
+      if (currentUser === null) throw new Error("currentUser is null");
+      const { token: idToken } = await currentUser.getIdTokenResult(false);
 
       const tokenExchangeReq = new URLSearchParams();
       tokenExchangeReq.set("idToken", idToken);

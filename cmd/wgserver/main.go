@@ -149,13 +149,14 @@ func run(
 	createpage.AddEndpoint(serveMux, createpage.EndpointDeps{
 		Template: tmpl,
 	})
+	amw := authmiddleware.AuthMiddleware(firebaseApp)
 	umwr := usernameMiddleware.NewRepository(context.Background(), db)
 	umws := usernameMiddleware.NewService(umwr)
 	umw := usernameMiddleware.Middleware(umws)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)
-	return http.ListenAndServe(addr, umw(authmiddleware.AuthMiddleware(firebaseApp)(serveMux)))
+	return http.ListenAndServe(addr, amw(umw(serveMux)))
 }
 
 func main() {

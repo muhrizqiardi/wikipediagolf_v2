@@ -10,11 +10,7 @@ import (
 
 func Handler(tmpl *template.Template) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		val, ok := authcontext.GetFromRequest(r)
-		if !ok {
-			http.Redirect(w, r, "/sign-in", http.StatusSeeOther)
-			return
-		}
+		val, _ := authcontext.GetFromRequest(r)
 		data := TemplateData{
 			UID: val.UID,
 		}

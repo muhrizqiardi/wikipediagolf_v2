@@ -23,8 +23,9 @@ func AuthMiddleware(firebaseApp *firebase.App) func(next http.Handler) http.Hand
 				return
 			}
 
-			decoded, err := client.VerifySessionCookieAndCheckRevoked(r.Context(), cookie.Value)
+			decoded, err := client.VerifySessionCookie(r.Context(), cookie.Value)
 			if err != nil {
+				slog.Debug("verify session cookie failed", "err", err)
 				next.ServeHTTP(w, r)
 				return
 			}

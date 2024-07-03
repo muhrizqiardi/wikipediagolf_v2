@@ -1,12 +1,13 @@
 import {
   Auth,
-  browserSessionPersistence,
   signInWithEmailAndPassword,
   signOut,
+  User,
   UserCredential,
 } from "@firebase/auth";
 
 export interface IFirebaseService {
+  getCurrentUser(): User | null;
   signInWithEmailAndPassword(
     email: string,
     password: string,
@@ -16,7 +17,11 @@ export interface IFirebaseService {
 
 export class FirebaseService implements IFirebaseService {
   constructor(private firebaseAuth: Auth) {
-    firebaseAuth.setPersistence(browserSessionPersistence);
+    firebaseAuth.setPersistence({ type: "NONE" });
+  }
+
+  getCurrentUser(): User | null {
+    return this.firebaseAuth.currentUser;
   }
 
   async signInWithEmailAndPassword(

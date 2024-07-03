@@ -1,6 +1,8 @@
 package signin
 
-import "time"
+import (
+	"time"
+)
 
 type Service interface {
 	SignIn(idToken string, expiresIn time.Duration) (*SignInResponse, error)
@@ -17,10 +19,5 @@ func NewService(r Repository) *service {
 }
 
 func (s *service) SignIn(idToken string, expiresIn time.Duration) (*SignInResponse, error) {
-	decoded, err := s.repository.VerifyIDToken(idToken)
-	if err != nil {
-		return nil, err
-	}
-	uid := decoded.UID
-	return s.repository.SessionCookie(uid, expiresIn)
+	return s.repository.SessionCookie(idToken, expiresIn)
 }
