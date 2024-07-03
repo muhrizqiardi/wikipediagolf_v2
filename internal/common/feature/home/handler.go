@@ -8,7 +8,7 @@ import (
 	authctx "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 )
 
-func Handler(
+func handler(
 	tmpl *template.Template,
 ) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

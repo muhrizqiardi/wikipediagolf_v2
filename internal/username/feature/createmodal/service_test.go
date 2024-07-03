@@ -11,7 +11,7 @@ import (
 func TestService_UsernameNotFound(t *testing.T) {
 	var (
 		mr      = &mockRepository{findByUIDErr: sql.ErrNoRows}
-		s       = NewService(mr)
+		s       = newService(mr)
 		mockUID = "mockUID"
 		_, err  = s.FindByUID(mockUID)
 	)
@@ -23,7 +23,7 @@ func TestService_UsernameNotFound(t *testing.T) {
 func TestService_RepositoryError(t *testing.T) {
 	var (
 		mr      = &mockRepository{findByUIDErr: errors.New("")}
-		s       = NewService(mr)
+		s       = newService(mr)
 		mockUID = "mockUID"
 		_, err  = s.FindByUID(mockUID)
 	)
@@ -40,7 +40,7 @@ func TestService_NoError(t *testing.T) {
 			},
 			findByUIDErr: nil,
 		}
-		s       = NewService(mr)
+		s       = newService(mr)
 		mockUID = "mockUID"
 		_, err  = s.FindByUID(mockUID)
 	)

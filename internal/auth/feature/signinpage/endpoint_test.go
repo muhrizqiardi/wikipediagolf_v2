@@ -19,7 +19,7 @@ func TestEndpoint(t *testing.T) {
 		)
 
 		tmpl := template.New("")
-		tmpl, err := AddTemplate(tmpl)
+		tmpl, err := addTemplate(tmpl)
 		if err != nil {
 			t.Error("exp nil; got err:", err)
 		}
@@ -27,7 +27,7 @@ func TestEndpoint(t *testing.T) {
 			Template: tmpl,
 		}
 
-		AddEndpoint(serveMux, deps)
+		addEndpoint(serveMux, deps)
 		serveMux.ServeHTTP(res, req)
 
 		testutil.AssertInequal(t, 404, res.Result().StatusCode)

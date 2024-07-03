@@ -5,11 +5,11 @@ import (
 	"net/http"
 )
 
-type EndpointDeps struct {
+type endpointDeps struct {
 	Service  Service
 	Template *template.Template
 }
 
-func AddEndpoint(serveMux *http.ServeMux, deps EndpointDeps) {
+func addEndpoint(serveMux *http.ServeMux, deps endpointDeps) {
 	serveMux.Handle("POST /usernames/check", Handler(deps.Service, deps.Template))
 }

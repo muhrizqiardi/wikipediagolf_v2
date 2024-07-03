@@ -18,12 +18,12 @@ func TestAddEndpoint(t *testing.T) {
 			serveMux = http.NewServeMux()
 		)
 		tmpl := template.New("")
-		tmpl, err := AddTemplate(tmpl)
+		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
-		deps := EndpointDeps{
+		deps := endpointDeps{
 			Template: tmpl,
 		}
-		AddEndpoint(serveMux, deps)
+		addEndpoint(serveMux, deps)
 		serveMux.ServeHTTP(res, req)
 
 		testutil.AssertEqual(t, res.Result().StatusCode, http.StatusOK)

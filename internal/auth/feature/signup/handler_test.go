@@ -30,9 +30,9 @@ func TestHandler_InvalidUsername(t *testing.T) {
 		tmpl = template.New("")
 	)
 
-	tmpl, err := AddTemplate(tmpl)
+	tmpl, err := addTemplate(tmpl)
 	testutil.AssertNoError(t, err)
-	Handler(ms, tmpl).ServeHTTP(res, req)
+	handler(ms, tmpl).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
 	testutil.AssertNoError(t, err)
@@ -57,9 +57,9 @@ func TestHandler_InvalidEmail(t *testing.T) {
 		tmpl = template.New("")
 	)
 
-	tmpl, err := AddTemplate(tmpl)
+	tmpl, err := addTemplate(tmpl)
 	testutil.AssertNoError(t, err)
-	Handler(ms, tmpl).ServeHTTP(res, req)
+	handler(ms, tmpl).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
 	testutil.AssertNoError(t, err)
@@ -84,9 +84,9 @@ func TestHandler_InvalidPassword(t *testing.T) {
 		tmpl = template.New("")
 	)
 
-	tmpl, err := AddTemplate(tmpl)
+	tmpl, err := addTemplate(tmpl)
 	testutil.AssertNoError(t, err)
-	Handler(ms, tmpl).ServeHTTP(res, req)
+	handler(ms, tmpl).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
 	testutil.AssertNoError(t, err)
@@ -111,9 +111,9 @@ func TestHandler_ConfirmPasswordNotMatched(t *testing.T) {
 		tmpl = template.New("")
 	)
 
-	tmpl, err := AddTemplate(tmpl)
+	tmpl, err := addTemplate(tmpl)
 	testutil.AssertNoError(t, err)
-	Handler(ms, tmpl).ServeHTTP(res, req)
+	handler(ms, tmpl).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
 	testutil.AssertNoError(t, err)
@@ -138,9 +138,9 @@ func TestHandler_NoError(t *testing.T) {
 		tmpl = template.New("")
 	)
 
-	tmpl, err := AddTemplate(tmpl)
+	tmpl, err := addTemplate(tmpl)
 	testutil.AssertNoError(t, err)
-	Handler(ms, tmpl).ServeHTTP(res, req)
+	handler(ms, tmpl).ServeHTTP(res, req)
 
 	testutil.AssertEqual(t, http.StatusCreated, res.Result().StatusCode)
 }

@@ -17,7 +17,7 @@ type repository struct {
 	firebaseApp *firebase.App
 }
 
-func NewRepository(ctx context.Context, firebaseApp *firebase.App) *repository {
+func newRepository(ctx context.Context, firebaseApp *firebase.App) *repository {
 	return &repository{
 		context:     ctx,
 		firebaseApp: firebaseApp,

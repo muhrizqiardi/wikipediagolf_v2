@@ -14,12 +14,12 @@ func TestHandler(t *testing.T) {
 			res = httptest.NewRecorder()
 		)
 		tmpl := template.New("")
-		tmpl, err := AddTemplate(tmpl)
+		tmpl, err := addTemplate(tmpl)
 		if err != nil {
 			t.Error("exp nil; got err:", err)
 		}
 
-		Handler(tmpl).ServeHTTP(res, req)
+		handler(tmpl).ServeHTTP(res, req)
 
 		var (
 			exp = 200

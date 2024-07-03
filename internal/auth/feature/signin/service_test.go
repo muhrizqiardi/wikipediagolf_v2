@@ -13,7 +13,7 @@ func TestSignIn_ErrSignIn(t *testing.T) {
 			sessionCookieV:   nil,
 			sessionCookieErr: errors.New(""),
 		}
-		s           = NewService(mr)
+		s           = newService(mr)
 		mockIDToken = "mockIDToken"
 	)
 

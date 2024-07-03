@@ -30,7 +30,7 @@ func TestHandler_UsernameFound(t *testing.T) {
 
 	ctx.SetRequest(req, ctx.Val{UID: "mockUID"})
 
-	AddTemplate(tmpl)
+	addTemplate(tmpl)
 	Handler(ms, tmpl).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
@@ -51,7 +51,7 @@ func TestHandler_UsernameNotFound(t *testing.T) {
 
 	ctx.SetRequest(req, ctx.Val{UID: "mockUID"})
 
-	AddTemplate(tmpl)
+	addTemplate(tmpl)
 	Handler(ms, tmpl).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)

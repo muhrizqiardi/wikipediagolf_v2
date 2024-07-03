@@ -26,14 +26,14 @@ func TestAddEndpoint(t *testing.T) {
 		req      = httptest.NewRequest(http.MethodPost, "/usernames/check", body)
 		tmpl     = template.New("")
 		serveMux = http.NewServeMux()
-		deps     = EndpointDeps{
+		deps     = endpointDeps{
 			Service:  ms,
 			Template: tmpl,
 		}
 	)
 
 	ctx.SetRequest(req, ctx.Val{UID: "mockUID"})
-	AddEndpoint(serveMux, deps)
+	addEndpoint(serveMux, deps)
 
 	serveMux.ServeHTTP(res, req)
 

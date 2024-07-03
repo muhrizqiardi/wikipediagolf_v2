@@ -28,7 +28,7 @@ func TestHandler_NoError(t *testing.T) {
 	)
 
 	req.Header.Set("Content-Type", contentType)
-	Handler(ms).ServeHTTP(res, req)
+	handler(ms).ServeHTTP(res, req)
 
 	testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
 }

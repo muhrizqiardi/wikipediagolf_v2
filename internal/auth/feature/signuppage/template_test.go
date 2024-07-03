@@ -13,7 +13,7 @@ func TestAddTemplate(t *testing.T) {
 		templateName := "sign-up.html"
 		tmpl := template.New("")
 
-		tmpl, err := AddTemplate(tmpl)
+		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
 

@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/schema"
 )
 
-func Handler(
+func handler(
 	s Service,
 ) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

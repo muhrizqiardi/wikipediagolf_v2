@@ -19,7 +19,7 @@ func TestHandler(t *testing.T) {
 			res  = httptest.NewRecorder()
 		)
 		tmpl := template.New("")
-		tmpl, err := AddTemplate(tmpl)
+		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
 

@@ -29,7 +29,7 @@ func handleError(tmpl *template.Template, err error) http.Handler {
 	})
 }
 
-func Handler(s Service, tmpl *template.Template) http.Handler {
+func handler(s Service, tmpl *template.Template) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if err := r.ParseForm(); err != nil {
 			slog.Error("failed to parse form", "err", err)

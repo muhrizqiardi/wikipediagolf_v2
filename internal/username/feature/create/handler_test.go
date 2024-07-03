@@ -25,7 +25,7 @@ func TestHandler_InvalidUsername(t *testing.T) {
 		tmpl = template.New("")
 	)
 
-	AddTemplate(tmpl)
+	addTemplate(tmpl)
 	Handler(tmpl, ms).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
@@ -46,7 +46,7 @@ func TestHandler_DuplicateUsername(t *testing.T) {
 		tmpl = template.New("")
 	)
 
-	AddTemplate(tmpl)
+	addTemplate(tmpl)
 	Handler(tmpl, ms).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
@@ -67,7 +67,7 @@ func TestHandler_NoError(t *testing.T) {
 		tmpl = template.New("")
 	)
 
-	AddTemplate(tmpl)
+	addTemplate(tmpl)
 	Handler(tmpl, ms).ServeHTTP(res, req)
 
 	testutil.AssertEqual(t, res.Result().Header.Get("HX-Redirect"), "/")

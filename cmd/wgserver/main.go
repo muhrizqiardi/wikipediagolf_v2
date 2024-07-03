@@ -15,16 +15,16 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	authmiddleware "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/middleware"
-	featureSignin "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signin"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signin"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signinpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signout"
-	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signup"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signuppage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/asset"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/config"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/dbsetup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/home"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/game"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gamepage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gameresult"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/pregame"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/surrender"
@@ -48,113 +48,35 @@ func run(
 		Level:     slog.LevelDebug,
 	})))
 	cfg := config.GetConfig(args, getenv)
-	db, err := dbsetup.Setup(context.Background(), cfg.DatabaseURL, cfg.IsMigrate)
-	if err != nil {
-		return err
-	}
-
-	serveMux := http.NewServeMux()
-	tmpl := template.New("")
-	tmpl, err = signuppage.AddTemplate(tmpl)
-	if err != nil {
-		return err
-	}
-	tmpl, err = home.AddTemplate(tmpl)
-	if err != nil {
-		return err
-	}
-	asset.AddEndpoint(serveMux)
-	homepageEndpointDeps := home.EndpointDeps{
-		Template: tmpl,
-	}
-	home.AddEndpoint(serveMux, homepageEndpointDeps)
-	signuppageEndpointDeps := signuppage.EndpointDeps{
-		Template: tmpl,
-	}
-	signuppage.AddEndpoint(serveMux, signuppageEndpointDeps)
-	signinpage.AddTemplate(tmpl)
-	signinEndpointDeps := signinpage.EndpointDeps{
-		Template: tmpl,
-	}
-	signinpage.AddEndpoint(serveMux, signinEndpointDeps)
-	roomcreatepage.AddTemplate(tmpl)
-	createroompageEndpointDeps := roomcreatepage.EndpointDeps{
-		Template: tmpl,
-	}
-	roomcreatepage.AddEndpoint(serveMux, createroompageEndpointDeps)
-	roomjoinpage.AddTemplate(tmpl)
-	joinroompageEndpointDeps := roomjoinpage.EndpointDeps{
-		Template: tmpl,
-	}
-	roomjoinpage.AddEndpoint(serveMux, joinroompageEndpointDeps)
-	roomwaitingpage.AddTemplate(tmpl)
-	waitingroompageEndpointDeps := roomwaitingpage.EndpointDeps{
-		Template: tmpl,
-	}
-	roomwaitingpage.AddEndpoint(serveMux, waitingroompageEndpointDeps)
-	game.AddTemplate(tmpl)
-	gamepageEndpointDeps := game.EndpointDeps{
-		Template: tmpl,
-	}
-	game.AddEndpoint(serveMux, gamepageEndpointDeps)
-	surrender.AddTemplate(tmpl)
-	surrenderpageEndpointDeps := surrender.EndpointDeps{
-		Template: tmpl,
-	}
-	surrender.AddEndpoint(serveMux, surrenderpageEndpointDeps)
-	gameresult.AddTemplate(tmpl)
-	resultpageEndpointDeps := gameresult.EndpointDeps{
-		Template: tmpl,
-	}
-	gameresult.AddEndpoint(serveMux, resultpageEndpointDeps)
-	pregame.AddTemplate(tmpl)
-	pregamesplashscreenEndpointDeps := pregame.EndpointDeps{
-		Template: tmpl,
-	}
-	pregame.AddEndpoint(serveMux, pregamesplashscreenEndpointDeps)
 	firebaseApp, err := firebase.NewApp(context.Background(), nil, option.WithCredentialsFile(cfg.FirebaseConfig))
 	if err != nil {
 		return err
 	}
-	signupUserRepository := featureSignup.NewRepository(context.Background(), firebaseApp)
-	signupService := featureSignup.NewService(context.Background(), signupUserRepository)
-	tmpl, err = featureSignup.AddTemplate(tmpl)
+	db, err := dbsetup.Setup(context.Background(), cfg.DatabaseURL, cfg.IsMigrate)
 	if err != nil {
 		return err
 	}
-	signinRepository := featureSignin.NewRepository(context.Background(), firebaseApp)
-	signinService := featureSignin.NewService(signinRepository)
-	featureSigninEndpointDeps := featureSignin.EndpointDeps{
-		Service: signinService,
-	}
-	featureSignin.AddEndpoint(serveMux, featureSigninEndpointDeps)
-	signout.AddEndpoint(serveMux)
-	featureSignup.AddEndpoint(serveMux, featureSignup.EndpointDeps{
-		Service:  signupService,
-		Template: tmpl,
-	})
-	featureSignup.Handler(signupService, tmpl)
-	usernameCreateRepository := featureUsernameCreate.NewRepository(context.Background(), db)
-	usernameCreateService := featureUsernameCreate.NewService(context.Background(), usernameCreateRepository)
-	tmpl, err = featureUsernameCreate.AddTemplate(tmpl)
-	if err != nil {
-		return err
-	}
-	featureUsernameCreate.AddEndpoint(serveMux, featureUsernameCreate.EndpointDeps{
-		Template: tmpl,
-		Service:  usernameCreateService,
-	})
-	createUsernameModalRepository := createUsernameModal.NewRepository(context.Background(), db)
-	createUsernameModalService := createUsernameModal.NewService(createUsernameModalRepository)
-	tmpl, err = createUsernameModal.AddTemplate(tmpl)
-	if err != nil {
-		return err
-	}
-	createUsernameModal.AddEndpoint(serveMux, createUsernameModal.EndpointDeps{
-		Service:  createUsernameModalService,
-		Template: tmpl,
-	})
+	serveMux := http.NewServeMux()
+	tmpl := template.New("")
+
 	amw := authmiddleware.AuthMiddleware(firebaseApp)
+
+	signuppage.Register(tmpl, serveMux)
+	home.Register(tmpl, serveMux)
+	asset.Register(serveMux)
+	signinpage.Register(tmpl, serveMux)
+	roomcreatepage.Register(tmpl, serveMux)
+	roomjoinpage.Register(tmpl, serveMux)
+	roomwaitingpage.Register(tmpl, serveMux)
+	gamepage.Register(tmpl, serveMux)
+	surrender.Register(tmpl, serveMux)
+	gameresult.Register(tmpl, serveMux)
+	pregame.Register(tmpl, serveMux)
+	signin.Register(context.Background(), firebaseApp, serveMux)
+	signout.Register(serveMux)
+	signup.Register(context.Background(), firebaseApp, tmpl, serveMux)
+	createUsernameModal.Register(context.Background(), db, tmpl, serveMux)
+	featureUsernameCreate.BuildCreate(context.Background(), db, tmpl, serveMux)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)

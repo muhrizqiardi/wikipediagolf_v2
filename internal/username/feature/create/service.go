@@ -15,7 +15,7 @@ type service struct {
 	repository Repository
 }
 
-func NewService(ctx context.Context, r Repository) *service {
+func newService(ctx context.Context, r Repository) *service {
 	return &service{
 		context:    ctx,
 		repository: r,

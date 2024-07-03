@@ -15,7 +15,7 @@ type service struct {
 	userRepository Repository
 }
 
-func NewService(ctx context.Context, ur Repository) *service {
+func newService(ctx context.Context, ur Repository) *service {
 	return &service{
 		context:        ctx,
 		userRepository: ur,

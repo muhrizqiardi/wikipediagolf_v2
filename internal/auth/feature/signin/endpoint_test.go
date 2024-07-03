@@ -27,8 +27,8 @@ func TestAddEndpoint(t *testing.T) {
 			signInErr: nil,
 		}
 		serveMux = http.NewServeMux()
-		deps     = EndpointDeps{
-			Service: ms,
+		deps     = endpointDeps{
+			service: ms,
 		}
 	)
 	req.Header.Set("Content-Type", contentType)
