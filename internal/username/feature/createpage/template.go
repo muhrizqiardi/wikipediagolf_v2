@@ -9,6 +9,10 @@ func AddTemplate(tmpl *template.Template) (*template.Template, error) {
 	return tmpl.ParseFS(templateFS, "template/create-username-page.html")
 }
 
-func ExecuteTemplate(tmpl *template.Template, wr io.Writer) error {
+type TemplateData struct {
+	UID string
+}
+
+func ExecuteTemplate(tmpl *template.Template, wr io.Writer, data TemplateData) error {
 	return tmpl.ExecuteTemplate(wr, "create-username-page.html", nil)
 }
