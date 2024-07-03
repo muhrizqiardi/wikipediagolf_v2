@@ -34,11 +34,25 @@ const signInHandler = handler(signInService);
 
 function addEventHandlers() {
   const signinFormEl = document.querySelector("#signin");
-  if (signinFormEl === null) return null;
+  if (signinFormEl !== null) {
+    signinFormEl.addEventListener("submit", signInHandler);
+  }
 
-  signinFormEl.addEventListener("submit", signInHandler);
-  window.htmx.on("htmx:beforeRequest", () => {
-    console.debug("bebek");
-  });
+  const signupFormEl = document.querySelector("#signup");
+  if (signupFormEl !== null) {
+    window.htmx.on("#signup", "htmx:afterRequest", (evt) => {
+      const htmxEvt = evt as Event & {
+        elt: Element;
+        xhr: XMLHttpRequest;
+        target: EventTarget;
+        requestConfig: object;
+        successful: boolean;
+        failed: boolean;
+      };
+      if (htmxEvt.xhr.status === 201) {
+        signInHandler(evt);
+      }
+    });
+  }
 }
 addEventHandlers();

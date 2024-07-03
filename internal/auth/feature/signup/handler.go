@@ -48,8 +48,6 @@ func Handler(s Service, tmpl *template.Template) http.Handler {
 			return
 		}
 
-		w.Header().Set("HX-Redirect", "/usernames/create")
-		w.Header().Set("HX-Target", "body")
-		w.Header().Set("HX-Swap", "outerHTML")
+		w.WriteHeader(http.StatusCreated)
 	})
 }

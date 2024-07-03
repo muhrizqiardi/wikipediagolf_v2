@@ -28,6 +28,19 @@
         <nav class="bg-base-100 flex flex-col gap-6 lg:sticky lg:top-0">
           <div class="h-full flex flex-col gap-2">
             <div class="flex justify-end">
+              {{if .IsAuthenticated}}
+              <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn mr-2">
+                  <span class="iconify mdi--user text-lg">User</span>
+                </div>
+                <ul
+                  tabindex="0"
+                  class="dropdown-content menu bg-base-300 rounded-box z-[1] w-52 p-2 shadow"
+                >
+                  <li><a hx-delete="/sign-out">Sign out</a></li>
+                </ul>
+              </div>
+              {{end}}
               <button class="btn" onclick="changeLanguageModal.showModal()">
                 EN
                 <span class="iconify mdi--globe text-lg"></span>
@@ -60,6 +73,7 @@
                 </div>
               </dialog>
             </div>
+
             <form class="w-full">
               <button
                 class="btn btn-lg flex-col items-start justify-center w-full"
@@ -82,12 +96,14 @@
               <span>Join Room</span>
               <span class="font-normal text-xs">Join an existing Room</span>
             </a>
+            {{if not .IsAuthenticated}}
             <a
               href="/sign-up"
               class="btn btn-lg flex-col items-start justify-center mt-6"
             >
               <span>Sign up / sign in</span>
             </a>
+            {{end}}
           </div>
         </nav>
 
@@ -134,6 +150,12 @@
           >. Articles taken from Wikipedia English.
         </p>
       </footer>
+      <div
+        id="checkUsernameContainer"
+        hx-post="/usernames/check"
+        hx-trigger="load"
+        hx-swap="outerHTML"
+      ></div>
     </div>
   </body>
 </html>

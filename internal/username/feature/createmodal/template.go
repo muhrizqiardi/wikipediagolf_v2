@@ -1,4 +1,4 @@
-package createpage
+package createmodal
 
 import (
 	"html/template"
@@ -6,7 +6,7 @@ import (
 )
 
 func AddTemplate(tmpl *template.Template) (*template.Template, error) {
-	return tmpl.ParseFS(templateFS, "template/create-username-page.html")
+	return tmpl.ParseFS(templateFS, "template/create-username-modal-partial.html")
 }
 
 type TemplateData struct {
@@ -14,5 +14,5 @@ type TemplateData struct {
 }
 
 func ExecuteTemplate(tmpl *template.Template, wr io.Writer, data TemplateData) error {
-	return tmpl.ExecuteTemplate(wr, "create-username-page.html", nil)
+	return tmpl.ExecuteTemplate(wr, "create-username-modal-partial.html", data)
 }
