@@ -8,7 +8,7 @@ import (
 )
 
 type Repository interface {
-	VerifyIDToken(idTokens string) (*VerifyIDTokenResponse, error)
+	VerifyIDToken(idToken string) (*VerifyIDTokenResponse, error)
 	SessionCookie(uid string, expiresIn time.Duration) (*SignInResponse, error)
 }
 
@@ -24,16 +24,47 @@ func NewRepository(ctx context.Context, firebaseApp *firebase.App) *repository {
 	}
 }
 
-func (r *repository) SessionCookie(idToken string, expiresIn time.Duration) (*SignInResponse, error) {
+func (r *repository) VerifyIDToken(idToken string) (*VerifyIDTokenResponse, error) {
 	client, err := r.firebaseApp.Auth(r.context)
 	if err != nil {
 		return nil, err
 	}
+
 	decoded, err := client.VerifyIDToken(r.context, idToken)
 	if err != nil {
 		return nil, err
 	}
-	cookie, err := client.CustomToken(r.context, decoded.UID)
+
+	result := VerifyIDTokenResponse{
+		AuthTime: decoded.AuthTime,
+		Issuer:   decoded.Issuer,
+		Audience: decoded.Audience,
+		Expires:  decoded.Expires,
+		IssuedAt: decoded.IssuedAt,
+		Subject:  decoded.Subject,
+		UID:      decoded.UID,
+		Firebase: struct {
+			SignInProvider string                 "json:\"sign_in_provider\""
+			Tenant         string                 "json:\"tenant\""
+			Identities     map[string]interface{} "json:\"identities\""
+		}{
+			SignInProvider: decoded.Firebase.SignInProvider,
+			Tenant:         decoded.Firebase.Tenant,
+			Identities:     decoded.Firebase.Identities,
+		},
+		Claims: decoded.Claims,
+	}
+
+	return &result, nil
+}
+
+func (r *repository) SessionCookie(uid string, expiresIn time.Duration) (*SignInResponse, error) {
+	client, err := r.firebaseApp.Auth(r.context)
+	if err != nil {
+		return nil, err
+	}
+
+	cookie, err := client.CustomToken(r.context, uid)
 	if err != nil {
 		return nil, err
 	}

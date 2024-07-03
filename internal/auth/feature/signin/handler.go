@@ -34,7 +34,6 @@ func Handler(
 			HttpOnly: true,
 		})
 
-		w.Header().Set("HX-Location", "/")
-		w.WriteHeader(http.StatusSeeOther)
+		w.WriteHeader(http.StatusOK)
 	})
 }

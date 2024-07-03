@@ -15,6 +15,7 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	authmiddleware "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/middleware"
+	featureSignin "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signin"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signinpage"
 	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signuppage"
@@ -121,6 +122,12 @@ func run(
 	if err != nil {
 		return err
 	}
+	signinRepository := featureSignin.NewRepository(context.Background(), firebaseApp)
+	signinService := featureSignin.NewService(signinRepository)
+	featureSigninEndpointDeps := featureSignin.EndpointDeps{
+		Service: signinService,
+	}
+	featureSignin.AddEndpoint(serveMux, featureSigninEndpointDeps)
 	featureSignup.AddEndpoint(serveMux, featureSignup.EndpointDeps{
 		Service:  signupService,
 		Template: tmpl,

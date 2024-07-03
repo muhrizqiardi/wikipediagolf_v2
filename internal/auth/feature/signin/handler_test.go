@@ -30,6 +30,5 @@ func TestHandler_NoError(t *testing.T) {
 	req.Header.Set("Content-Type", contentType)
 	Handler(ms).ServeHTTP(res, req)
 
-	testutil.AssertEqual(t, "/", res.Result().Header.Get("HX-Location"))
-	testutil.AssertEqual(t, http.StatusSeeOther, res.Result().StatusCode)
+	testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
 }

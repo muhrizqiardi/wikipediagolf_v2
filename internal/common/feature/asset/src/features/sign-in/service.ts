@@ -17,7 +17,18 @@ export class SignInService implements ISignInService {
         validPayload.email,
         validPayload.password,
       );
+      const idToken = await user.getIdToken(true);
 
+      const tokenExchangeReq = new URLSearchParams();
+      tokenExchangeReq.set("idToken", idToken);
+      const tokenExchangeURL = new URL("/sign-in", window.location.origin);
+      const tokenExchangeResult = await fetch(tokenExchangeURL, {
+        method: "POST",
+        body: tokenExchangeReq,
+      });
+      if (!tokenExchangeResult.ok) throw new Error("failed to sign in");
+
+      await this.firebaseService.signOut();
       return user;
     } catch (error) {
       if (error instanceof ZodError) {
