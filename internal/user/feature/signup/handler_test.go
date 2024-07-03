@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
+	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
 func TestHandler_InvalidUsername(t *testing.T) {

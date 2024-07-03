@@ -5,12 +5,12 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/authctx"
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 )
 
 func Handler(tmpl *template.Template) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		val, ok := authctx.GetFromRequest(r)
+		val, ok := authcontext.GetFromRequest(r)
 		if !ok {
 			http.Redirect(w, r, "/sign-in", http.StatusSeeOther)
 			return

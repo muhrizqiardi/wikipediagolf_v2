@@ -3,13 +3,13 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/authctx"
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 )
 
 func Middleware(s Service) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			val, ok := authctx.GetFromRequest(r)
+			val, ok := authcontext.GetFromRequest(r)
 			if !ok {
 				next.ServeHTTP(w, r)
 				return

@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/lib/pq"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
+	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
 func TestCreate_InvalidUsername(t *testing.T) {
