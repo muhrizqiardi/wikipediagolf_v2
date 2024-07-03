@@ -16,7 +16,9 @@ func TestExecuteTemplate(t *testing.T) {
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
 		var buf bytes.Buffer
-		err = ExecuteTemplate(tmpl, &buf)
+		err = ExecuteTemplate(tmpl, &buf, TemplateData{
+			UID: "mockUID",
+		})
 		fmt.Println(buf.String())
 		testutil.AssertNoError(t, err)
 		testutil.AssertInequal(t, 0, buf.Len())
