@@ -14,6 +14,7 @@ import (
 	"google.golang.org/api/option"
 
 	firebase "firebase.google.com/go/v4"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/authmiddleware"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/config"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/dbsetup"
 	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/user/feature/signup"
@@ -143,7 +144,7 @@ func run(
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)
-	return http.ListenAndServe(addr, serveMux)
+	return http.ListenAndServe(addr, authmiddleware.AuthMiddleware(firebaseApp)(serveMux))
 }
 
 func main() {
