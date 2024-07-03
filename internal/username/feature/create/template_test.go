@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"testing"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
+	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
 func TestAddTemplate(t *testing.T) {

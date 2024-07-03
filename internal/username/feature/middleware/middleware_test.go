@@ -5,8 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/authctx"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
+	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
 func TestMiddleware_UsernameNotFound(t *testing.T) {
@@ -21,7 +21,7 @@ func TestMiddleware_UsernameNotFound(t *testing.T) {
 		req        = httptest.NewRequest(http.MethodGet, "/", nil)
 	)
 
-	authctx.SetRequest(req, authctx.Val{UID: "mockUID"})
+	authcontext.SetRequest(req, authcontext.Val{UID: "mockUID"})
 
 	Middleware(ms)(next).ServeHTTP(res, req)
 
@@ -42,7 +42,7 @@ func TestMiddleware_UsernameFound(t *testing.T) {
 		req        = httptest.NewRequest(http.MethodGet, "/", nil)
 	)
 
-	authctx.SetRequest(req, authctx.Val{UID: "mockUID"})
+	authcontext.SetRequest(req, authcontext.Val{UID: "mockUID"})
 
 	Middleware(ms)(next).ServeHTTP(res, req)
 

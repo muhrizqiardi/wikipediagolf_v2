@@ -14,24 +14,24 @@ import (
 	"google.golang.org/api/option"
 
 	firebase "firebase.google.com/go/v4"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/authmiddleware"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/config"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/dbsetup"
-	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/user/feature/signup"
+	authmiddleware "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/middleware"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signinpage"
+	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signup"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signuppage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/asset"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/config"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/dbsetup"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/home"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/game"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gameresult"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/pregame"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/surrender"
+	roomcreatepage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/createpage"
+	roomjoinpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/joinpage"
+	roomwaitingpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/waitingpage"
 	featureUsernameCreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/create"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/createpage"
 	usernameMiddleware "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/middleware"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/asset"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/game"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/gameresult"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/home"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/pregame"
-	createroom "github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomcreate"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomjoin"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/roomwaiting"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/signin"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/signup"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/view/surrender"
 )
 
 func run(
@@ -54,7 +54,7 @@ func run(
 
 	serveMux := http.NewServeMux()
 	tmpl := template.New("")
-	tmpl, err = signup.AddTemplate(tmpl)
+	tmpl, err = signuppage.AddTemplate(tmpl)
 	if err != nil {
 		return err
 	}
@@ -67,30 +67,30 @@ func run(
 		Template: tmpl,
 	}
 	home.AddEndpoint(serveMux, homepageEndpointDeps)
-	signuppageEndpointDeps := signup.EndpointDeps{
+	signuppageEndpointDeps := signuppage.EndpointDeps{
 		Template: tmpl,
 	}
-	signup.AddEndpoint(serveMux, signuppageEndpointDeps)
-	signin.AddTemplate(tmpl)
-	signinEndpointDeps := signin.EndpointDeps{
+	signuppage.AddEndpoint(serveMux, signuppageEndpointDeps)
+	signinpage.AddTemplate(tmpl)
+	signinEndpointDeps := signinpage.EndpointDeps{
 		Template: tmpl,
 	}
-	signin.AddEndpoint(serveMux, signinEndpointDeps)
-	createroom.AddTemplate(tmpl)
-	createroompageEndpointDeps := createroom.EndpointDeps{
+	signinpage.AddEndpoint(serveMux, signinEndpointDeps)
+	roomcreatepage.AddTemplate(tmpl)
+	createroompageEndpointDeps := roomcreatepage.EndpointDeps{
 		Template: tmpl,
 	}
-	createroom.AddEndpoint(serveMux, createroompageEndpointDeps)
-	roomjoin.AddTemplate(tmpl)
-	joinroompageEndpointDeps := roomjoin.EndpointDeps{
+	roomcreatepage.AddEndpoint(serveMux, createroompageEndpointDeps)
+	roomjoinpage.AddTemplate(tmpl)
+	joinroompageEndpointDeps := roomjoinpage.EndpointDeps{
 		Template: tmpl,
 	}
-	roomjoin.AddEndpoint(serveMux, joinroompageEndpointDeps)
-	roomwaiting.AddTemplate(tmpl)
-	waitingroompageEndpointDeps := roomwaiting.EndpointDeps{
+	roomjoinpage.AddEndpoint(serveMux, joinroompageEndpointDeps)
+	roomwaitingpage.AddTemplate(tmpl)
+	waitingroompageEndpointDeps := roomwaitingpage.EndpointDeps{
 		Template: tmpl,
 	}
-	roomwaiting.AddEndpoint(serveMux, waitingroompageEndpointDeps)
+	roomwaitingpage.AddEndpoint(serveMux, waitingroompageEndpointDeps)
 	game.AddTemplate(tmpl)
 	gamepageEndpointDeps := game.EndpointDeps{
 		Template: tmpl,

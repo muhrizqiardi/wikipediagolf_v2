@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
+	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
 func TestAddEndpoint(t *testing.T) {

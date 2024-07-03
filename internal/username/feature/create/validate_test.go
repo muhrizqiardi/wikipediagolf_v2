@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/testutil"
+	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
 func TestValidate(t *testing.T) {
