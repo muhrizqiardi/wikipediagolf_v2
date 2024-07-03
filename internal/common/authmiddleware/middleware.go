@@ -3,6 +3,7 @@ package authmiddleware
 import (
 	"log/slog"
 	"net/http"
+	"strings"
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/authctx"
@@ -11,11 +12,13 @@ import (
 func AuthMiddleware(firebaseApp *firebase.App) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			cookie, err := r.Cookie("session")
-			if err != nil {
+			bearerHeader := r.Header.Get("Bearer")
+			bearerHeaderSplit := strings.Split(bearerHeader, " ")
+			if len(bearerHeaderSplit) < 2 {
 				next.ServeHTTP(w, r)
 				return
 			}
+			idToken := bearerHeaderSplit[1]
 
 			client, err := firebaseApp.Auth(r.Context())
 			if err != nil {
@@ -24,7 +27,7 @@ func AuthMiddleware(firebaseApp *firebase.App) func(next http.Handler) http.Hand
 				return
 			}
 
-			decoded, err := client.VerifySessionCookieAndCheckRevoked(r.Context(), cookie.Value)
+			decoded, err := client.VerifyIDToken(r.Context(), idToken)
 			if err != nil {
 				next.ServeHTTP(w, r)
 				return
