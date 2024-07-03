@@ -2,7 +2,6 @@ package createpage
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"testing"
 
@@ -17,7 +16,6 @@ func TestExecuteTemplate(t *testing.T) {
 		testutil.AssertNotNil(t, tmpl)
 		var buf bytes.Buffer
 		err = ExecuteTemplate(tmpl, &buf)
-		fmt.Println(buf.String())
 		testutil.AssertNoError(t, err)
 		testutil.AssertInequal(t, 0, buf.Len())
 	})

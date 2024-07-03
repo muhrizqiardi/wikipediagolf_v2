@@ -73,7 +73,7 @@ func TestService_DuplicateEmail(t *testing.T) {
 			ConfirmPassword: "secure_Password321",
 		}
 		expVal *CreateUserResponse = nil
-		expErr                     = ErrDuplicateUser
+		expErr                     = ErrDuplicateEmail
 	)
 
 	s := NewService(context.Background(), mr)
