@@ -1,0 +1,33 @@
+<dialog id="checkUsernameModal" open class="modal">
+  <div class="modal-box shadow-md">
+    <header class="flex justify-start items-center text-center gap-3">
+      <h2 class="text-lg font-semibold text-center">Choose Username</h2>
+    </header>
+    <form
+      class="flex flex-col gap-2"
+      action="/usernames/create"
+      method="post"
+      hx-target="#createusernameAlertContainer"
+      hx-boost="true"
+    >
+      <div id="createusernameAlertContainer" class="mt-2"></div>
+      <input type="hidden" name="uid" value="{{.UID}}" />
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Username</span>
+        </div>
+        <input
+          type="text"
+          name="username"
+          class="input input-bordered w-full"
+          required
+        />
+      </label>
+      <button type="submit" class="btn btn-primary mt-2">Save</button>
+      <button type="button" class="btn btn-ghost text-error mt-8">
+        Sign out
+      </button>
+    </form>
+  </div>
+  <div class="modal-backdrop bg-white/5"></div>
+</dialog>

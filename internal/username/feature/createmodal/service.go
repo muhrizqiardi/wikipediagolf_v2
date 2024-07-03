@@ -1,4 +1,4 @@
-package middleware
+package createmodal
 
 import (
 	"database/sql"

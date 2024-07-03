@@ -28,5 +28,5 @@ func (s *service) Create(payload CreateUsernameRequest) error {
 		}
 	}
 
-	return nil
+	return s.repository.Insert(payload.UID, payload.Username)
 }

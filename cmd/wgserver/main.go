@@ -15,7 +15,9 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	authmiddleware "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/middleware"
+	featureSignin "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signin"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signinpage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signout"
 	featureSignup "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signuppage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/asset"
@@ -30,8 +32,7 @@ import (
 	roomjoinpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/joinpage"
 	roomwaitingpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/waitingpage"
 	featureUsernameCreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/create"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/createpage"
-	usernameMiddleware "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/middleware"
+	createUsernameModal "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/createmodal"
 )
 
 func run(
@@ -121,34 +122,43 @@ func run(
 	if err != nil {
 		return err
 	}
+	signinRepository := featureSignin.NewRepository(context.Background(), firebaseApp)
+	signinService := featureSignin.NewService(signinRepository)
+	featureSigninEndpointDeps := featureSignin.EndpointDeps{
+		Service: signinService,
+	}
+	featureSignin.AddEndpoint(serveMux, featureSigninEndpointDeps)
+	signout.AddEndpoint(serveMux)
 	featureSignup.AddEndpoint(serveMux, featureSignup.EndpointDeps{
 		Service:  signupService,
 		Template: tmpl,
 	})
 	featureSignup.Handler(signupService, tmpl)
-	featureUsernameCreate.NewRepository(context.Background(), db)
+	usernameCreateRepository := featureUsernameCreate.NewRepository(context.Background(), db)
+	usernameCreateService := featureUsernameCreate.NewService(context.Background(), usernameCreateRepository)
 	tmpl, err = featureUsernameCreate.AddTemplate(tmpl)
 	if err != nil {
 		return err
 	}
 	featureUsernameCreate.AddEndpoint(serveMux, featureUsernameCreate.EndpointDeps{
 		Template: tmpl,
-		Service:  nil,
+		Service:  usernameCreateService,
 	})
-	tmpl, err = createpage.AddTemplate(tmpl)
+	createUsernameModalRepository := createUsernameModal.NewRepository(context.Background(), db)
+	createUsernameModalService := createUsernameModal.NewService(createUsernameModalRepository)
+	tmpl, err = createUsernameModal.AddTemplate(tmpl)
 	if err != nil {
 		return err
 	}
-	createpage.AddEndpoint(serveMux, createpage.EndpointDeps{
+	createUsernameModal.AddEndpoint(serveMux, createUsernameModal.EndpointDeps{
+		Service:  createUsernameModalService,
 		Template: tmpl,
 	})
-	umwr := usernameMiddleware.NewRepository(context.Background(), db)
-	umws := usernameMiddleware.NewService(umwr)
-	umw := usernameMiddleware.Middleware(umws)
+	amw := authmiddleware.AuthMiddleware(firebaseApp)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)
-	return http.ListenAndServe(addr, umw(authmiddleware.AuthMiddleware(firebaseApp)(serveMux)))
+	return http.ListenAndServe(addr, amw(serveMux))
 }
 
 func main() {

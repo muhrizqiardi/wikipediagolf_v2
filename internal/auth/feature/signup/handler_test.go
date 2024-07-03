@@ -142,7 +142,5 @@ func TestHandler_NoError(t *testing.T) {
 	testutil.AssertNoError(t, err)
 	Handler(ms, tmpl).ServeHTTP(res, req)
 
-	testutil.AssertEqual(t, res.Result().Header.Get("HX-Redirect"), "/usernames/create")
-	testutil.AssertEqual(t, res.Result().Header.Get("HX-Target"), "body")
-	testutil.AssertEqual(t, res.Result().Header.Get("HX-Swap"), "outerHTML")
+	testutil.AssertEqual(t, http.StatusCreated, res.Result().StatusCode)
 }
