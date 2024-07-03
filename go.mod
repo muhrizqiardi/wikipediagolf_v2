@@ -62,5 +62,6 @@ require (
 require (
 	firebase.google.com/go/v4 v4.14.1
 	github.com/gorilla/schema v1.4.1
+	github.com/jmoiron/sqlx v1.4.0
 	github.com/lib/pq v1.10.9
 )
