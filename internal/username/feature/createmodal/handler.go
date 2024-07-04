@@ -8,9 +8,9 @@ import (
 	authctx "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 )
 
-func handler(s Service, tmpl *template.Template) http.Handler {
+func handler(s Service, tmpl *template.Template, c authctx.AuthContext) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		v, ok := authctx.GetFromRequest(r)
+		v, ok := c.GetFromRequest(r)
 		if !ok {
 			w.WriteHeader(http.StatusOK)
 			return

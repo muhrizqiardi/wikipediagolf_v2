@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	ctx "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -30,9 +30,10 @@ func TestAddEndpoint(t *testing.T) {
 			Service:  ms,
 			Template: tmpl,
 		}
+		c = authcontext.NewAuthContext()
 	)
 
-	ctx.SetRequest(req, ctx.Val{UID: "mockUID"})
+	c.SetRequest(req, authcontext.Val{UID: "mockUID"})
 	addEndpoint(serveMux, deps)
 
 	serveMux.ServeHTTP(res, req)

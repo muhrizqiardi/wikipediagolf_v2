@@ -33,7 +33,7 @@ func TestAddEndpoint(t *testing.T) {
 	)
 	req.Header.Set("Content-Type", contentType)
 
-	AddEndpoint(serveMux, deps)
+	addEndpoint(serveMux, deps)
 	serveMux.ServeHTTP(res, req)
 
 	testutil.AssertInequal(t, http.StatusNotFound, res.Result().StatusCode)

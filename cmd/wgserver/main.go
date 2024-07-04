@@ -14,6 +14,7 @@ import (
 	"google.golang.org/api/option"
 
 	firebase "firebase.google.com/go/v4"
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 	authmiddleware "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/middleware"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signin"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signinpage"
@@ -59,10 +60,11 @@ func run(
 	serveMux := http.NewServeMux()
 	tmpl := template.New("")
 
-	amw := authmiddleware.AuthMiddleware(firebaseApp)
+	actx := authcontext.NewAuthContext()
+	amw := authmiddleware.AuthMiddleware(firebaseApp, actx)
 
 	signuppage.Register(tmpl, serveMux)
-	home.Register(tmpl, serveMux)
+	home.Register(tmpl, serveMux, actx)
 	asset.Register(serveMux)
 	signinpage.Register(tmpl, serveMux)
 	roomcreatepage.Register(tmpl, serveMux)
@@ -75,7 +77,7 @@ func run(
 	signin.Register(context.Background(), firebaseApp, serveMux)
 	signout.Register(serveMux)
 	signup.Register(context.Background(), firebaseApp, tmpl, serveMux)
-	createUsernameModal.Register(context.Background(), db, tmpl, serveMux)
+	createUsernameModal.Register(context.Background(), db, tmpl, serveMux, actx)
 	featureUsernameCreate.BuildCreate(context.Background(), db, tmpl, serveMux)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
