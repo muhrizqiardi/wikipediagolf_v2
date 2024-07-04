@@ -164,7 +164,7 @@ func (r *Repository) GetRoomMembers(roomID uuid.UUID) ([]model.RoomMember, error
 	return result, nil
 }
 
-func (r *Repository) GetRoomBelongToMember(userUID uuid.UUID) (*model.Room, error) {
+func (r *Repository) GetRoomBelongToMember(userUID string) (*model.Room, error) {
 	var (
 		q      = query.QueryGetRoomBelongToMember
 		args   = []any{userUID}
