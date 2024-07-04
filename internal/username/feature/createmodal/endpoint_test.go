@@ -26,11 +26,12 @@ func TestAddEndpoint(t *testing.T) {
 		req      = httptest.NewRequest(http.MethodPost, "/usernames/check", body)
 		tmpl     = template.New("")
 		serveMux = http.NewServeMux()
+		c        = authcontext.NewAuthContext()
 		deps     = endpointDeps{
-			Service:  ms,
-			Template: tmpl,
+			Service:     ms,
+			Template:    tmpl,
+			AuthContext: c,
 		}
-		c = authcontext.NewAuthContext()
 	)
 
 	c.SetRequest(req, authcontext.Val{UID: "mockUID"})
