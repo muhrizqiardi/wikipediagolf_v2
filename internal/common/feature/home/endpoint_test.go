@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -21,7 +22,8 @@ func TestEndpoint(t *testing.T) {
 		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		deps := endpointDeps{
-			Template: tmpl,
+			Template:    tmpl,
+			AuthContext: authcontext.NewAuthContext(),
 		}
 
 		addEndpoint(serveMux, deps)
