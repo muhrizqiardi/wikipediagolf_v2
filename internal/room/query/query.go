@@ -40,11 +40,14 @@ const (
 				rm.owner_id as owner_id,
 				rm.room_id as room_id,
 				rm.user_uid as user_uid,
+				u.username as username,
 				rm.created_at as created_at, 
 				rm.updated_at as updated_at
 			from rooms as r
 			inner join room_members as rm
 				on rm.room_id = r.id
+			inner join usernames as u
+				on u.uid = rm.user_uid
 			where r.id = $1;
 	`
 

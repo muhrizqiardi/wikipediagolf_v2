@@ -4,7 +4,9 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"time"
 
+	firebase "firebase.google.com/go/v4"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/model"
@@ -16,8 +18,9 @@ var (
 )
 
 type Repository struct {
-	context context.Context
-	db      *sql.DB
+	context     context.Context
+	firebaseApp *firebase.App
+	db          *sql.DB
 }
 
 func NewRepository(ctx context.Context, db *sql.DB) *Repository {
@@ -142,11 +145,35 @@ func (r *Repository) GetRoomByID(roomID uuid.UUID) (*model.Room, error) {
 	return &result, nil
 }
 
-func (r *Repository) GetRoomMembers(roomID uuid.UUID) ([]model.RoomMember, error) {
+func (r *Repository) GetRoomMemberDisplayName(userUID string) (string, error) {
+	client, err := r.firebaseApp.Auth(r.context)
+	if err != nil {
+		return "", err
+	}
+
+	user, err := client.GetUser(r.context, userUID)
+	if err != nil {
+		return "", err
+	}
+
+	return user.DisplayName, nil
+}
+
+type GetRoomMembersRow struct {
+	ID        uuid.UUID `db:"id"`
+	IsOwner   bool      `db:"is_owner"`
+	RoomID    uuid.UUID `db:"room_id"`
+	UserUID   string    `db:"user_uid"`
+	Username  string    `db:"username"`
+	CreatedAt time.Time `db:"created_at"`
+	UpdatedAt time.Time `db:"updated_at"`
+}
+
+func (r *Repository) GetRoomMembers(roomID uuid.UUID) ([]GetRoomMembersRow, error) {
 	var (
 		q      = query.QueryGetRoomMembers
 		args   = []any{roomID}
-		result []model.RoomMember
+		result []GetRoomMembersRow
 	)
 
 	dbx := sqlx.NewDb(r.db, "postgres")
