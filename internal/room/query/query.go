@@ -1,29 +1,40 @@
 package query
 
 const (
-	queryInsertRoom = `
-		insert into rooms (code, state) values ($1, $2)
-			returning id, code, state, created_at, updated_at;
+	// args: `code`, `status`
+	QueryInsertRoom = `
+		insert into rooms (code, status) values ($1, $2)
+			returning id, code, status, created_at, updated_at;
 	`
-	queryInsertRoomMember = `
+
+	// args: `room_id`, `user_id`, `is_owner`
+	QueryInsertRoomMember = `
 		insert into room_members (room_id, user_uid, is_owner) values ($1, $2, $3)
 			returning id, is_owner, room_id, user_uid, created_at, updated_at;
 	`
-	queryDeleteRoomMember = `
+
+	// args: `room_id`, `user_uid`
+	QueryDeleteRoomMember = `
 		delete from room_members
 			where room_id = $1 and user_uid = $2;
 	`
-	queryGetRoomByCode = `
-		select id, code, state, created_at, updated_at
+
+	// args: `code`
+	QueryGetRoomByCode = `
+		select id, code, status, created_at, updated_at
 			from rooms
 			where code = $1;
 	`
-	queryGetRoomByID = `
-		select id, code, state, created_at, updated_at
+
+	// args: `id`
+	QueryGetRoomByID = `
+		select id, code, status, created_at, updated_at
 			from rooms
 			where id = $1;
 	`
-	queryGetRoomMembers = `
+
+	// args: `id`
+	QueryGetRoomMembers = `
 		select 
 				rm.id as id, 
 				rm.owner_id as owner_id,
@@ -36,11 +47,13 @@ const (
 				on rm.room_id = r.id
 			where r.id = $1;
 	`
-	queryGetRoomBelongToMember = `
+
+	// args: `user_uid`
+	QueryGetRoomBelongToMember = `
 		select 
 				r.id as id, 
 				r.code as code, 
-				r.state as state, 
+				r.status as status, 
 				r.created_at as created_at, 
 				r.updated_at as updated_at
 			from rooms as r
@@ -48,15 +61,19 @@ const (
 				on rm.room_id = r.id
 			where rm.user_uid = $1;
 	`
-	queryUpdateRoomState = `
+
+	// args: `id`, `status`
+	QueryUpdateRoomstatus = `
 		update rooms
 			set 
 				status = $2,
 				updated_at = current_timestamp
 			where id = $1
-			returning id, code, state, created_at, updated_at;
+			returning id, code, status, created_at, updated_at;
 	`
-	queryDelete = `
+
+	// args: `id`, `user_uid`
+	QueryDelete = `
 		delete from rooms
 			where id = $1 and user_uid = $2;
 	`
