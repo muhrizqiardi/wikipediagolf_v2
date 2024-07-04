@@ -18,7 +18,7 @@ type RoomMember struct {
 type Room struct {
 	ID          uuid.UUID `db:"id"`
 	Code        string    `db:"code"`
-	State       string    `db:"state"`
+	Status      string    `db:"status"`
 	RoomMembers []RoomMember
 	CreatedAt   time.Time `db:"created_at"`
 	UpdatedAt   time.Time `db:"updated_at"`
