@@ -91,6 +91,9 @@ func (r *Repository) DeleteRoomMember(roomID uuid.UUID, userUID string) error {
 	} else if rowsAffected < 1 {
 		return ErrNoRowsAffected
 	}
+	if err := tx.Commit(); err != nil {
+		return nil
+	}
 
 	return nil
 }
@@ -224,6 +227,9 @@ func (r *Repository) Delete(roomID uuid.UUID) error {
 		return err
 	} else if rowsAffected < 1 {
 		return ErrNoRowsAffected
+	}
+	if err := tx.Commit(); err != nil {
+		return nil
 	}
 
 	return nil
