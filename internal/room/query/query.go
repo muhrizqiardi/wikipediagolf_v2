@@ -34,7 +34,7 @@ const (
 			from rooms as r
 			inner join room_members as rm
 				on rm.room_id = r.id
-			where id = $1;
+			where r.id = $1;
 	`
 	queryGetRoomBelongToMember = `
 		select 
@@ -48,7 +48,7 @@ const (
 				on rm.room_id = r.id
 			where rm.user_uid = $1;
 	`
-	queryUpdateRoomStatus = `
+	queryUpdateRoomState = `
 		update rooms
 			set 
 				status = $2,
