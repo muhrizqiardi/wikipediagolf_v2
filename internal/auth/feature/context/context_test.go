@@ -1,4 +1,4 @@
-package ctx
+package context
 
 import (
 	"net/http"
@@ -11,9 +11,10 @@ import (
 func TestSetRequest(t *testing.T) {
 	var (
 		req = httptest.NewRequest(http.MethodGet, "/", nil)
+		c   = NewAuthContext()
 	)
 
-	SetRequest(req, Val{
+	c.SetRequest(req, Val{
 		UID: "testUID",
 	})
 
@@ -23,12 +24,13 @@ func TestSetRequest(t *testing.T) {
 func TestGetFromRequest(t *testing.T) {
 	var (
 		r = httptest.NewRequest(http.MethodGet, "/", nil)
+		c = NewAuthContext()
 	)
 
-	SetRequest(r, Val{
+	c.SetRequest(r, Val{
 		UID: "testUID",
 	})
-	v, ok := GetFromRequest(r)
+	v, ok := c.GetFromRequest(r)
 	testutil.AssertEqual(t, true, ok)
 	testutil.AssertEqualCMP(t, Val{UID: "testUID"}, v)
 }

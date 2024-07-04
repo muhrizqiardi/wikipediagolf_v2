@@ -5,10 +5,10 @@ import (
 	"net/http"
 )
 
-type EndpointDeps struct {
+type endpointDeps struct {
 	Template *template.Template
 }
 
-func AddEndpoint(serveMux *http.ServeMux, deps EndpointDeps) {
-	serveMux.Handle("/game/result", Handler(deps.Template))
+func addEndpoint(serveMux *http.ServeMux, deps endpointDeps) {
+	serveMux.Handle("/game/result", handler(deps.Template))
 }

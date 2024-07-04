@@ -21,10 +21,10 @@ func TestAddEndpoint(t *testing.T) {
 		req      = httptest.NewRequest(http.MethodPost, path, body)
 		serveMux = http.NewServeMux()
 	)
-	deps := EndpointDeps{
+	deps := endpointDeps{
 		Service: &mockService{createErr: nil},
 	}
-	AddEndpoint(serveMux, deps)
+	addEndpoint(serveMux, deps)
 	serveMux.ServeHTTP(res, req)
 
 	testutil.AssertInequal(t, http.StatusNotFound, res.Result().StatusCode)

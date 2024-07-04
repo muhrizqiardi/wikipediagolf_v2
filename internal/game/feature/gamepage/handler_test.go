@@ -1,4 +1,4 @@
-package game
+package gamepage
 
 import (
 	"html/template"
@@ -17,7 +17,7 @@ func TestHandler(t *testing.T) {
 			req  = httptest.NewRequest(http.MethodGet, path, nil)
 		)
 		tmpl := template.New("")
-		tmpl, err := AddTemplate(tmpl)
+		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
 

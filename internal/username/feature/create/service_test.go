@@ -16,7 +16,7 @@ func TestCreate_InvalidUsername(t *testing.T) {
 			UID:      "mockID",
 			Username: "invalid username",
 		}
-		s   = NewService(context.TODO(), mr)
+		s   = newService(context.TODO(), mr)
 		err = s.Create(payload)
 	)
 
@@ -31,7 +31,7 @@ func TestCreate_RepositoryErrorCode23505(t *testing.T) {
 			UID:      "mockID",
 			Username: "validUsername",
 		}
-		s   = NewService(context.TODO(), mr)
+		s   = newService(context.TODO(), mr)
 		err = s.Create(payload)
 	)
 
@@ -45,7 +45,7 @@ func TestCreate_RepositoryError(t *testing.T) {
 			UID:      "mockID",
 			Username: "validUsername",
 		}
-		s   = NewService(context.TODO(), mr)
+		s   = newService(context.TODO(), mr)
 		err = s.Create(payload)
 	)
 
@@ -60,7 +60,7 @@ func TestCreate_NoError(t *testing.T) {
 			UID:      "mockID",
 			Username: "validUsername",
 		}
-		s = NewService(context.TODO(), mr)
+		s = newService(context.TODO(), mr)
 	)
 
 	testutil.AssertNoError(t, s.Create(payload))

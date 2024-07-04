@@ -17,7 +17,7 @@ func TestHandler(t *testing.T) {
 			res = httptest.NewRecorder()
 		)
 
-		DistHandler().ServeHTTP(res, req)
+		distHandler().ServeHTTP(res, req)
 
 		var bodyBuf bytes.Buffer
 		written, err := io.Copy(&bodyBuf, res.Result().Body)
@@ -31,7 +31,7 @@ func TestHandler(t *testing.T) {
 			res = httptest.NewRecorder()
 		)
 
-		AssetHandler().ServeHTTP(res, req)
+		assetHandler().ServeHTTP(res, req)
 
 		var bodyBuf bytes.Buffer
 		written, err := io.Copy(&bodyBuf, res.Result().Body)

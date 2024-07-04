@@ -2,10 +2,10 @@ package asset
 
 import "net/http"
 
-func AssetHandler() http.Handler {
+func assetHandler() http.Handler {
 	return http.FileServerFS(assetFS)
 }
 
-func DistHandler() http.Handler {
+func distHandler() http.Handler {
 	return http.FileServerFS(distFS)
 }

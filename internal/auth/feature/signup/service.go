@@ -2,6 +2,8 @@ package signup
 
 import (
 	"context"
+
+	"firebase.google.com/go/v4/errorutils"
 )
 
 type Service interface {
@@ -13,7 +15,7 @@ type service struct {
 	userRepository Repository
 }
 
-func NewService(ctx context.Context, ur Repository) *service {
+func newService(ctx context.Context, ur Repository) *service {
 	return &service{
 		context:        ctx,
 		userRepository: ur,
@@ -38,6 +40,10 @@ func (s *service) SignUp(payload CreateUserRequest) (*CreateUserResponse, error)
 
 	u, err := s.userRepository.Create(payload.Email, payload.Password)
 	if err != nil {
+		if errorutils.IsAlreadyExists(err) {
+			return nil, ErrDuplicateEmail
+		}
+
 		return nil, err
 	}
 

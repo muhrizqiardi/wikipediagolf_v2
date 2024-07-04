@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-func AddTemplate(tmpl *template.Template) (*template.Template, error) {
+func addTemplate(tmpl *template.Template) (*template.Template, error) {
 	templateName := "template/index.html"
 	return tmpl.ParseFS(templateFS, templateName)
 }

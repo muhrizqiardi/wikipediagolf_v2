@@ -26,12 +26,13 @@ func TestHandler_UsernameFound(t *testing.T) {
 		res  = httptest.NewRecorder()
 		req  = httptest.NewRequest(http.MethodPost, "/usernames/check", body)
 		tmpl = template.New("")
+		c    = ctx.NewAuthContext()
 	)
 
-	ctx.SetRequest(req, ctx.Val{UID: "mockUID"})
+	c.SetRequest(req, ctx.Val{UID: "mockUID"})
 
-	AddTemplate(tmpl)
-	Handler(ms, tmpl).ServeHTTP(res, req)
+	addTemplate(tmpl)
+	handler(ms, tmpl, c).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
 	testutil.AssertNoError(t, err)
@@ -47,12 +48,13 @@ func TestHandler_UsernameNotFound(t *testing.T) {
 		res  = httptest.NewRecorder()
 		req  = httptest.NewRequest(http.MethodPost, "/usernames/check", body)
 		tmpl = template.New("")
+		c    = ctx.NewAuthContext()
 	)
 
-	ctx.SetRequest(req, ctx.Val{UID: "mockUID"})
+	c.SetRequest(req, ctx.Val{UID: "mockUID"})
 
-	AddTemplate(tmpl)
-	Handler(ms, tmpl).ServeHTTP(res, req)
+	addTemplate(tmpl)
+	handler(ms, tmpl, c).ServeHTTP(res, req)
 
 	doc, err := goquery.NewDocumentFromReader(res.Result().Body)
 	testutil.AssertNoError(t, err)

@@ -3,12 +3,15 @@ package home
 import (
 	"html/template"
 	"net/http"
+
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 )
 
-type EndpointDeps struct {
-	Template *template.Template
+type endpointDeps struct {
+	Template    *template.Template
+	AuthContext authcontext.AuthContext
 }
 
-func AddEndpoint(serveMux *http.ServeMux, deps EndpointDeps) {
-	serveMux.Handle("GET /{$}", Handler(deps.Template))
+func addEndpoint(serveMux *http.ServeMux, deps endpointDeps) {
+	serveMux.Handle("GET /{$}", handler(deps.Template, deps.AuthContext))
 }

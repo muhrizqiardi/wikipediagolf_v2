@@ -17,10 +17,10 @@ func TestHandler(t *testing.T) {
 			req  = httptest.NewRequest(http.MethodGet, path, nil)
 		)
 		tmpl := template.New("")
-		tmpl, err := AddTemplate(tmpl)
+		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 
-		Handler(tmpl).ServeHTTP(res, req)
+		handler(tmpl).ServeHTTP(res, req)
 
 		testutil.AssertEqual(t, res.Result().StatusCode, http.StatusOK)
 	})

@@ -19,7 +19,7 @@ func TestService_InvalidEmail(t *testing.T) {
 		expErr                     = ErrInvalidEmail
 	)
 
-	s := NewService(context.Background(), mr)
+	s := newService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -37,7 +37,7 @@ func TestService_InvalidPassword(t *testing.T) {
 		expErr                     = ErrInvalidPassword
 	)
 
-	s := NewService(context.Background(), mr)
+	s := newService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -55,7 +55,7 @@ func TestService_InvalidConfirmPassword(t *testing.T) {
 		expErr                     = ErrPasswordNotMatch
 	)
 
-	s := NewService(context.Background(), mr)
+	s := newService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -73,10 +73,10 @@ func TestService_DuplicateEmail(t *testing.T) {
 			ConfirmPassword: "secure_Password321",
 		}
 		expVal *CreateUserResponse = nil
-		expErr                     = ErrDuplicateUser
+		expErr                     = ErrDuplicateEmail
 	)
 
-	s := NewService(context.Background(), mr)
+	s := newService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -97,7 +97,7 @@ func TestService_UserRepositoryFindReturnsError(t *testing.T) {
 		expErr                     = ErrDuplicateEmail
 	)
 
-	s := NewService(context.Background(), mr)
+	s := newService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)
@@ -134,7 +134,7 @@ func TestService_NoError(t *testing.T) {
 		expErr error = nil
 	)
 
-	s := NewService(context.Background(), mr)
+	s := newService(context.Background(), mr)
 	got, err := s.SignUp(payload)
 	testutil.CompareError(t, expErr, err)
 	testutil.AssertEqualCMP(t, expVal, got)

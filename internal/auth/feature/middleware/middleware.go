@@ -8,7 +8,10 @@ import (
 	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 )
 
-func AuthMiddleware(firebaseApp *firebase.App) func(next http.Handler) http.Handler {
+func AuthMiddleware(
+	firebaseApp *firebase.App,
+	c authcontext.AuthContext,
+) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			client, err := firebaseApp.Auth(r.Context())
@@ -30,7 +33,7 @@ func AuthMiddleware(firebaseApp *firebase.App) func(next http.Handler) http.Hand
 				return
 			}
 
-			authcontext.SetRequest(r, authcontext.Val{
+			c.SetRequest(r, authcontext.Val{
 				UID: decoded.UID,
 			})
 

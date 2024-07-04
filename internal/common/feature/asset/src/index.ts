@@ -42,14 +42,19 @@ function addEventHandlers() {
   if (signupFormEl !== null) {
     window.htmx.on("#signup", "htmx:afterRequest", (evt) => {
       const htmxEvt = evt as Event & {
-        elt: Element;
-        xhr: XMLHttpRequest;
-        target: EventTarget;
-        requestConfig: object;
-        successful: boolean;
-        failed: boolean;
+        detail?: {
+          elt?: Element;
+          xhr?: XMLHttpRequest;
+          target?: EventTarget;
+          requestConfig?: object;
+          successful?: boolean;
+          failed?: boolean;
+        };
       };
-      if (htmxEvt.xhr.status === 201) {
+      if (htmxEvt.detail === undefined || htmxEvt.detail === null) return;
+      if (htmxEvt.detail.xhr === undefined || htmxEvt.detail.xhr === null)
+        return;
+      if (htmxEvt.detail.xhr.status === 201) {
         signInHandler(evt);
       }
     });

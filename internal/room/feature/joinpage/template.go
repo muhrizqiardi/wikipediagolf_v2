@@ -5,10 +5,10 @@ import (
 	"io"
 )
 
-func AddTemplate(tmpl *template.Template) (*template.Template, error) {
+func addTemplate(tmpl *template.Template) (*template.Template, error) {
 	return tmpl.ParseFS(templateFS, "template/join-room.html")
 }
 
-func ExecuteTemplate(tmpl *template.Template, wr io.Writer) error {
+func executeTemplate(tmpl *template.Template, wr io.Writer) error {
 	return tmpl.ExecuteTemplate(wr, "join-room.html", nil)
 }

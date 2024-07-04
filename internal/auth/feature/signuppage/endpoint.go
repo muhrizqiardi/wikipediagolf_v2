@@ -9,6 +9,6 @@ type EndpointDeps struct {
 	Template *template.Template
 }
 
-func AddEndpoint(serveMux *http.ServeMux, deps EndpointDeps) {
-	serveMux.Handle("/sign-up", Handler(deps.Template))
+func addEndpoint(serveMux *http.ServeMux, deps EndpointDeps) {
+	serveMux.Handle("/sign-up", handler(deps.Template))
 }

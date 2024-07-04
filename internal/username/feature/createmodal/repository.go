@@ -16,7 +16,7 @@ type repository struct {
 	db      *sql.DB
 }
 
-func NewRepository(ctx context.Context, db *sql.DB) *repository {
+func newRepository(ctx context.Context, db *sql.DB) *repository {
 	return &repository{
 		context: ctx,
 		db:      db,
