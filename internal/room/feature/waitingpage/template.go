@@ -12,8 +12,10 @@ func AddTemplate(tmpl *template.Template) (*template.Template, error) {
 }
 
 type TemplateData struct {
-	Room    model.Room
-	Members []model.RoomMember
+	CurrentUserUID string
+	Room           model.Room
+	Members        []GetRoomResponseMember
+	MembersTotal   int
 }
 
 func ExecuteTemplate(tmpl *template.Template, wr io.Writer, data TemplateData) error {

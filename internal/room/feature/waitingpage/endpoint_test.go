@@ -6,6 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/google/uuid"
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/model"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -16,16 +19,32 @@ func TestAddEndpoint(t *testing.T) {
 			res      = httptest.NewRecorder()
 			req      = httptest.NewRequest(http.MethodGet, path, nil)
 			serveMux = http.NewServeMux()
+			c        = authcontext.NewAuthContext()
+			ms       = &mockService{
+				getRoomV: &GetRoomResponse{
+					Room: model.Room{
+						ID:     uuid.New(),
+						Code:   "123456",
+						Status: "open",
+					},
+					Members: []GetRoomResponseMember{},
+				},
+				getRoomErr: nil,
+			}
+			mockUID = "mockUID"
 		)
+		c.SetRequest(req, authcontext.Val{UID: mockUID})
 		tmpl := template.New("")
 		tmpl, err := AddTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		deps := EndpointDeps{
-			Template: tmpl,
+			Template:    tmpl,
+			AuthContext: c,
+			Service:     ms,
 		}
 		AddEndpoint(serveMux, deps)
 		serveMux.ServeHTTP(res, req)
 
-		testutil.AssertEqual(t, res.Result().StatusCode, http.StatusOK)
+		testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
 	})
 }
