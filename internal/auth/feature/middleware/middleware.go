@@ -33,8 +33,16 @@ func AuthMiddleware(
 				return
 			}
 
+			u, err := client.GetUser(r.Context(), decoded.UID)
+			if err != nil {
+				slog.Debug("failed to get user from UID", "err", err)
+				next.ServeHTTP(w, r)
+				return
+			}
+
 			c.SetRequest(r, authcontext.Val{
-				UID: decoded.UID,
+				UID:    decoded.UID,
+				IsAnon: u.Email == "",
 			})
 
 			next.ServeHTTP(w, r)
