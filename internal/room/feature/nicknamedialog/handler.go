@@ -13,11 +13,6 @@ func handler(
 	c authcontext.AuthContext,
 ) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, ok := c.GetFromRequest(r)
-		if ok {
-			w.Header().Set("HX-Redirect", "/")
-		}
-
 		if err := executeTemplate(tmpl, w); err != nil {
 			slog.Error("failed to execute template", "err", err)
 			w.WriteHeader(http.StatusInternalServerError)

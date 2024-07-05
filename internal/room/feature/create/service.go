@@ -34,6 +34,14 @@ func NewService(c CodeGenerator, repository Repository) *service {
 }
 
 func (s *service) Create(ownerUID string) (*CreateRoomResponse, error) {
+	// delete existing room first
+	existingRoom, err := s.repository.GetRoomBelongToMember(ownerUID)
+	if err == nil {
+		if err := s.repository.Delete(existingRoom.ID); err != nil {
+			return nil, err
+		}
+	}
+
 	code := s.codeGenerator.Generate()
 	room, err := s.repository.InsertRoom(code, "open")
 	if err != nil {
