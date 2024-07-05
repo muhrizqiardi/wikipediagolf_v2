@@ -83,14 +83,37 @@
               </button>
             </form>
             {{if .IsAuthenticated}}
-            <a
-              href="/rooms/create"
-              class="btn btn-lg flex-col items-start justify-center"
+            <form
+              class="w-full"
+              action="/rooms/create"
+              method="post"
+              hx-boost="true"
             >
-              <span>Create Room</span>
-              <span class="font-normal text-xs">Play with your friends</span>
-            </a>
-            {{else}} {{end}}
+              <button
+                type="submit"
+                class="btn btn-lg flex-col items-start justify-center"
+              >
+                <span>Create Room</span>
+                <span class="font-normal text-xs">Play with your friends</span>
+              </button>
+            </form>
+            {{else}}
+            <form
+              class="w-full"
+              action="/rooms/choose-nickname"
+              method="post"
+              hx-boost="true"
+              hx-target="#nicknameModalContainer"
+            >
+              <button
+                type="submit"
+                class="btn btn-lg flex-col items-start justify-center"
+              >
+                <span>Create Room</span>
+                <span class="font-normal text-xs">Play with your friends</span>
+              </button>
+            </form>
+            {{end}}
             <a
               href="/rooms/join"
               class="btn btn-lg flex-col items-start justify-center"
