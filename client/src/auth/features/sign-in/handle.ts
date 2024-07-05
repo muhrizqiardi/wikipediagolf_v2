@@ -1,7 +1,7 @@
 import { FirebaseError } from "@firebase/app";
 import { SignInService } from "./service";
 
-export function handler(signInService: SignInService) {
+export function handleSignIn(signInService: SignInService) {
   return (event: Event) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);

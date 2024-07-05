@@ -29,6 +29,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gameresult"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/pregame"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/surrender"
+	roomcreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/create"
 	roomcreatepage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/createpage"
 	roomjoinpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/joinpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/nicknamedialog"
@@ -68,6 +69,7 @@ func run(
 	home.Register(tmpl, serveMux, actx)
 	asset.Register(serveMux)
 	signinpage.Register(tmpl, serveMux)
+	roomcreate.Register(context.Background(), db, firebaseApp, serveMux)
 	roomcreatepage.Register(tmpl, serveMux)
 	roomjoinpage.Register(tmpl, serveMux)
 	roomwaitingpage.Register(tmpl, serveMux)

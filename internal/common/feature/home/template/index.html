@@ -84,12 +84,7 @@
               </button>
             </form>
             {{if .IsAuthenticated}}
-            <form
-              class="w-full"
-              action="/rooms/create"
-              method="post"
-              hx-boost="true"
-            >
+            <form class="w-full" hx-post="/rooms" hx-boost="true">
               <button
                 type="submit"
                 class="btn btn-lg w-full flex-col items-start justify-center"
@@ -101,8 +96,7 @@
             {{else}}
             <form
               class="w-full"
-              action="/rooms/choose-nickname"
-              method="post"
+              hx-post="/rooms/choose-nickname"
               hx-boost="true"
               hx-target="#nicknameModalContainer"
             >

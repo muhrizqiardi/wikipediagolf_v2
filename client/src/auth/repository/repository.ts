@@ -1,7 +1,9 @@
 import {
   Auth,
+  signInAnonymously,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
   User,
   UserCredential,
 } from "@firebase/auth";
@@ -9,6 +11,11 @@ import {
 export interface IRepository {
   backendExchangeToken(idToken: string): Promise<void>;
   firebaseGetCurrentUser(): User | null;
+  firebaseUpdateProfile(
+    oldUser: User,
+    newUser: { displayName?: string; photoURL?: string },
+  ): Promise<void>;
+  firebaseSignInAnonymously(): Promise<UserCredential>;
   firebaseSignInWithEmailAndPassword(
     email: string,
     password: string,
@@ -36,8 +43,19 @@ export class Repository implements IRepository {
     }
   }
 
+  async firebaseUpdateProfile(
+    oldUser: User,
+    newUser: { displayName?: string; photoURL?: string },
+  ): Promise<void> {
+    return await updateProfile(oldUser, newUser);
+  }
+
   firebaseGetCurrentUser(): User | null {
     return this.firebaseAuth.currentUser;
+  }
+
+  async firebaseSignInAnonymously(): Promise<UserCredential> {
+    return await signInAnonymously(this.firebaseAuth);
   }
 
   async firebaseSignInWithEmailAndPassword(
