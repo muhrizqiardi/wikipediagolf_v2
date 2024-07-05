@@ -72,7 +72,7 @@ func run(
 	roomcreate.Register(context.Background(), db, firebaseApp, serveMux)
 	roomcreatepage.Register(tmpl, serveMux)
 	roomjoinpage.Register(tmpl, serveMux)
-	roomwaitingpage.Register(tmpl, serveMux)
+	roomwaitingpage.Register(context.Background(), db, firebaseApp, tmpl, serveMux)
 	gamepage.Register(tmpl, serveMux)
 	surrender.Register(tmpl, serveMux)
 	gameresult.Register(tmpl, serveMux)

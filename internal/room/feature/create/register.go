@@ -11,7 +11,7 @@ import (
 )
 
 func Register(ctx context.Context, db *sql.DB, firebaseApp *firebase.App, serveMux *http.ServeMux) {
-	r := repository.NewRepository(ctx, db)
+	r := repository.NewRepository(ctx, db, firebaseApp)
 	s := NewService(NewCodeGenerator(), r)
 	deps := endpointDeps{
 		Service:     s,
