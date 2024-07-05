@@ -1,9 +1,9 @@
 import { initializeApp } from "@firebase/app";
 import { connectAuthEmulator, getAuth } from "@firebase/auth";
-import { SignInService } from "./features/sign-in/service";
-import { FirebaseService } from "./features/firebase/service";
-import { handler } from "./features/sign-in/handle";
 import { htmx as htmxModule } from "./htmx";
+import { Repository } from "./auth/repository/repository";
+import { SignInService } from "./auth/features/sign-in/service";
+import { handler } from "./auth/features/sign-in/handle";
 
 declare const window: Window &
   typeof globalThis & {
@@ -28,8 +28,8 @@ if (window.htmx === null || window.htmx === undefined)
 
 DEV: connectAuthEmulator(auth, "http://127.0.0.1:9099");
 
-const firebaseService = new FirebaseService(auth);
-const signInService = new SignInService(firebaseService);
+const repository = new Repository(auth);
+const signInService = new SignInService(repository);
 const signInHandler = handler(signInService);
 
 function addEventHandlers() {

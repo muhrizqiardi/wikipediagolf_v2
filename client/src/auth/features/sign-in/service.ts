@@ -1,36 +1,29 @@
 import { SignInRequest, signInRequestSchema, SignInResponse } from "./schema";
-import { IFirebaseService } from "../firebase/service";
 import { ZodError } from "zod";
 import { ValidationError } from "./error";
+import { IRepository } from "../../repository/repository";
 
 export interface ISignInService {
   signIn(payload: SignInRequest): Promise<SignInResponse>;
 }
 
 export class SignInService implements ISignInService {
-  constructor(private firebaseService: IFirebaseService) {}
+  constructor(private repository: IRepository) {}
 
   async signIn(payload: SignInRequest) {
     try {
       const validPayload = signInRequestSchema.parse(payload);
-      const { user } = await this.firebaseService.signInWithEmailAndPassword(
+      const { user } = await this.repository.firebaseSignInWithEmailAndPassword(
         validPayload.email,
         validPayload.password,
       );
-      const currentUser = this.firebaseService.getCurrentUser();
+      const currentUser = this.repository.firebaseGetCurrentUser();
       if (currentUser === null) throw new Error("currentUser is null");
       const { token: idToken } = await currentUser.getIdTokenResult(false);
 
-      const tokenExchangeReq = new URLSearchParams();
-      tokenExchangeReq.set("idToken", idToken);
-      const tokenExchangeURL = new URL("/sign-in", window.location.origin);
-      const tokenExchangeResult = await fetch(tokenExchangeURL, {
-        method: "POST",
-        body: tokenExchangeReq,
-      });
-      if (!tokenExchangeResult.ok) throw new Error("failed to sign in");
+      await this.repository.backendExchangeToken(idToken);
+      await this.repository.firebaseSignOut();
 
-      await this.firebaseService.signOut();
       return user;
     } catch (error) {
       if (error instanceof ZodError) {

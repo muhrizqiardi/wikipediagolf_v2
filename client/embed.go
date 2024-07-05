@@ -1,9 +1,9 @@
-package asset
+package client
 
 import "embed"
 
 //go:embed dist/*
-var distFS embed.FS
+var DistFS embed.FS
 
 //go:embed assets/*
-var assetFS embed.FS
+var AssetFS embed.FS
