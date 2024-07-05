@@ -31,6 +31,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/surrender"
 	roomcreatepage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/createpage"
 	roomjoinpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/joinpage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/nicknamedialog"
 	roomwaitingpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/waitingpage"
 	featureUsernameCreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/create"
 	createUsernameModal "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/createmodal"
@@ -79,6 +80,7 @@ func run(
 	signup.Register(context.Background(), firebaseApp, tmpl, serveMux)
 	createUsernameModal.Register(context.Background(), db, tmpl, serveMux, actx)
 	featureUsernameCreate.BuildCreate(context.Background(), db, tmpl, serveMux)
+	nicknamedialog.Register(tmpl, serveMux, actx)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)

@@ -7,7 +7,7 @@
     </header>
     <form
       class="flex flex-col gap-2"
-      action="/usernames/create"
+      action="/rooms/create"
       method="post"
       hx-target="#nicknameModalForm"
       hx-boost="true"
@@ -16,7 +16,7 @@
       <input type="hidden" name="uid" value="{{.UID}}" />
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text">nickname</span>
+          <span class="label-text">Nickname</span>
         </div>
         <input
           type="text"
