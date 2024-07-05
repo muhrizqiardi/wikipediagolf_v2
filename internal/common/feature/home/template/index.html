@@ -75,6 +75,13 @@
               </dialog>
             </div>
 
+            <div
+              class="w-full grid"
+              hx-post="/rooms/check"
+              hx-target="this"
+              hx-swap="innerHTML"
+              hx-trigger="load"
+            ></div>
             <form class="w-full">
               <button
                 class="btn btn-lg flex-col items-start justify-center w-full"

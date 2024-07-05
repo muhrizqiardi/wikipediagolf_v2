@@ -61,7 +61,9 @@ const (
 			from rooms as r
 			inner join room_members as rm
 				on rm.room_id = r.id
-			where rm.user_uid = $1;
+			where 
+				rm.user_uid = $1 and
+				r.status = 'open';
 	`
 
 	// args: `id`, `status`

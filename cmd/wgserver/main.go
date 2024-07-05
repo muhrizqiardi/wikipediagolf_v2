@@ -29,6 +29,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gameresult"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/pregame"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/surrender"
+	roomcheck "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/check"
 	roomcreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/create"
 	roomcreatepage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/createpage"
 	roomjoinpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/joinpage"
@@ -83,6 +84,7 @@ func run(
 	createUsernameModal.Register(context.Background(), db, tmpl, serveMux, actx)
 	featureUsernameCreate.BuildCreate(context.Background(), db, tmpl, serveMux)
 	nicknamedialog.Register(tmpl, serveMux, actx)
+	roomcheck.Register(context.Background(), db, firebaseApp, tmpl, serveMux)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)
