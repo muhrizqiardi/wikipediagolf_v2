@@ -4,12 +4,9 @@
   "description": "",
   "main": "tailwind.config.js",
   "scripts": {
-    "build-js": "esbuild --drop-labels=DEV --drop:console ./client/src/index.ts --outdir=./client/dist --bundle --allow-overwrite",
-    "build-tailwindcss": "tailwindcss -i ./client/src/styles.css -o ./client/dist/styles.css",
-    "build": "npm run build-tailwindcss && npm run build-js",
-    "dev-js": "esbuild ./client/src/index.ts --sourcemap --outdir=./client/dist --bundle --allow-overwrite",
-    "dev": "npm run build-tailwindcss && npm run dev-js",
-    "test": "vitest"
+    "build": "node ./scripts/build.cjs",
+    "dev": "bun ./scripts/dev.cjs",
+    "test": "bun test"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +14,12 @@
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.67",
     "@iconify/tailwind": "^1.1.1",
+    "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.10",
+    "esbuild": "^0.23.0",
+    "esbuild-postcss": "^0.0.4",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.4",
     "vitest": "^1.6.0"
   },
   "dependencies": {
