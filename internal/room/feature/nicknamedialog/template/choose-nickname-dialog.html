@@ -1,27 +1,31 @@
-<dialog id="checkUsernameModal" open class="modal">
+<dialog id="nicknameModal" open class="modal">
   <div class="modal-box shadow-md">
     <header class="flex justify-start items-center text-center gap-3">
-      <h2 class="text-lg font-semibold text-center">Choose Username</h2>
+      <h2 class="text-lg font-semibold text-center">
+        Choose Nickname to continue
+      </h2>
     </header>
     <form
       class="flex flex-col gap-2"
-      action="/rooms/create"
+      action="/usernames/create"
       method="post"
+      hx-target="#nicknameModalForm"
       hx-boost="true"
     >
+      <div id="createusernameAlertContainer" class="mt-2"></div>
       <input type="hidden" name="uid" value="{{.UID}}" />
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text">Username</span>
+          <span class="label-text">nickname</span>
         </div>
         <input
           type="text"
-          name="username"
+          name="displayName"
           class="input input-bordered w-full"
           required
         />
       </label>
-      <button type="submit" class="btn btn-primary mt-2">Save</button>
+      <button type="submit" class="btn btn-primary mt-2">Continue</button>
       <button type="button" class="btn btn-ghost text-error mt-8">
         Sign out
       </button>
