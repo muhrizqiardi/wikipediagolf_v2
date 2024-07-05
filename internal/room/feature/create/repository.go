@@ -8,4 +8,6 @@ import (
 type Repository interface {
 	InsertRoom(roomCode, status string) (*model.Room, error)
 	InsertRoomMember(roomID uuid.UUID, userUID string, isOwner bool) (*model.RoomMember, error)
+	GetRoomBelongToMember(userUID string) (*model.Room, error)
+	Delete(roomID uuid.UUID) error
 }

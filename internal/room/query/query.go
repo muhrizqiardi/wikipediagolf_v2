@@ -37,16 +37,15 @@ const (
 	QueryGetRoomMembers = `
 		select 
 				rm.id as id, 
-				rm.owner_id as owner_id,
 				rm.room_id as room_id,
 				rm.user_uid as user_uid,
-				u.username as username,
+				coalesce(u.username, '') as username,
 				rm.created_at as created_at, 
 				rm.updated_at as updated_at
 			from rooms as r
 			inner join room_members as rm
 				on rm.room_id = r.id
-			inner join usernames as u
+			left join usernames as u
 				on u.uid = rm.user_uid
 			where r.id = $1;
 	`
@@ -62,7 +61,9 @@ const (
 			from rooms as r
 			inner join room_members as rm
 				on rm.room_id = r.id
-			where rm.user_uid = $1;
+			where 
+				rm.user_uid = $1 and
+				r.status = 'open';
 	`
 
 	// args: `id`, `status`

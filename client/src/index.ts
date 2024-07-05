@@ -3,7 +3,9 @@ import { connectAuthEmulator, getAuth } from "@firebase/auth";
 import { htmx as htmxModule } from "./htmx";
 import { Repository } from "./auth/repository/repository";
 import { SignInService } from "./auth/features/sign-in/service";
-import { handler } from "./auth/features/sign-in/handle";
+import { handleSignIn } from "./auth/features/sign-in/handle";
+import { handleSignUpAnon } from "./auth/features/sign-up-anon/handle";
+import { SignUpAnonService } from "./auth/features/sign-up-anon/service";
 
 declare const window: Window &
   typeof globalThis & {
@@ -30,13 +32,17 @@ DEV: connectAuthEmulator(auth, "http://127.0.0.1:9099");
 
 const repository = new Repository(auth);
 const signInService = new SignInService(repository);
-const signInHandler = handler(signInService);
+const signUpAnonService = new SignUpAnonService(repository);
+const signInHandler = handleSignIn(signInService);
+const signUpAnonHandler = handleSignUpAnon(signUpAnonService, window.htmx);
 
 function addEventHandlers() {
   const signinFormEl = document.querySelector("#signin");
-  if (signinFormEl !== null) {
-    signinFormEl.addEventListener("submit", signInHandler);
-  }
+  signinFormEl?.addEventListener("submit", signInHandler);
+
+  const chooseNicknameModalFormEl =
+    document.querySelector("#nicknameModalForm");
+  chooseNicknameModalFormEl?.addEventListener("submit", signUpAnonHandler);
 
   const signupFormEl = document.querySelector("#signup");
   if (signupFormEl !== null) {
@@ -60,4 +66,4 @@ function addEventHandlers() {
     });
   }
 }
-addEventHandlers();
+window.htmx.onLoad(() => addEventHandlers());

@@ -23,10 +23,11 @@ type Repository struct {
 	db          *sql.DB
 }
 
-func NewRepository(ctx context.Context, db *sql.DB) *Repository {
+func NewRepository(ctx context.Context, db *sql.DB, firebaseApp *firebase.App) *Repository {
 	return &Repository{
-		context: ctx,
-		db:      db,
+		context:     ctx,
+		firebaseApp: firebaseApp,
+		db:          db,
 	}
 }
 
@@ -42,7 +43,7 @@ func (r *Repository) InsertRoom(roomCode, status string) (*model.Room, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := txx.Get(&result, q, args); err != nil {
+	if err := txx.Get(&result, q, args...); err != nil {
 		return nil, err
 	}
 	if err := txx.Commit(); err != nil {
@@ -64,7 +65,7 @@ func (r *Repository) InsertRoomMember(roomID uuid.UUID, userUID string, isOwner 
 	if err != nil {
 		return nil, err
 	}
-	if err := txx.Get(&result, q, args); err != nil {
+	if err := txx.Get(&result, q, args...); err != nil {
 		return nil, err
 	}
 	if err := txx.Commit(); err != nil {
@@ -84,7 +85,7 @@ func (r *Repository) DeleteRoomMember(roomID uuid.UUID, userUID string) error {
 	if err != nil {
 		return err
 	}
-	sqlResult, err := tx.Exec(q, args)
+	sqlResult, err := tx.Exec(q, args...)
 	if err != nil {
 		return err
 	}
@@ -113,7 +114,7 @@ func (r *Repository) GetRoomByCode(roomCode string) (*model.Room, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := txx.Get(&result, q, args); err != nil {
+	if err := txx.Get(&result, q, args...); err != nil {
 		return nil, err
 	}
 	if err := txx.Commit(); err != nil {
@@ -135,7 +136,7 @@ func (r *Repository) GetRoomByID(roomID uuid.UUID) (*model.Room, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := txx.Get(&result, q, args); err != nil {
+	if err := txx.Get(&result, q, args...); err != nil {
 		return nil, err
 	}
 	if err := txx.Commit(); err != nil {
@@ -181,7 +182,7 @@ func (r *Repository) GetRoomMembers(roomID uuid.UUID) ([]GetRoomMembersRow, erro
 	if err != nil {
 		return nil, err
 	}
-	if err := txx.Select(&result, q, args); err != nil {
+	if err := txx.Select(&result, q, args...); err != nil {
 		return nil, err
 	}
 	if err := txx.Commit(); err != nil {
@@ -203,7 +204,7 @@ func (r *Repository) GetRoomBelongToMember(userUID string) (*model.Room, error) 
 	if err != nil {
 		return nil, err
 	}
-	if err := txx.Get(&result, q, args); err != nil {
+	if err := txx.Get(&result, q, args...); err != nil {
 		return nil, err
 	}
 	if err := txx.Commit(); err != nil {
@@ -225,7 +226,7 @@ func (r *Repository) UpdateRoomState(roomID uuid.UUID, newStatus string) (*model
 	if err != nil {
 		return nil, err
 	}
-	if err := txx.Get(&result, q, args); err != nil {
+	if err := txx.Get(&result, q, args...); err != nil {
 		return nil, err
 	}
 	if err := txx.Commit(); err != nil {
@@ -245,7 +246,7 @@ func (r *Repository) Delete(roomID uuid.UUID) error {
 	if err != nil {
 		return err
 	}
-	sqlResult, err := tx.Exec(q, args)
+	sqlResult, err := tx.Exec(q, args...)
 	if err != nil {
 		return err
 	}

@@ -18,7 +18,8 @@ func NewAuthContext() *authContext {
 }
 
 type Val struct {
-	UID string
+	UID    string
+	IsAnon bool
 }
 
 type Key string

@@ -8,6 +8,7 @@
   </head>
   <body class="bg-white antialiased">
     <script src="/dist/index.js"></script>
+    <script src="/assets/surreal.js"></script>
     <div
       class="flex flex-col gap-8 justify-center items-center lg:min-h-screen bg-base-200 p-3"
     >
@@ -74,6 +75,13 @@
               </dialog>
             </div>
 
+            <div
+              class="w-full grid"
+              hx-post="/rooms/check"
+              hx-target="this"
+              hx-swap="innerHTML"
+              hx-trigger="load"
+            ></div>
             <form class="w-full">
               <button
                 class="btn btn-lg flex-col items-start justify-center w-full"
@@ -82,13 +90,32 @@
                 <span class="font-normal text-xs">Single player</span>
               </button>
             </form>
-            <a
-              href="/rooms/create"
-              class="btn btn-lg flex-col items-start justify-center"
+            {{if .IsAuthenticated}}
+            <form class="w-full" hx-post="/rooms" hx-boost="true">
+              <button
+                type="submit"
+                class="btn btn-lg w-full flex-col items-start justify-center"
+              >
+                <span>Create Room</span>
+                <span class="font-normal text-xs">Play with your friends</span>
+              </button>
+            </form>
+            {{else}}
+            <form
+              class="w-full"
+              hx-post="/rooms/choose-nickname"
+              hx-boost="true"
+              hx-target="#nicknameModalContainer"
             >
-              <span>Create Room</span>
-              <span class="font-normal text-xs">Play with your friends</span>
-            </a>
+              <button
+                type="submit"
+                class="btn btn-lg w-full flex-col items-start justify-center"
+              >
+                <span>Create Room</span>
+                <span class="font-normal text-xs">Play with your friends</span>
+              </button>
+            </form>
+            {{end}}
             <a
               href="/rooms/join"
               class="btn btn-lg flex-col items-start justify-center"
@@ -156,6 +183,7 @@
         hx-trigger="load"
         hx-swap="outerHTML"
       ></div>
+      <div id="nicknameModalContainer"></div>
     </div>
   </body>
 </html>

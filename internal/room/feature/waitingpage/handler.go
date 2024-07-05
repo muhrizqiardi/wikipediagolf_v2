@@ -29,8 +29,10 @@ func handler(
 		}
 
 		if err := ExecuteTemplate(tmpl, w, TemplateData{
-			Room:    response.Room,
-			Members: response.Members,
+			CurrentUserUID: v.UID,
+			Room:           response.Room,
+			Members:        response.Members,
+			MembersTotal:   len(response.Members),
 		}); err != nil {
 			slog.Error("failed to execute template", "err", err)
 			return

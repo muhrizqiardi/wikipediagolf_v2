@@ -1,4 +1,4 @@
-package joinpage
+package check
 
 import (
 	"html/template"

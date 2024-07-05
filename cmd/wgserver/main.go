@@ -29,8 +29,11 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gameresult"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/pregame"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/surrender"
+	roomcheck "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/check"
+	roomcreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/create"
 	roomcreatepage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/createpage"
 	roomjoinpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/joinpage"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/nicknamedialog"
 	roomwaitingpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/waitingpage"
 	featureUsernameCreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/create"
 	createUsernameModal "github.com/muhrizqiardi/wikipediagolf_v2/internal/username/feature/createmodal"
@@ -67,9 +70,10 @@ func run(
 	home.Register(tmpl, serveMux, actx)
 	asset.Register(serveMux)
 	signinpage.Register(tmpl, serveMux)
+	roomcreate.Register(context.Background(), db, firebaseApp, serveMux)
 	roomcreatepage.Register(tmpl, serveMux)
 	roomjoinpage.Register(tmpl, serveMux)
-	roomwaitingpage.Register(tmpl, serveMux)
+	roomwaitingpage.Register(context.Background(), db, firebaseApp, tmpl, serveMux)
 	gamepage.Register(tmpl, serveMux)
 	surrender.Register(tmpl, serveMux)
 	gameresult.Register(tmpl, serveMux)
@@ -79,6 +83,8 @@ func run(
 	signup.Register(context.Background(), firebaseApp, tmpl, serveMux)
 	createUsernameModal.Register(context.Background(), db, tmpl, serveMux, actx)
 	featureUsernameCreate.BuildCreate(context.Background(), db, tmpl, serveMux)
+	nicknamedialog.Register(tmpl, serveMux, actx)
+	roomcheck.Register(context.Background(), db, firebaseApp, tmpl, serveMux)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)

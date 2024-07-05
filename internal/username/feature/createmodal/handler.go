@@ -16,6 +16,11 @@ func handler(s Service, tmpl *template.Template, c authctx.AuthContext) http.Han
 			return
 		}
 
+		if v.IsAnon {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
 		if _, err := s.FindByUID(v.UID); err != nil {
 			if err := ExecuteTemplate(tmpl, w, TemplateData{
 				UID: v.UID,

@@ -1,4 +1,4 @@
-package waitingpage
+package check
 
 import (
 	"context"
@@ -11,19 +11,14 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/repository"
 )
 
-func Register(
-	ctx context.Context,
-	db *sql.DB,
-	firebaseApp *firebase.App,
-	tmpl *template.Template,
-	serveMux *http.ServeMux,
-) {
-	AddTemplate(tmpl)
+func Register(ctx context.Context, db *sql.DB, firebaseApp *firebase.App, tmpl *template.Template, serveMux *http.ServeMux) {
 	r := repository.NewRepository(ctx, db, firebaseApp)
-	deps := EndpointDeps{
+	addTemplate(tmpl)
+	s := newService(r)
+	deps := endpointDeps{
 		Template:    tmpl,
+		Service:     s,
 		AuthContext: authcontext.NewAuthContext(),
-		Service:     NewService(r),
 	}
-	AddEndpoint(serveMux, deps)
+	addEndpoint(serveMux, deps)
 }

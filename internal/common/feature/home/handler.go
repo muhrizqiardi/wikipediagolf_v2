@@ -25,12 +25,12 @@ func handler(
 			return
 		}
 
-		data := TemplateData{
-			IsAuthenticated: ok,
-		}
-
+		var data TemplateData
 		if ok {
 			data.UID = v.UID
+			if !v.IsAnon {
+				data.IsAuthenticated = true
+			}
 		}
 
 		if err := ExecuteTemplate(tmpl, w, data); err != nil {
