@@ -6,7 +6,6 @@ export function handleSignUpAnon(
   htmx: typeof htmxModule,
 ) {
   return (event: Event) => {
-    console.log({ event });
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const payload = {
@@ -15,7 +14,7 @@ export function handleSignUpAnon(
 
     signUpAnonService.signUpAnon(payload).then(() => {
       htmx.ajax("POST", "/rooms").then(() => {
-        window.location.assign("/rooms");
+        htmx.ajax("GET", "/rooms", "body");
       });
     });
   };

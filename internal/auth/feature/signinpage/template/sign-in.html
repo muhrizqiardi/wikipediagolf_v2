@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" class="bg-base-200 [scrollbar-gutter:stable]">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/dist/styles.css" />
     <title>Wikipediagolf</title>
   </head>
-  <body class="bg-base-200 antialiased">
+  <body hx-boost="true">
     <script defer src="/dist/index.js"></script>
     <div
       class="flex flex-col p-3 gap-12 justify-center items-center bg-base-200"
@@ -18,48 +18,56 @@
       </header>
       <main
         id="main"
-        class="mx-auto p-6 max-w-sm w-full bg-base-100 flex flex-col mb-2 rounded-box overflow-y-scroll transition-[all]"
+        class="mx-auto max-w-sm w-full bg-base-100 flex flex-col mb-2 rounded-box overflow-y-scroll transition-[all] duration-700"
       >
-        <header class="flex justify-start items-center text-center gap-3">
-          <a href="/" class="button btn btn-ghost btn-square">
-            <span class="iconify mdi--arrow-back text-xl"></span>
-          </a>
-          <h2 class="text-lg font-semibold text-center">Sign In</h2>
-        </header>
-        <form id="signin" class="flex flex-col gap-2">
-          <div id="signinAlertContainer" class="mt-2"></div>
-          <template id="signinAlert">
-            <article class="alert alert-error">
-              <span id="signinAlertText"></span>
-            </article>
-          </template>
-          <label class="form-control w-full">
-            <div class="label">
-              <span class="label-text">Email</span>
-            </div>
-            <input
-              type="email"
-              name="email"
-              class="input input-bordered w-full"
-              required
-            />
-          </label>
-          <label class="form-control w-full">
-            <div class="label">
-              <span class="label-text">Password</span>
-            </div>
-            <input
-              type="password"
-              name="password"
-              class="input input-bordered w-full"
-              required
-            />
-          </label>
-          <a href="/sign-up" class="link link-hover link-primary text-sm mt-2">
-            I don't have an account yet.
-          </a>
-          <button class="btn btn-primary mt-2">Sign In</button>
-        </form>
+        <div
+          id="fixedContainer"
+          class="w-[24rem] p-6 mx-auto transition-[opacity] duration-700"
+        >
+          <header class="flex justify-start items-center text-center gap-3">
+            <a href="/" class="button btn btn-ghost btn-square">
+              <span class="iconify mdi--arrow-back text-xl"></span>
+            </a>
+            <h2 class="text-lg font-semibold text-center">Sign In</h2>
+          </header>
+          <form id="signin" class="flex flex-col gap-2">
+            <div id="signinAlertContainer" class="mt-2"></div>
+            <template id="signinAlert">
+              <article class="alert alert-error">
+                <span id="signinAlertText"></span>
+              </article>
+            </template>
+            <label class="form-control w-full">
+              <div class="label">
+                <span class="label-text">Email</span>
+              </div>
+              <input
+                type="email"
+                name="email"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+            <label class="form-control w-full">
+              <div class="label">
+                <span class="label-text">Password</span>
+              </div>
+              <input
+                type="password"
+                name="password"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+            <a
+              href="/sign-up"
+              class="link link-hover link-primary text-sm mt-2"
+            >
+              I don't have an account yet.
+            </a>
+            <button class="btn btn-primary mt-2">Sign In</button>
+          </form>
+        </div>
       </main>
     </div>
   </body>

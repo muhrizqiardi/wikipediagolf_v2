@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" class="bg-base-200 [scrollbar-gutter:stable]">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/dist/styles.css" />
     <title>Wikipediagolf</title>
   </head>
-  <body class="bg-base-200 antialiased">
+  <body hx-boost="true">
     <script src="/dist/index.js"></script>
     <div
       class="flex flex-col p-3 gap-12 justify-center items-center bg-base-200"
@@ -16,56 +16,64 @@
           Wikipedia Golf
         </h1>
       </header>
+
       <main
         id="main"
-        class="mx-auto p-6 max-w-sm w-full bg-base-100 flex flex-col mb-2 rounded-box overflow-y-scroll transition-[all]"
+        class="mx-auto max-w-sm w-full bg-base-100 flex flex-col mb-2 rounded-box overflow-y-scroll transition-[all] duration-700"
       >
-        <div class="flex flex-col gap-4 h-full">
-          <header class="flex justify-start items-center text-center gap-3">
-            <a href="/" class="button btn btn-ghost btn-square">
-              <span class="iconify mdi--arrow-back text-xl"></span>
-            </a>
-            <h2 class="text-lg font-semibold text-center">Room</h2>
-          </header>
-          <section id="createRoomPageFormCode" class="mb-2">
-            <h3 class="font-semibold mb-4">Room Code</h3>
-            <p
-              class="text-center inline-flex justify-center items-center gap-2 w-full"
-            >
-              <span class="font-mono text-2xl leading-none"
-                >{{.Room.Code}}</span
+        <div
+          id="fixedContainer"
+          class="w-[24rem] p-6 mx-auto transition-[opacity] duration-700"
+        >
+          <div class="flex flex-col gap-4 h-full">
+            <header class="flex justify-start items-center text-center gap-3">
+              <a href="/" class="button btn btn-ghost btn-square">
+                <span class="iconify mdi--arrow-back text-xl"></span>
+              </a>
+              <h2 class="text-lg font-semibold text-center">Room</h2>
+            </header>
+            <section id="createRoomPageFormCode" class="mb-2">
+              <h3 class="font-semibold mb-4">Room Code</h3>
+              <p
+                class="text-center inline-flex justify-center items-center gap-2 w-full"
               >
-              <button class="btn btn-xs btn-square btn-ghost text-xs">
-                <span class="hero-clipboard w-4 h-4"></span>
-              </button>
-            </p>
-          </section>
-          <section id="createRoomPageFormPlayerList" class="mb-2">
-            <h3 class="font-semibold mb-4">Player list ({{.MembersTotal}})</h3>
-            <ul class="flex flex-col gap-2 mb-4">
-              {{$cur := .CurrentUserUID}} {{range $e := .Members}}
-              <li class="inline-flex items-center gap-2">
-                <span>
-                  <!-- prettier-ignore -->
-                  {{if $e.IsOwner}}@{{$e.Username}}{{else}}{{$e.DisplayName}}{{end}}{{if (eq $cur $e.UserUID)}} (You){{end}}
-                </span>
-                <button
-                  class="btn btn-xs btn-square btn-ghost text-white/60 text-xs"
+                <span class="font-mono text-2xl leading-none"
+                  >{{.Room.Code}}</span
                 >
-                  <span class="hero-pencil-solid w-4 h-4"></span>
+                <button class="btn btn-xs btn-square btn-ghost text-xs">
+                  <span class="hero-clipboard w-4 h-4"></span>
                 </button>
-              </li>
-              {{end}}
-            </ul>
-          </section>
+              </p>
+            </section>
+            <section id="createRoomPageFormPlayerList" class="mb-2">
+              <h3 class="font-semibold mb-4">
+                Player list ({{.MembersTotal}})
+              </h3>
+              <ul class="flex flex-col gap-2 mb-4">
+                {{$cur := .CurrentUserUID}} {{range $e := .Members}}
+                <li class="inline-flex items-center gap-2">
+                  <span>
+                    <!-- prettier-ignore -->
+                    {{if $e.IsOwner}}@{{$e.Username}}{{else}}{{$e.DisplayName}}{{end}}{{if (eq $cur $e.UserUID)}} (You){{end}}
+                  </span>
+                  <button
+                    class="btn btn-xs btn-square btn-ghost text-white/60 text-xs"
+                  >
+                    <span class="hero-pencil-solid w-4 h-4"></span>
+                  </button>
+                </li>
+                {{end}}
+              </ul>
+            </section>
 
-          <button
-            type="button"
-            id="createRoomPageFormButton"
-            class="btn btn-primary w-full mt-auto"
-          >
-            Start Game!
-          </button>
+            <button
+              type="button"
+              id="createRoomPageFormButton"
+              class="btn btn-primary w-full mt-auto"
+            >
+              Start Game!
+            </button>
+          </div>
         </div>
       </main>
     </div>
