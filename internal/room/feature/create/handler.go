@@ -22,6 +22,6 @@ func handler(s Service, c authcontext.AuthContext) http.Handler {
 			return
 		}
 
-		w.Header().Set("HX-Push-URL", "/rooms")
+		w.Header().Set("HX-Redirect", "/rooms")
 	})
 }

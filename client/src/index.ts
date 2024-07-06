@@ -40,14 +40,7 @@ const signUpAnonCreateRoomHandler = handleSignUpAnon(signUpAnonService, () => {
   });
 });
 const signUpAnonJoinRoomHandler = handleSignUpAnon(signUpAnonService, () => {
-  window.htmx
-    .ajax("POST", "/rooms/join", {
-      source: "#joinNicknameModalForm",
-      values: window.htmx.values(window.htmx.find("#joinNicknameModalForm")!),
-    })
-    .then(() => {
-      window.htmx.ajax("GET", "/rooms", "body");
-    });
+  window.htmx.ajax("GET", "/rooms/join", "body");
 });
 
 function addEventHandlers() {

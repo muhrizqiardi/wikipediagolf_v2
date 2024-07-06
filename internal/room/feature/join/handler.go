@@ -31,5 +31,6 @@ func handler(s Service, c authcontext.AuthContext) http.Handler {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		w.Header().Set("HX-Redirect", "/rooms")
 	})
 }
