@@ -21,6 +21,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signout"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/signuppage"
+	authrepository "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/repository"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/asset"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/config"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/dbsetup"
@@ -65,7 +66,9 @@ func run(
 	tmpl := template.New("")
 
 	actx := authcontext.NewAuthContext()
-	amw := authmiddleware.AuthMiddleware(firebaseApp, actx)
+	authRepository := authrepository.NewRepository(context.Background(), firebaseApp)
+	authService := authmiddleware.NewService(authRepository)
+	amw := authmiddleware.AuthMiddleware(authService, actx)
 
 	signuppage.Register(tmpl, serveMux)
 	home.Register(tmpl, serveMux, actx)
