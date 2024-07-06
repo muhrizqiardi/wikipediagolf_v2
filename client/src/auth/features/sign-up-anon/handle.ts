@@ -3,7 +3,7 @@ import { htmx as htmxModule } from "../../../htmx";
 
 export function handleSignUpAnon(
   signUpAnonService: ISignUpAnonService,
-  htmx: typeof htmxModule,
+  after: () => void,
 ) {
   return (event: Event) => {
     event.preventDefault();
@@ -12,10 +12,6 @@ export function handleSignUpAnon(
       displayName: formData.get("displayName")?.toString() ?? "",
     };
 
-    signUpAnonService.signUpAnon(payload).then(() => {
-      htmx.ajax("POST", "/rooms").then(() => {
-        htmx.ajax("GET", "/rooms", "body");
-      });
-    });
+    signUpAnonService.signUpAnon(payload).then(after);
   };
 }

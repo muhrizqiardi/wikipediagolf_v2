@@ -32,6 +32,7 @@ import (
 	roomcheck "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/check"
 	roomcreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/create"
 	roomcreatepage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/createpage"
+	roomjoin "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/join"
 	roomjoinpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/joinpage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/nicknamedialog"
 	roomwaitingpage "github.com/muhrizqiardi/wikipediagolf_v2/internal/room/feature/waitingpage"
@@ -85,6 +86,7 @@ func run(
 	featureUsernameCreate.BuildCreate(context.Background(), db, tmpl, serveMux)
 	nicknamedialog.Register(tmpl, serveMux, actx)
 	roomcheck.Register(context.Background(), db, firebaseApp, tmpl, serveMux)
+	roomjoin.Register(context.Background(), db, firebaseApp, serveMux)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)
