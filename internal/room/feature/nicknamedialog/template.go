@@ -10,6 +10,11 @@ func addTemplate(tmpl *template.Template) (*template.Template, error) {
 	return tmpl.ParseFS(templateFS, templateName)
 }
 
-func executeTemplate(tmpl *template.Template, wr io.Writer) error {
-	return tmpl.ExecuteTemplate(wr, "choose-nickname-dialog.html", nil)
+type templateData struct {
+	// `join` or `create-room`
+	Type string
+}
+
+func executeTemplate(tmpl *template.Template, wr io.Writer, data templateData) error {
+	return tmpl.ExecuteTemplate(wr, "choose-nickname-dialog.html", data)
 }

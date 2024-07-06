@@ -1,3 +1,4 @@
+{{if (eq .Type "create-room")}}
 <dialog id="nicknameModal" class="modal">
   <script>
     me().attribute("open", "");
@@ -9,8 +10,6 @@
       </h2>
     </header>
     <form id="nicknameModalForm" class="flex flex-col gap-2">
-      <div id="createusernameAlertContainer" class="mt-2"></div>
-      <input type="hidden" name="uid" value="{{.UID}}" />
       <label class="form-control w-full">
         <div class="label">
           <span class="label-text">Nickname</span>
@@ -33,3 +32,43 @@
   </div>
   <div class="modal-backdrop bg-white/5"></div>
 </dialog>
+{{else if (eq .Type "join")}}
+<dialog id="joinNicknameModal" class="modal">
+  <script>
+    me().attribute("open", "");
+  </script>
+  <div class="modal-box shadow-md">
+    <header class="flex justify-start items-center text-center gap-3">
+      <h2 class="text-lg font-semibold text-center">
+        Choose nickname and room code to continue
+      </h2>
+    </header>
+    <form
+      id="joinNicknameModalForm"
+      class="flex flex-col gap-2"
+      hx-trigger="joinRoom"
+    >
+      <label class="form-control w-full">
+        <div class="label">
+          <span class="label-text">Nickname</span>
+        </div>
+        <input
+          type="text"
+          name="displayName"
+          class="input input-bordered w-full"
+          hx-disable
+          required
+        />
+      </label>
+      <button type="submit" class="btn btn-primary mt-2">Continue</button>
+    </form>
+    <button
+      class="btn btn-ghost btn-block text-error mt-8"
+      onclick="joinNicknameModal.close()"
+    >
+      Cancel
+    </button>
+  </div>
+  <div class="modal-backdrop bg-white/5"></div>
+</dialog>
+{{end}}

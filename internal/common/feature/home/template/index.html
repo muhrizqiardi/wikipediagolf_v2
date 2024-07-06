@@ -123,6 +123,7 @@
                 hx-boost="true"
                 hx-target="#nicknameModalContainer"
               >
+                <input type="hidden" name="type" value="create-room" />
                 <button
                   type="submit"
                   class="btn btn-lg w-full flex-col items-start justify-center"
@@ -133,15 +134,31 @@
                   >
                 </button>
               </form>
-              {{end}}
+              {{end}} {{if .IsAuthenticated}}
               <a
                 href="/rooms/join"
-                class="btn btn-lg flex-col items-start justify-center"
+                class="btn btn-block btn-lg flex-col items-start justify-center"
               >
                 <span>Join Room</span>
                 <span class="font-normal text-xs">Join an existing Room</span>
               </a>
-              {{if not .IsAuthenticated}}
+              {{else}}
+              <form
+                class="w-full"
+                hx-post="/rooms/choose-nickname"
+                hx-boost="true"
+                hx-target="#nicknameModalContainer"
+              >
+                <input type="hidden" name="type" value="join" />
+                <button
+                  type="submit"
+                  class="btn btn-block btn-lg flex-col items-start justify-center"
+                >
+                  <span>Join Room</span>
+                  <span class="font-normal text-xs">Join an existing Room</span>
+                </button>
+              </form>
+              {{end}} {{if not .IsAuthenticated}}
               <a
                 href="/sign-up"
                 class="btn btn-lg flex-col items-start justify-center mt-6"

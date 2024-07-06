@@ -10,10 +10,14 @@ import (
 
 func handler(
 	tmpl *template.Template,
-	c authcontext.AuthContext,
+	_ authcontext.AuthContext,
 ) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if err := executeTemplate(tmpl, w); err != nil {
+		r.ParseForm()
+		formType := r.PostFormValue("type")
+		if err := executeTemplate(tmpl, w, templateData{
+			Type: formType,
+		}); err != nil {
 			slog.Error("failed to execute template", "err", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return

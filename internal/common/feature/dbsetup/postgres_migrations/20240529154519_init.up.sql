@@ -24,5 +24,6 @@ create table if not exists room_members (
   updated_at timestamp default current_timestamp not null, 
 
   foreign key (room_id)
-    references rooms (id)
+    references rooms (id),
+  unique (room_id, user_uid)
 );

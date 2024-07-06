@@ -6,9 +6,9 @@ import (
 )
 
 func addTemplate(tmpl *template.Template) (*template.Template, error) {
-	return tmpl.ParseFS(templateFS, "template/continue-button-partial.html")
+	return tmpl.ParseFS(templateFS, "template/join-room.html")
 }
 
 func executeTemplate(tmpl *template.Template, wr io.Writer) error {
-	return tmpl.ExecuteTemplate(wr, "continue-button-partial.html", nil)
+	return tmpl.ExecuteTemplate(wr, "join-room.html", nil)
 }

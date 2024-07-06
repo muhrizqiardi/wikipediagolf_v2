@@ -34,7 +34,14 @@ const repository = new Repository(auth);
 const signInService = new SignInService(repository);
 const signUpAnonService = new SignUpAnonService(repository);
 const signInHandler = handleSignIn(signInService);
-const signUpAnonHandler = handleSignUpAnon(signUpAnonService, window.htmx);
+const signUpAnonCreateRoomHandler = handleSignUpAnon(signUpAnonService, () => {
+  window.htmx.ajax("POST", "/rooms").then(() => {
+    window.htmx.ajax("GET", "/rooms", "body");
+  });
+});
+const signUpAnonJoinRoomHandler = handleSignUpAnon(signUpAnonService, () => {
+  window.htmx.ajax("GET", "/rooms/join", "body");
+});
 
 function addEventHandlers() {
   const signinFormEl = document.querySelector("#signin");
@@ -42,7 +49,18 @@ function addEventHandlers() {
 
   const chooseNicknameModalFormEl =
     document.querySelector("#nicknameModalForm");
-  chooseNicknameModalFormEl?.addEventListener("submit", signUpAnonHandler);
+  chooseNicknameModalFormEl?.addEventListener(
+    "submit",
+    signUpAnonCreateRoomHandler,
+  );
+
+  const chooseNicknameModalJoinFormEl = document.querySelector(
+    "#joinNicknameModalForm",
+  );
+  chooseNicknameModalJoinFormEl?.addEventListener(
+    "submit",
+    signUpAnonJoinRoomHandler,
+  );
 
   const signupFormEl = document.querySelector("#signup");
   if (signupFormEl !== null) {

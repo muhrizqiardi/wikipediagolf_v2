@@ -54,7 +54,7 @@
                 <li class="inline-flex items-center gap-2">
                   <span>
                     <!-- prettier-ignore -->
-                    {{if $e.IsOwner}}@{{$e.Username}}{{else}}{{$e.DisplayName}}{{end}}{{if (eq $cur $e.UserUID)}} (You){{end}}
+                    {{if not $e.DisplayName}}@{{$e.Username}}{{else}}{{$e.DisplayName}}{{end}}{{if (eq $cur $e.UserUID)}} (You){{end}}
                   </span>
                   <button
                     class="btn btn-xs btn-square btn-ghost text-white/60 text-xs"
