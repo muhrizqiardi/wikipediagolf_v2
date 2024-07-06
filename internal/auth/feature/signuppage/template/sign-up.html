@@ -19,66 +19,71 @@
       </header>
       <main
         id="main"
-        class="mx-auto p-6 max-w-sm w-full bg-base-100 flex flex-col mb-2 rounded-box overflow-y-scroll transition-[all] duration-700"
+        class="mx-auto max-w-sm w-full bg-base-100 flex flex-col mb-2 rounded-box overflow-y-scroll transition-[all] duration-700"
       >
-        <header class="flex justify-start items-center text-center gap-3">
-          <a href="/" class="button btn btn-ghost btn-square">
-            <span class="iconify mdi--arrow-back text-xl"></span>
-          </a>
-          <h2 class="text-lg font-semibold text-center">Sign Up</h2>
-        </header>
-        <form
-          id="signup"
-          class="flex flex-col gap-2"
-          action="/sign-up"
-          method="post"
-          hx-boost="true"
-          hx-target="#signupAlert"
-          hx-swap="innerHTML"
+        <div
+          id="fixedContainer"
+          class="w-[24rem] p-6 mx-auto transition-[opacity] duration-700"
         >
-          <div id="signupAlert" class="mt-2"></div>
-          <label class="form-control w-full">
-            <div class="label">
-              <span class="label-text">Email</span>
-            </div>
-            <input
-              type="email"
-              name="email"
-              class="input input-bordered w-full"
-              required
-            />
-          </label>
-          <label class="form-control w-full">
-            <div class="label">
-              <span class="label-text">Password</span>
-            </div>
-            <input
-              type="password"
-              name="password"
-              class="input input-bordered w-full"
-              required
-            />
-          </label>
-          <label class="form-control w-full">
-            <div class="label">
-              <span class="label-text">Confirm Password</span>
-            </div>
-            <input
-              type="password"
-              name="confirmPassword"
-              class="input input-bordered w-full"
-              required
-            />
-          </label>
-          <a
-            href="/sign-in"
-            hx-target="body"
-            class="link link-hover link-primary text-sm mt-2"
+          <header class="flex justify-start items-center text-center gap-3">
+            <a href="/" class="button btn btn-ghost btn-square">
+              <span class="iconify mdi--arrow-back text-xl"></span>
+            </a>
+            <h2 class="text-lg font-semibold text-center">Sign Up</h2>
+          </header>
+          <form
+            id="signup"
+            class="flex flex-col gap-2"
+            action="/sign-up"
+            method="post"
+            hx-boost="true"
+            hx-target="#signupAlert"
+            hx-swap="innerHTML"
           >
-            I already have an account.
-          </a>
-          <button class="btn btn-primary mt-2">Sign Up</button>
-        </form>
+            <div id="signupAlert" class="mt-2"></div>
+            <label class="form-control w-full">
+              <div class="label">
+                <span class="label-text">Email</span>
+              </div>
+              <input
+                type="email"
+                name="email"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+            <label class="form-control w-full">
+              <div class="label">
+                <span class="label-text">Password</span>
+              </div>
+              <input
+                type="password"
+                name="password"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+            <label class="form-control w-full">
+              <div class="label">
+                <span class="label-text">Confirm Password</span>
+              </div>
+              <input
+                type="password"
+                name="confirmPassword"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+            <a
+              href="/sign-in"
+              hx-target="body"
+              class="link link-hover link-primary text-sm mt-2"
+            >
+              I already have an account.
+            </a>
+            <button class="btn btn-primary mt-2">Sign Up</button>
+          </form>
+        </div>
       </main>
     </div>
   </body>
