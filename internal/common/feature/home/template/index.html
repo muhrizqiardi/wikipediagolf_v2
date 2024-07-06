@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en" class="bg-white [scrollbar-gutter:stable]">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/dist/styles.css" />
     <title>Wikipediagolf</title>
   </head>
-  <body class="bg-white antialiased">
+  <body hx-boost="true" class="bg-base-200">
     <script src="/dist/index.js"></script>
     <script src="/assets/surreal.js"></script>
     <div
@@ -24,148 +24,167 @@
 
       <main
         id="main"
-        class="mx-auto p-6 max-w-6xl w-full flex-grow bg-base-100 grid lg:grid-cols-4 gap-6 rounded-box overflow-y-scroll transition-[all]"
+        class="mx-auto max-w-6xl w-full flex-grow bg-base-100 rounded-box overflow-y-scroll transition-[all] duration-700"
       >
-        <nav class="bg-base-100 flex flex-col gap-6 lg:sticky lg:top-0">
-          <div class="h-full flex flex-col gap-2">
-            <div class="flex justify-end">
-              {{if .IsAuthenticated}}
-              <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="btn mr-2">
-                  <span class="iconify mdi--user text-lg">User</span>
+        <div
+          id="fixedContainer"
+          class="w-[72rem] p-6 grid lg:grid-cols-4 gap-6 mx-auto transition-[opacity] duration-700"
+        >
+          <script>
+            me().styles({
+              opacity: 0,
+            });
+            me().styles({
+              opacity: 1,
+            });
+          </script>
+          <nav class="bg-base-100 flex flex-col gap-6 lg:sticky lg:top-0">
+            <div class="h-full flex flex-col gap-2">
+              <div class="flex justify-end">
+                {{if .IsAuthenticated}}
+                <div class="dropdown dropdown-end">
+                  <div tabindex="0" role="button" class="btn mr-2">
+                    <span class="iconify mdi--user text-lg">User</span>
+                  </div>
+                  <ul
+                    tabindex="0"
+                    class="dropdown-content menu bg-base-300 rounded-box z-[1] w-52 p-2 shadow"
+                  >
+                    <li><a hx-delete="/sign-out">Sign out</a></li>
+                  </ul>
                 </div>
-                <ul
-                  tabindex="0"
-                  class="dropdown-content menu bg-base-300 rounded-box z-[1] w-52 p-2 shadow"
-                >
-                  <li><a hx-delete="/sign-out">Sign out</a></li>
-                </ul>
-              </div>
-              {{end}}
-              <button class="btn" onclick="changeLanguageModal.showModal()">
-                EN
-                <span class="iconify mdi--globe text-lg"></span>
-              </button>
-              <dialog id="changeLanguageModal" class="modal">
-                <div class="modal-box w-84 p-0">
-                  <header class="sticky top-0 z-[100] bg-base-100 px-6 py-4">
-                    <h3 class="text-lg font-bold">Select Language</h3>
-                  </header>
-                  <div class="px-6 py-4">
-                    <ul class="menu rounded-box p-0 mb-6">
-                      <li>
-                        <a class="active">
-                          <span class="iconify mdi--check text-lg"></span>
-                          English
-                        </a>
-                      </li>
-                    </ul>
-                    <div class="alert">
-                      <p>More languages will be supported soon. Stay tuned!</p>
+                {{end}}
+                <button class="btn" onclick="changeLanguageModal.showModal()">
+                  EN
+                  <span class="iconify mdi--globe text-lg"></span>
+                </button>
+                <dialog id="changeLanguageModal" class="modal">
+                  <div class="modal-box w-84 p-0">
+                    <header class="sticky top-0 z-[100] bg-base-100 px-6 py-4">
+                      <h3 class="text-lg font-bold">Select Language</h3>
+                    </header>
+                    <div class="px-6 py-4">
+                      <ul class="menu rounded-box p-0 mb-6">
+                        <li>
+                          <a class="active">
+                            <span class="iconify mdi--check text-lg"></span>
+                            English
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="alert">
+                        <p>
+                          More languages will be supported soon. Stay tuned!
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="modal-action sticky bottom-0 z-[100] bg-base-100 px-6 py-4 mt-0"
+                    >
+                      <form method="dialog">
+                        <button class="btn btn-ghost btn-sm">Cancel</button>
+                      </form>
                     </div>
                   </div>
-                  <div
-                    class="modal-action sticky bottom-0 z-[100] bg-base-100 px-6 py-4 mt-0"
+                </dialog>
+              </div>
+
+              <div
+                class="w-full grid"
+                hx-post="/rooms/check"
+                hx-target="this"
+                hx-swap="innerHTML"
+                hx-trigger="load"
+              ></div>
+              <form class="w-full">
+                <button
+                  class="btn btn-lg flex-col items-start justify-center w-full"
+                >
+                  <span>Play</span>
+                  <span class="font-normal text-xs">Single player</span>
+                </button>
+              </form>
+              {{if .IsAuthenticated}}
+              <form class="w-full" hx-post="/rooms" hx-boost="true">
+                <button
+                  type="submit"
+                  class="btn btn-lg w-full flex-col items-start justify-center"
+                >
+                  <span>Create Room</span>
+                  <span class="font-normal text-xs"
+                    >Play with your friends</span
                   >
-                    <form method="dialog">
-                      <button class="btn btn-ghost btn-sm">Cancel</button>
-                    </form>
-                  </div>
-                </div>
-              </dialog>
-            </div>
-
-            <div
-              class="w-full grid"
-              hx-post="/rooms/check"
-              hx-target="this"
-              hx-swap="innerHTML"
-              hx-trigger="load"
-            ></div>
-            <form class="w-full">
-              <button
-                class="btn btn-lg flex-col items-start justify-center w-full"
+                </button>
+              </form>
+              {{else}}
+              <form
+                class="w-full"
+                hx-post="/rooms/choose-nickname"
+                hx-boost="true"
+                hx-target="#nicknameModalContainer"
               >
-                <span>Play</span>
-                <span class="font-normal text-xs">Single player</span>
-              </button>
-            </form>
-            {{if .IsAuthenticated}}
-            <form class="w-full" hx-post="/rooms" hx-boost="true">
-              <button
-                type="submit"
-                class="btn btn-lg w-full flex-col items-start justify-center"
+                <button
+                  type="submit"
+                  class="btn btn-lg w-full flex-col items-start justify-center"
+                >
+                  <span>Create Room</span>
+                  <span class="font-normal text-xs"
+                    >Play with your friends</span
+                  >
+                </button>
+              </form>
+              {{end}}
+              <a
+                href="/rooms/join"
+                class="btn btn-lg flex-col items-start justify-center"
               >
-                <span>Create Room</span>
-                <span class="font-normal text-xs">Play with your friends</span>
-              </button>
-            </form>
-            {{else}}
-            <form
-              class="w-full"
-              hx-post="/rooms/choose-nickname"
-              hx-boost="true"
-              hx-target="#nicknameModalContainer"
-            >
-              <button
-                type="submit"
-                class="btn btn-lg w-full flex-col items-start justify-center"
+                <span>Join Room</span>
+                <span class="font-normal text-xs">Join an existing Room</span>
+              </a>
+              {{if not .IsAuthenticated}}
+              <a
+                href="/sign-up"
+                class="btn btn-lg flex-col items-start justify-center mt-6"
               >
-                <span>Create Room</span>
-                <span class="font-normal text-xs">Play with your friends</span>
-              </button>
-            </form>
-            {{end}}
-            <a
-              href="/rooms/join"
-              class="btn btn-lg flex-col items-start justify-center"
-            >
-              <span>Join Room</span>
-              <span class="font-normal text-xs">Join an existing Room</span>
-            </a>
-            {{if not .IsAuthenticated}}
-            <a
-              href="/sign-up"
-              class="btn btn-lg flex-col items-start justify-center mt-6"
-            >
-              <span>Sign up / sign in</span>
-            </a>
-            {{end}}
-          </div>
-        </nav>
-
-        <section class="lg:col-span-3">
-          <div role="tablist" class="tabs tabs-lg tabs-lifted">
-            <input
-              type="radio"
-              name="my_tabs_2"
-              role="tab"
-              class="tab"
-              aria-label="Leaderboard"
-              checked
-            />
-            <div
-              role="tabpanel"
-              class="tab-content bg-base-100 border-base-300 rounded-box p-6"
-            >
-              (coming soon!)
+                <span>Sign up / sign in</span>
+              </a>
+              {{end}}
             </div>
+          </nav>
 
-            <input
-              type="radio"
-              name="my_tabs_2"
-              role="tab"
-              class="tab"
-              aria-label="Tutorial"
-            />
-            <div
-              role="tabpanel"
-              class="tab-content bg-base-100 border-base-300 rounded-box p-6"
-            >
-              (coming soon!)
+          <section class="lg:col-span-3">
+            <div role="tablist" class="tabs tabs-lg tabs-lifted">
+              <input
+                type="radio"
+                name="my_tabs_2"
+                role="tab"
+                class="tab"
+                aria-label="Leaderboard"
+                checked
+              />
+              <div
+                role="tabpanel"
+                class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+              >
+                (coming soon!)
+              </div>
+
+              <input
+                type="radio"
+                name="my_tabs_2"
+                role="tab"
+                class="tab"
+                aria-label="Tutorial"
+              />
+              <div
+                role="tabpanel"
+                class="tab-content bg-base-100 border-base-300 rounded-box p-6"
+              >
+                (coming soon!)
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
       <footer>
         <p class="text-neutral-content text-xs text-center lg:mt-auto">
