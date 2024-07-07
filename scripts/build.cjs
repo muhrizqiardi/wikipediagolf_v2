@@ -1,18 +1,18 @@
 const esbuild = require("esbuild");
-const pluginPostcss = require("esbuild-plugin-postcss2");
+const pluginPostcss = require("esbuild-postcss");
 
 async function build() {
   await esbuild.build({
-    entryPoints: ["./client/src/index.ts", "./client/src/styles.css"],
+    entryPoints: [
+      "./client/src/index.js",
+      "./client/src/surreal.js",
+      "./client/src/styles.css",
+    ],
     outdir: "./client/dist",
     bundle: true,
     minify: true,
     allowOverwrite: true,
-    plugins: [
-      pluginPostcss.default({
-        plugins: [require("autoprefixer"), require("tailwindcss")],
-      }),
-    ],
+    plugins: [pluginPostcss()],
   });
 }
 build().catch((error) => console.error(error));

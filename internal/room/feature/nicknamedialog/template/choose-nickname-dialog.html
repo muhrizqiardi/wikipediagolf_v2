@@ -10,6 +10,12 @@
       </h2>
     </header>
     <form id="nicknameModalForm" class="flex flex-col gap-2">
+      <script>
+        me().on("submit", (event) => {
+          halt(event);
+          me(event).send("wg:createRoomChooseNickname");
+        });
+      </script>
       <label class="form-control w-full">
         <div class="label">
           <span class="label-text">Nickname</span>
@@ -43,11 +49,13 @@
         Choose nickname and room code to continue
       </h2>
     </header>
-    <form
-      id="joinNicknameModalForm"
-      class="flex flex-col gap-2"
-      hx-trigger="joinRoom"
-    >
+    <form id="joinNicknameModalForm" class="flex flex-col gap-2" hx-disable>
+      <script>
+        me().on("submit", (event) => {
+          halt(event);
+          me(event).send("wg:joinRoomChooseNickname");
+        });
+      </script>
       <label class="form-control w-full">
         <div class="label">
           <span class="label-text">Nickname</span>
@@ -56,16 +64,15 @@
           type="text"
           name="displayName"
           class="input input-bordered w-full"
-          hx-disable
           required
         />
       </label>
       <button type="submit" class="btn btn-primary mt-2">Continue</button>
     </form>
-    <button
-      class="btn btn-ghost btn-block text-error mt-8"
-      onclick="joinNicknameModal.close()"
-    >
+    <button class="btn btn-ghost btn-block text-error mt-8">
+      <script>
+        me().on("click", () => me("#joinNicknameModal").close());
+      </script>
       Cancel
     </button>
   </div>
