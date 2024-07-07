@@ -26,6 +26,12 @@
             <h2 class="text-lg font-semibold text-center">Sign In</h2>
           </header>
           <form id="signin" class="flex flex-col gap-2">
+            <script>
+              me().on("submit", (event) => {
+                halt(event);
+                me(event).send("wg:signIn");
+              });
+            </script>
             <div id="signinAlertContainer" class="mt-2"></div>
             <template id="signinAlert">
               <article class="alert alert-error">

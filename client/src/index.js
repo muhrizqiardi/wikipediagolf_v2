@@ -6,6 +6,7 @@ import {
   setPersistence,
   signInAnonymously,
   inMemoryPersistence,
+  signInWithEmailAndPassword,
 } from "@firebase/auth";
 
 const firebaseConfig = {
@@ -21,6 +22,26 @@ const auth = getAuth(app);
 
 DEV: connectAuthEmulator(auth, "http://127.0.0.1:9099", {
   disableWarnings: true,
+});
+
+document.addEventListener("wg:signIn", (event) => {
+  console.debug({ event });
+  const formData = new FormData(event.target);
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  setPersistence(auth, inMemoryPersistence)
+    .then(() => signInWithEmailAndPassword(auth, email, password))
+    .then((userCredential) => userCredential.user.getIdTokenResult())
+    .then((idTokenResult) => {
+      const url = `${window.location.origin}/sign-in`;
+      const body = new URLSearchParams();
+      body.set("idToken", idTokenResult?.token);
+
+      return fetch(url, { method: "POST", body: body });
+    })
+    .then(() => htmx.ajax("get", "/", event.currentTarget))
+    .catch((error) => console.debug(error));
 });
 
 document.addEventListener("wg:joinRoomChooseNickname", (event) => {
