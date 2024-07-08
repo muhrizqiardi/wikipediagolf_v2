@@ -83,7 +83,7 @@ func (r *Repository) CreateGame(roomID uuid.UUID, index int, language, fromTitle
 
 func (r *Repository) GetLatestGame(roomID uuid.UUID) (*model.Game, error) {
 	var (
-		q      = query.QueryCreateGame
+		q      = query.QueryGetLatestGame
 		args   = []any{roomID}
 		result model.Game
 	)

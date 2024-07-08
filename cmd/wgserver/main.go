@@ -81,7 +81,7 @@ func run(
 	roomcreatepage.Register(tmpl, serveMux)
 	roomjoinpage.Register(tmpl, serveMux)
 	roomwaitingpage.Register(context.Background(), db, firebaseApp, tmpl, serveMux)
-	gamepage.Register(tmpl, serveMux)
+	gamepage.Register(tmpl, serveMux, context.Background(), http.DefaultClient, db)
 	surrender.Register(tmpl, serveMux)
 	gameresult.Register(tmpl, serveMux)
 	pregame.Register(tmpl, serveMux)
