@@ -27,6 +27,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/dbsetup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/home"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
+	gamecreate "github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/create"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gamepage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gameresult"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/pregame"
@@ -92,6 +93,7 @@ func run(
 	nicknamedialog.Register(tmpl, serveMux, actx)
 	roomcheck.Register(context.Background(), db, firebaseApp, tmpl, serveMux)
 	roomjoin.Register(context.Background(), db, firebaseApp, serveMux)
+	gamecreate.Register(context.Background(), http.DefaultClient, db, serveMux)
 
 	addr := cfg.Host + ":" + strconv.Itoa(cfg.Port)
 	slog.Info("starting server", "addr", addr)
