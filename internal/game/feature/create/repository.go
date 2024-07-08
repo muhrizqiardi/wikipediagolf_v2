@@ -6,7 +6,8 @@ import (
 )
 
 type Repository interface {
+	GetRoomBelongToMember(userUID string) (*model.Room, error)
 	GetRandomSummary(language string) (*model.Summary, error)
 	GetLatestGame(roomID uuid.UUID) (*model.Game, error)
-	CreateGame(roomID uuid.UUID, index int, fromTitle, toTitle string) (*model.Game, error)
+	CreateGame(roomID uuid.UUID, index int, language, fromTitle, toTitle string) (*model.Game, error)
 }

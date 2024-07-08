@@ -1,12 +1,9 @@
 package create
 
-import (
-	"github.com/google/uuid"
-	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/model"
-)
+import "github.com/muhrizqiardi/wikipediagolf_v2/internal/game/model"
 
 type Service interface {
-	Create(language, userUID string, roomID uuid.UUID) (*model.Game, error)
+	Create(language, userUID string) (*model.Game, error)
 }
 
 type service struct {
@@ -19,7 +16,7 @@ func newService(repository Repository) *service {
 	}
 }
 
-func (s *service) Create(language, userUID string, roomID uuid.UUID) (*model.Game, error) {
+func (s *service) Create(language, userUID string) (*model.Game, error) {
 	fromSummary, err := s.repository.GetRandomSummary(language)
 	if err != nil {
 		return nil, err
@@ -29,13 +26,16 @@ func (s *service) Create(language, userUID string, roomID uuid.UUID) (*model.Gam
 		return nil, err
 	}
 
-	// TODO: check if room belongs to user UID
+	room, err := s.repository.GetRoomBelongToMember(userUID)
+	if err != nil {
+		return nil, err
+	}
 
 	index := 0
-	latestGame, err := s.repository.GetLatestGame(roomID)
+	latestGame, err := s.repository.GetLatestGame(room.ID)
 	if err == nil {
 		index = latestGame.Index + 1
 	}
 
-	return s.repository.CreateGame(roomID, index, fromSummary.Title, toSummary.Title)
+	return s.repository.CreateGame(room.ID, index, language, fromSummary.Title, toSummary.Title)
 }
