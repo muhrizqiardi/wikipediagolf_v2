@@ -27,3 +27,18 @@ create table if not exists room_members (
     references rooms (id),
   unique (room_id, user_uid)
 );
+
+create table if not exists games (
+  id uuid not null default gen_random_uuid() primary key,
+  room_id uuid not null,
+  index int not null,
+  is_finished boolean not null,
+  language text not null,
+  from_title text not null,
+  to_title text not null,
+  created_at timestamp default current_timestamp not null,
+  updated_at timestamp default current_timestamp not null, 
+
+  foreign key (room_id)
+    references rooms (id)
+)

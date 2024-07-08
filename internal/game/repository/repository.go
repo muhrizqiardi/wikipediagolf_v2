@@ -59,10 +59,10 @@ func (r *Repository) GetRandomSummary(language string) (*model.Summary, error) {
 	}
 }
 
-func (r *Repository) CreateGame(roomID uuid.UUID, index int, fromTitle, toTitle string) (*model.Game, error) {
+func (r *Repository) CreateGame(roomID uuid.UUID, index int, language, fromTitle, toTitle string) (*model.Game, error) {
 	var (
 		q      = query.QueryCreateGame
-		args   = []any{roomID, index, fromTitle, toTitle}
+		args   = []any{roomID, index, language, fromTitle, toTitle}
 		result model.Game
 	)
 
@@ -128,4 +128,26 @@ func (r *Repository) UpdateGame(id, roomID uuid.UUID, isFinished bool) error {
 	}
 
 	return nil
+}
+
+func (r *Repository) GetRoomBelongToMember(userUID string) (*model.Room, error) {
+	var (
+		q      = query.QueryGetRoomBelongToMember
+		args   = []any{userUID}
+		result model.Room
+	)
+
+	dbx := sqlx.NewDb(r.db, "postgres")
+	txx, err := dbx.BeginTxx(r.context, &sql.TxOptions{})
+	if err != nil {
+		return nil, err
+	}
+	if err := txx.Get(&result, q, args...); err != nil {
+		return nil, err
+	}
+	if err := txx.Commit(); err != nil {
+		return nil, err
+	}
+
+	return &result, nil
 }

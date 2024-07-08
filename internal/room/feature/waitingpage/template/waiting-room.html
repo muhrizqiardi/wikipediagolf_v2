@@ -63,8 +63,9 @@
 
             {{if .CurrentUserIsOwner}}
             <button
-              type="button"
               id="createRoomPageFormButton"
+              type="button"
+              hx-post="/game"
               class="btn btn-primary w-full mt-auto"
             >
               Start Game!
