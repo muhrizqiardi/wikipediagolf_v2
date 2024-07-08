@@ -39,6 +39,7 @@ const (
 				rm.id as id, 
 				rm.room_id as room_id,
 				rm.user_uid as user_uid,
+				rm.is_owner as is_owner,
 				coalesce(u.username, '') as username,
 				rm.created_at as created_at, 
 				rm.updated_at as updated_at

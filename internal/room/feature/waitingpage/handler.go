@@ -28,11 +28,20 @@ func handler(
 			return
 		}
 
+		var currentUserIsOwner bool
+		for _, member := range response.Members {
+			if member.UserUID == v.UID {
+				slog.Debug("currentUserIsOwner", "currentUserIsOwner", currentUserIsOwner)
+				currentUserIsOwner = member.IsOwner
+			}
+		}
+
 		if err := ExecuteTemplate(tmpl, w, TemplateData{
-			CurrentUserUID: v.UID,
-			Room:           response.Room,
-			Members:        response.Members,
-			MembersTotal:   len(response.Members),
+			CurrentUserUID:     v.UID,
+			CurrentUserIsOwner: currentUserIsOwner,
+			Room:               response.Room,
+			Members:            response.Members,
+			MembersTotal:       len(response.Members),
 		}); err != nil {
 			slog.Error("failed to execute template", "err", err)
 			return

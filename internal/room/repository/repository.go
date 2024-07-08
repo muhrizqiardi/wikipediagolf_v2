@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"log/slog"
 	"time"
 
 	firebase "firebase.google.com/go/v4"
@@ -71,7 +72,7 @@ func (r *Repository) InsertRoomMember(roomID uuid.UUID, userUID string, isOwner 
 	if err := txx.Commit(); err != nil {
 		return nil, err
 	}
-
+	slog.Debug("result", "result", result)
 	return &result, nil
 }
 
@@ -188,6 +189,7 @@ func (r *Repository) GetRoomMembers(roomID uuid.UUID) ([]GetRoomMembersRow, erro
 	if err := txx.Commit(); err != nil {
 		return nil, err
 	}
+	slog.Debug("result", "result", result)
 
 	return result, nil
 }

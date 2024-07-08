@@ -1,6 +1,8 @@
 package create
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+)
 
 type CodeGenerator interface {
 	Generate() string
@@ -51,6 +53,5 @@ func (s *service) Create(ownerUID string) (*CreateRoomResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return &CreateRoomResponse{*room, *member}, nil
 }
