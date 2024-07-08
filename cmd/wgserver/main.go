@@ -26,6 +26,7 @@ import (
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/config"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/dbsetup"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/home"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gamepage"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/gameresult"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/feature/pregame"
@@ -70,6 +71,7 @@ func run(
 	authService := authmiddleware.NewService(authRepository)
 	amw := authmiddleware.AuthMiddleware(authService, actx)
 
+	partials.Register(tmpl)
 	signuppage.Register(tmpl, serveMux)
 	home.Register(tmpl, serveMux, actx)
 	asset.Register(serveMux)

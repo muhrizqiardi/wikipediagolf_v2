@@ -22,7 +22,11 @@
         />
       </label>
       <button type="submit" class="btn btn-primary mt-2">Save</button>
-      <button type="button" class="btn btn-ghost text-error mt-8">
+      <button
+        type="button"
+        hx-delete="/sign-out"
+        class="btn btn-ghost text-error mt-8"
+      >
         Sign out
       </button>
     </form>

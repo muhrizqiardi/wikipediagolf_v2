@@ -48,6 +48,7 @@ func handler(s Service, tmpl *template.Template) http.Handler {
 			return
 		}
 
+		w.Header().Set("HX-Trigger", "wg:signIn")
 		w.WriteHeader(http.StatusCreated)
 	})
 }
