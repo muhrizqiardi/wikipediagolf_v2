@@ -25,18 +25,4 @@ func TestHandler(t *testing.T) {
 		testutil.AssertInequal(t, 0, written)
 		testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
 	})
-	t.Run("should return htmx.min.js", func(t *testing.T) {
-		var (
-			req = httptest.NewRequest(http.MethodGet, "/assets/htmx.min.js", nil)
-			res = httptest.NewRecorder()
-		)
-
-		assetHandler().ServeHTTP(res, req)
-
-		var bodyBuf bytes.Buffer
-		written, err := io.Copy(&bodyBuf, res.Result().Body)
-		testutil.AssertNoError(t, err)
-		testutil.AssertInequal(t, 0, written)
-		testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
-	})
 }

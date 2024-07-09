@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -19,6 +20,7 @@ func TestEndpoint(t *testing.T) {
 		)
 
 		tmpl := template.New("")
+		partials.Register(tmpl)
 		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		deps := endpointDeps{
