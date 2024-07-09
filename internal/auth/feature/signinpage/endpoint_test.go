@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -19,6 +20,8 @@ func TestEndpoint(t *testing.T) {
 		)
 
 		tmpl := template.New("")
+		partials.Register(tmpl)
+		testutil.AssertNotNil(t, tmpl)
 		tmpl, err := addTemplate(tmpl)
 		if err != nil {
 			t.Error("exp nil; got err:", err)

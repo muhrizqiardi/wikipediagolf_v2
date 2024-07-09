@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/repository"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -106,7 +107,7 @@ func TestService_UserRepositoryFindReturnsError(t *testing.T) {
 func TestService_NoError(t *testing.T) {
 	var (
 		mr = &mockRepository{
-			createV: &CreateUserResponse{
+			createV: &repository.CreateUserResult{
 				UID:           "mockuid",
 				Email:         "fulan@example.com",
 				EmailVerified: false,
