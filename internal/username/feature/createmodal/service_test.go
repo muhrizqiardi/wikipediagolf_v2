@@ -5,12 +5,13 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/username/repository"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
 func TestService_UsernameNotFound(t *testing.T) {
 	var (
-		mr      = &mockRepository{findByUIDErr: sql.ErrNoRows}
+		mr      = &mockRepository{err: sql.ErrNoRows}
 		s       = newService(mr)
 		mockUID = "mockUID"
 		_, err  = s.FindByUID(mockUID)
@@ -22,7 +23,7 @@ func TestService_UsernameNotFound(t *testing.T) {
 
 func TestService_RepositoryError(t *testing.T) {
 	var (
-		mr      = &mockRepository{findByUIDErr: errors.New("")}
+		mr      = &mockRepository{err: errors.New("")}
 		s       = newService(mr)
 		mockUID = "mockUID"
 		_, err  = s.FindByUID(mockUID)
@@ -34,11 +35,11 @@ func TestService_RepositoryError(t *testing.T) {
 func TestService_NoError(t *testing.T) {
 	var (
 		mr = &mockRepository{
-			findByUIDV: &FindByUIDResponse{
+			v: &repository.FindByUIDResult{
 				UID:      "mockUID",
 				Username: "mockUsername",
 			},
-			findByUIDErr: nil,
+			err: nil,
 		}
 		s       = newService(mr)
 		mockUID = "mockUID"
