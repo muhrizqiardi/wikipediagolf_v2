@@ -47,5 +47,5 @@ func (s *service) SignUp(payload CreateUserRequest) (*CreateUserResponse, error)
 		return nil, err
 	}
 
-	return u, nil
+	return (*CreateUserResponse)(u), nil
 }
