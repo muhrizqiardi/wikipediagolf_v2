@@ -8,6 +8,7 @@ import (
 
 	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/model"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -18,7 +19,10 @@ func TestHandler(t *testing.T) {
 			res  = httptest.NewRecorder()
 			req  = httptest.NewRequest(http.MethodGet, path, nil)
 			c    = authcontext.NewAuthContext()
-			s    = &mockService{}
+			s    = &mockService{
+				v:   &model.Game{},
+				err: nil,
+			}
 		)
 		c.SetRequest(req, authcontext.Val{
 			UID:    "mockUID",
