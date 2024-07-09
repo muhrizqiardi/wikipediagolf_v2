@@ -12,10 +12,13 @@ import (
 func TestService_RepositoryConflictError(t *testing.T) {
 	var (
 		mr = &mockRepository{
-			insertRoomV:         nil,
-			insertRoomErr:       &pq.Error{Code: "23505"},
-			insertRoomMemberV:   nil,
-			insertRoomMemberErr: nil,
+			insertRoomV:              nil,
+			insertRoomErr:            &pq.Error{Code: "23505"},
+			insertRoomMemberV:        nil,
+			insertRoomMemberErr:      nil,
+			getRoomBelongToMemberV:   &model.Room{ID: uuid.New()},
+			getRoomBelongToMemberErr: nil,
+			deleteErr:                nil,
 		}
 		c            = NewCodeGenerator()
 		s            = NewService(c, mr)
@@ -29,19 +32,13 @@ func TestService_NoError(t *testing.T) {
 	var (
 		mockOwnerUID = "mockOwnerUID"
 		mr           = &mockRepository{
-			insertRoomV: &model.Room{
-				ID:     uuid.New(),
-				Code:   "123456",
-				Status: "open",
-			},
-			insertRoomErr: nil,
-			insertRoomMemberV: &model.RoomMember{
-				ID:      uuid.New(),
-				IsOwner: true,
-				RoomID:  uuid.New(),
-				UserUID: mockOwnerUID,
-			},
-			insertRoomMemberErr: nil,
+			insertRoomV:              &model.Room{ID: uuid.New(), Code: "123456", Status: "open"},
+			insertRoomErr:            nil,
+			insertRoomMemberV:        &model.RoomMember{ID: uuid.New(), IsOwner: true, RoomID: uuid.New(), UserUID: mockOwnerUID},
+			insertRoomMemberErr:      nil,
+			getRoomBelongToMemberV:   &model.Room{ID: uuid.New()},
+			getRoomBelongToMemberErr: nil,
+			deleteErr:                nil,
 		}
 		c = NewCodeGenerator()
 		s = NewService(c, mr)

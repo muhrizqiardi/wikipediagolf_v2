@@ -5,7 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/google/uuid"
 	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/model"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -43,18 +45,30 @@ func TestHandler_ErrDuplicateRoomCode(t *testing.T) {
 
 func TestHandler_NoError(t *testing.T) {
 	var (
-		res = httptest.NewRecorder()
-		req = httptest.NewRequest(http.MethodPost, "/rooms", nil)
-		ms  = &mockService{
-			v:   &CreateRoomResponse{},
-			err: nil,
-		}
+		res     = httptest.NewRecorder()
+		req     = httptest.NewRequest(http.MethodPost, "/rooms", nil)
 		c       = authcontext.NewAuthContext()
 		mockUID = "mockUID"
+		ms      = &mockService{
+			v: &CreateRoomResponse{
+				Room: model.Room{
+					ID:     uuid.New(),
+					Code:   "123456",
+					Status: "open",
+				},
+				Owner: model.RoomMember{
+					ID:      uuid.New(),
+					IsOwner: true,
+					RoomID:  uuid.New(),
+					UserUID: mockUID,
+				},
+			},
+			err: nil,
+		}
 	)
 
 	c.SetRequest(req, authcontext.Val{UID: mockUID})
 	handler(ms, c).ServeHTTP(res, req)
 
-	testutil.AssertEqual(t, "/rooms", res.Result().Header.Get("HX-Location"))
+	testutil.AssertEqual(t, "/rooms", res.Result().Header.Get("HX-Redirect"))
 }

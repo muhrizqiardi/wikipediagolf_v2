@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/uuid"
 	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/model"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
@@ -24,6 +25,7 @@ func TestHandler_ErrForbidden(t *testing.T) {
 
 	// no UID passed from middleware
 	tmpl := template.New("")
+	partials.Register(tmpl)
 	tmpl, err := AddTemplate(tmpl)
 	testutil.AssertNoError(t, err)
 

@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -18,6 +19,7 @@ func TestEndpoint(t *testing.T) {
 			serveMux = http.NewServeMux()
 		)
 		tmpl := template.New("")
+		partials.Register(tmpl)
 		tmpl, err := AddTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)

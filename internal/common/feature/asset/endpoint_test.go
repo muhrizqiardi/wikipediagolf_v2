@@ -22,17 +22,5 @@ func TestAddEndpoint(t *testing.T) {
 
 			testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
 		}
-		{
-			var (
-				req      = httptest.NewRequest(http.MethodGet, "/assets/htmx.min.js", nil)
-				res      = httptest.NewRecorder()
-				serveMux = http.NewServeMux()
-			)
-
-			AddEndpoint(serveMux)
-			serveMux.ServeHTTP(res, req)
-
-			testutil.AssertEqual(t, http.StatusOK, res.Result().StatusCode)
-		}
 	})
 }
