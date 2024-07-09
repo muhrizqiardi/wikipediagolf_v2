@@ -19,5 +19,10 @@ func newService(r Repository) *service {
 }
 
 func (s *service) SignIn(idToken string, expiresIn time.Duration) (*SignInResponse, error) {
-	return s.repository.SessionCookie(idToken, expiresIn)
+	response, err := s.repository.SessionCookie(idToken, expiresIn)
+	if err != nil {
+		return nil, err
+	}
+
+	return (*SignInResponse)(response), nil
 }

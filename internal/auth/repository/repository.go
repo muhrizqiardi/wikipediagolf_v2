@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"log/slog"
+	"time"
 
 	firebase "firebase.google.com/go/v4"
 )
@@ -16,6 +18,27 @@ func NewRepository(ctx context.Context, firebaseApp *firebase.App) *Repository {
 		context:     ctx,
 		firebaseApp: firebaseApp,
 	}
+}
+
+type SessionCookieResult struct {
+	SessionCookie string
+}
+
+func (r *Repository) SessionCookie(idToken string, expiresIn time.Duration) (*SessionCookieResult, error) {
+	client, err := r.firebaseApp.Auth(r.context)
+	if err != nil {
+		return nil, err
+	}
+
+	cookie, err := client.SessionCookie(r.context, idToken, expiresIn)
+	if err != nil {
+		slog.Error("failed to create session cookie", "err", err)
+		return nil, err
+	}
+
+	return &SessionCookieResult{
+		SessionCookie: cookie,
+	}, nil
 }
 
 type VerifySessionCookieResponse struct {
