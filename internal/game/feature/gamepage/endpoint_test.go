@@ -8,6 +8,7 @@ import (
 
 	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/game/model"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -30,7 +31,12 @@ func TestEndpoint(t *testing.T) {
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
 		deps := EndpointDeps{
-			Template: tmpl,
+			Template:    tmpl,
+			AuthContext: authcontext.NewAuthContext(),
+			Service: &mockService{
+				v:   &model.Game{},
+				err: err,
+			},
 		}
 		addEndpoint(serveMux, deps)
 

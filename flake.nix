@@ -23,22 +23,22 @@
           name = "wgserver";
           version = "2.0.0";
           src = ./.;
-          vendorHash = "sha256-1wycFQdf6sudxnH10xNz1bppRDCQjCz33n+ugP74SdQ=";
+          vendorHash = "sha256-GBSLR/hzPoX/G8aEK+ATm+B4NMv7SQ+ATYP/4jFBt18=";
           preBuild = ''
-            cp -r ${self'.packages.wgserver-npm}/dist ./internal/view/asset/dist 
+            cp -r ${self'.packages.wgserver-npm}/dist ./client/dist 
           '';
         };
         packages.wgserver-npm = pkgs.buildNpmPackage {
           pname = "wgserver-npm";
           version = "0.2.0";
           src = ./.;
-          npmDepsHash = "sha256-m1E6aLBQe6YlwtYXY34TyQUIjnICqXAt1Im1BhmWx9c=";
+          npmDepsHash = "sha256-76XRdNhTx5ajF+mBpBpNxCRc9lEqPBy0DCzYZbviB4A=";
           nativeBuildInputs = [
             inputs'.tailwindcss.legacyPackages.tailwindcss
           ];
           postBuild = ''
             mkdir -p $out
-            cp -r ./internal/view/asset/dist $out/dist
+            cp -r ./client/dist $out/dist
           '';
         };
         packages.wgserver-docker = pkgs.dockerTools.buildImage {
