@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
 	"github.com/muhrizqiardi/wikipediagolf_v2/internal/room/model"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
@@ -14,6 +15,7 @@ import (
 func TestExecuteTemplate(t *testing.T) {
 	t.Run("should execute template", func(t *testing.T) {
 		tmpl := template.New("")
+		partials.Register(tmpl)
 		tmpl, err := AddTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
