@@ -5,17 +5,24 @@ import (
 	"html/template"
 	"testing"
 
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
 func TestExecuteTemplate(t *testing.T) {
 	t.Run("should execute template", func(t *testing.T) {
 		tmpl := template.New("")
+		partials.Register(tmpl)
 		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
 		var buf bytes.Buffer
-		err = ExecuteTemplate(tmpl, &buf)
+		err = ExecuteTemplate(tmpl, &buf, templateData{
+			FromTitle:        "Earth",
+			FromTitleDecoded: "Earth",
+			ToTitle:          "Mars",
+			ToTitleDecoded:   "Mars",
+		})
 		testutil.AssertNoError(t, err)
 		testutil.AssertInequal(t, 0, buf.Len())
 	})

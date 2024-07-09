@@ -6,6 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	authcontext "github.com/muhrizqiardi/wikipediagolf_v2/internal/auth/feature/context"
+	"github.com/muhrizqiardi/wikipediagolf_v2/internal/common/feature/partials"
 	"github.com/muhrizqiardi/wikipediagolf_v2/test/testutil"
 )
 
@@ -16,8 +18,14 @@ func TestEndpoint(t *testing.T) {
 			res      = httptest.NewRecorder()
 			req      = httptest.NewRequest(http.MethodGet, path, nil)
 			serveMux = http.NewServeMux()
+			c        = authcontext.NewAuthContext()
 		)
+		c.SetRequest(req, authcontext.Val{
+			UID:    "mockUID",
+			IsAnon: false,
+		})
 		tmpl := template.New("")
+		partials.Register(tmpl)
 		tmpl, err := addTemplate(tmpl)
 		testutil.AssertNoError(t, err)
 		testutil.AssertNotNil(t, tmpl)
