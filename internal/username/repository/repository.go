@@ -21,6 +21,25 @@ func NewRepository(ctx context.Context, db *sql.DB) *Repository {
 	}
 }
 
+func (r *Repository) Insert(uid, username string) error {
+	var (
+		query = query.QueryInsertUsername
+		args  = []any{uid, username}
+	)
+
+	tx, err := r.db.BeginTx(r.context, &sql.TxOptions{})
+	if err != nil {
+		return err
+	}
+	defer tx.Commit()
+
+	if _, err := tx.Exec(query, args...); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 type FindByUIDResult struct {
 	UID       string    `db:"uid"`
 	Username  string    `db:"username"`
