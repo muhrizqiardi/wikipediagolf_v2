@@ -30,5 +30,5 @@ func (s *service) FindByUID(uid string) (*FindByUIDResponse, error) {
 		return nil, err
 	}
 
-	return u, nil
+	return (*FindByUIDResponse)(u), nil
 }
